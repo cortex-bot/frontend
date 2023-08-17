@@ -1,0 +1,86 @@
+/* SignalsDashboard.css */
+.signals-dashboard {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cortexHeading {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333333;
+}
+
+.trade-signals-list {
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+}
+
+.trade-signal-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #f9f9f9, #e2e2e2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.trade-signal-row:hover {
+  background: linear-gradient(to right, #f0f9f5, #e2e2e2);
+}
+
+.trade-signal-details {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.trade-signal-details > span {
+  margin-right: 15px;
+}
+
+.delete-button {
+  background-color: #f94144;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-left: auto; /* Float the button to the right end */
+}
+
+
+.delete-button:hover {
+  background-color: #d00000;
+}
+
+.pill{
+  margin-left:auto; /* Float the button to the right end */
+  flex:inherit;
+}
+
+.trade-details {
+  margin-top: 20px;
+}
+
+.trade-details-row {
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.trade-details-subrow {
+  padding: 5px;
+  background-color: #f2f2f2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

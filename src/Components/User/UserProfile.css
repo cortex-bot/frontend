@@ -1,0 +1,78 @@
+.profile-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+  }
+  
+  .profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-username {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .profile-details {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 20px;
+    align-items: center;
+  }
+  
+  .profile-avatar img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 50%;
+  }
+  
+  .profile-field {
+    margin: 0;
+  }
+  
+  /* Add additional styles as needed */
+  .profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .profile-username {
+    margin-right: 20px;
+  }
+  
+  .logout-button {
+    background-color: rgba(193, 99, 99, 1);
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  .logout-button:hover {
+    background-color: rgba(193, 99, 99, 0.8);
+  }
+  
+
+  .access-pills {
+    margin-top: 10px;
+  }
+  
+  .access-pill {
+    display: inline-block;
+    background-color: rgb(144, 205, 146);
+    color: #ffffff;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+  

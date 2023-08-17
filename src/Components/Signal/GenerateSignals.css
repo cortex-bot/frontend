@@ -1,0 +1,42 @@
+/* Add your custom CSS styles here */
+.container {
+    display: flex;
+  }
+  
+  .column {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .left-column {
+    background: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .right-column {
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .button {
+    padding: 5px 10px;
+    border: none;
+    background: #007bff;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background: #0056b3;
+  }
+  

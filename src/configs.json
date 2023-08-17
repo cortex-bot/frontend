@@ -1,0 +1,53 @@
+{
+  "host": "https://cortexbot.onrender.com",
+  "dataService": "https://data-cortexbot.onrender.com",
+
+
+  "cortexUrl": "https://cortexbot.onrender.com",
+  "localHost": "http://127.0.0.1:8080",
+  "dataServiceHost": "https://data-cortexbot.onrender.com",
+  
+  "executeStrategy": "/api/v1/manager/execute-strategy",
+  "stockSymbol": "/api/v1/stock/get-stocks-symbol",
+  "getStockData": "/api/v1/stock/get-stocks-data",
+  "getStrategyList": "/api/v1/strategy/get-strategy-list",
+  "getTradeTypeList": "/api/v1/executor/trade-type-list",
+  "getBrokersList": "/api/v1/executor/brokers-list",
+  "getStrategyCode": "/api/v1/strategy/get-strategy-data",
+  "getStockBasketList": "/api/v1/stock/get-stock-type-list",
+  "saveStrategy": "/api/v1/manager/save-strategy",
+  "getStrategyCodeFromRanking": "/api/v1/ranking/fetch-code",
+  "getRankingDataList": "/api/v1/ranking/fetch-result",
+  "deleteRankingRecord": "/api/v1/ranking/delete-strategy",
+  "activeExecutorsList": "/api/v1/executor/active-list",
+  "updateExecutorStatus": "/api/v1/manager/update-executor-status",
+  "deactivateExecutor": "/api/v1/manager/deactivate-executor",
+  "spawnNewExecutor": "/api/v1/manager/initiate-executor",
+  "strategyMetadataList": "/api/v1/strategy/get-all-strategy-metadata",
+  "deleteStrategy":"/api/v1/manager/delete-strategy",
+
+
+"getIntervalList":"/api/v1/manager/interval-list",
+
+"userLogin":"/api/v1/onboarding/user-login",
+"userLogout":"/api/v1/onboarding/user-logout",
+
+"brokerLogin":"/api/v1/onboarding/broker-login",
+"brokerLogout":"/api/v1/onboarding/broker-logout",
+
+"getUserData":"/api/v1/user/get-user",
+"getUserHoldings":"/api/v1/broker/get-holdings",
+
+
+"generateSignals": "/api/v1/analysis/generate-trade-signals",
+"getAllSignalList": "/api/v1/analysis/get-all-signals-list",
+"getSignalData": "/api/v1/analysis/get-signal-data",
+"getSignalSummaryReport": "/api/v1/analysis/get-signal-summary-report",
+"deleteSignalData": "/api/v1/analysis/delete-signal",
+
+
+"getStockBucketList": "/api/v1/analysis/get-stock-bucket-list",
+"getStockBucketData": "/api/v1/analysis/get-stock-bucket-data",
+"saveStockBucketData": "/api/v1/analysis/save-stock-bucket-data",
+"daleteStockBucketData": "/api/v1/analysis/delete-bucket"
+}

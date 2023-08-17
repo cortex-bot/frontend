@@ -1,0 +1,4 @@
+.MuiTableRow-head {
+    position: sticky;
+    /* z-index: 1; */
+}

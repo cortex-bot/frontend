@@ -1,0 +1,46 @@
+.show-selected-stocks-container {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .show-selected-stocks-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 4px;
+    background: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background 0.2s;
+    border-radius: 1rem;
+  }
+  
+  .show-selected-stocks-row:hover {
+    background: rgb(18 185 129);
+  }
+  
+  .show-selected-stocks-button {
+    padding: 5px 10px;
+    border: none;
+    background: #cf4e4e;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 2rem;
+  }
+  
+  .show-selected-stocks-button:hover {
+    background: #d20f08;
+  }
+  
+
+  .cortexHeading {
+    position: sticky;
+    top: 0;
+    background-color: #f8f8f8;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* z-index: 99; */
+    font-size: large;
+    font-weight: bold;
+  }
