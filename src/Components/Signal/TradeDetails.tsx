@@ -10,7 +10,7 @@ import {
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 } from "../../configs.json";
 import MuiTable from '../../utils/MuiTable';
-import { getColumns, extractTradeSingals } from "../../utils/utils.js";
+import { getColumns, extractTradeSingals } from "../../utils/utils";
 
 const TradeDetails = ({
   signal,

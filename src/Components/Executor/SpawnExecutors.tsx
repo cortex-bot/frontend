@@ -136,7 +136,6 @@ export default function SpawnExecutors() {
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div>
-// @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
 <form onSubmit={submitNewExecutorRequest}>
       {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Paper className="bg-opacity-40 p-4 h-100" >
@@ -185,7 +184,6 @@ export default function SpawnExecutors() {
             options={tradeTypeList}
           />
 
-// @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
 <Select
   onChange={(e) => {
     // @ts-expect-error TS(2531): Object is possibly 'null'.

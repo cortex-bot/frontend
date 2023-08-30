@@ -141,7 +141,7 @@ function Algotrading() {
       </div>
     
 
-// @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+{/*// @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
 <div id="filter_code_panel" className="grid md:grid-cols-1 lg:grid-cols-4 gap-4 md:h-100">
   {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
   <div className="col-span-1 lg:col-span-3 ">

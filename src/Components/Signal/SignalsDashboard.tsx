@@ -5,7 +5,7 @@ import TradeDetails from './TradeDetails';
 import './SignalsDashboard.css';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import ReactModal from 'react-modal';
-import { getColumns, extractTradeSingals } from "../../utils/utils.js";
+import { getColumns, extractTradeSingals } from "../../utils/utils";
 
 
 import { Button } from "@material-ui/core";
