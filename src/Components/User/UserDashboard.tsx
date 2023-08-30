@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './UserDashboard.css';
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
-import { host, userLogin, brokerLogin } from "../../configs.json";
+import { host, userLogin, brokerLogin } from '../../configs.json';
 // @ts-expect-error TS(6142): Module './UserProfile' was resolved to 'D:/workspa... Remove this comment to see the full error message
-import UserProfile from "./UserProfile";
+import UserProfile from './UserProfile';
 
-function Toast({
-  message,
-  type
-}: any) {
+function Toast({ message, type }: any) {
   const [visible, setVisible] = useState(true);
 
   const handleClose = () => {
@@ -18,14 +15,13 @@ function Toast({
   return visible ? (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className={`toast ${type}`}>
-            <p className="message">{message}</p>
-            <button className="close-button" onClick={handleClose}>
+      <p className="message">{message}</p>
+      <button className="close-button" onClick={handleClose}>
         X
       </button>
     </div>
   ) : null;
 }
-
 
 function UserDashboard() {
   const [username, setUsername] = useState(null);
@@ -33,7 +29,7 @@ function UserDashboard() {
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('');
   const [sessionID, setSesssionID] = useState(null);
-//   const [userData, setUserData] = useState(null);
+  //   const [userData, setUserData] = useState(null);
 
   const checkSession = () => {
     console.log('Checking session');
@@ -42,17 +38,15 @@ function UserDashboard() {
     const sessionExpiry = localStorage.getItem('sessionExpiry');
     const currentTime = new Date().getTime();
 
-    if (sessionID_browser && username_browser && sessionExpiry ){
-        // && currentTime < sessionExpiry) {÷
+    if (sessionID_browser && username_browser && sessionExpiry) {
+      // && currentTime < sessionExpiry) {÷
       // User already logged in, fetch user details
       // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
       setUsername(username_browser);
       // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
-      setSesssionID(sessionID_browser)
+      setSesssionID(sessionID_browser);
     }
   };
-
-
 
   useEffect(() => {
     checkSession();
@@ -77,11 +71,14 @@ function UserDashboard() {
           localStorage.setItem('sessionID', data.data.session_id);
           localStorage.setItem('username', data.data.username);
           // @ts-expect-error TS(2345): Argument of type 'number' is not assignable to par... Remove this comment to see the full error message
-          localStorage.setItem('sessionExpiry', new Date(data.data.session_expiry_at).getTime());
+          localStorage.setItem(
+            'sessionExpiry',
+            new Date(data.data.session_expiry_at).getTime(),
+          );
           setToastMessage('Login Successful!');
           setToastType('success');
-        //   setUserData(data.data);
-        window.location.reload();
+          //   setUserData(data.data);
+          window.location.reload();
         } else {
           setToastMessage('Login Failed! - ' + data.error_description);
           setToastType('error');
@@ -98,14 +95,14 @@ function UserDashboard() {
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className="container">
-      {(username && sessionID) ? (
+      {username && sessionID ? (
         // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <UserProfile username={username} session_id = {sessionID} />
-      ): (
+        <UserProfile username={username} session_id={sessionID} />
+      ) : (
         // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <form className="login-form" onSubmit={handleSubmit}>
-                    <h2>User Login</h2>
-                    <input
+          <h2>User Login</h2>
+          <input
             className="input"
             type="text"
             placeholder="Username"
@@ -114,19 +111,19 @@ function UserDashboard() {
             // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
             onChange={(e) => setUsername(e.target.value)}
           />
-                    <input
+          <input
             className="input"
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-                    <button className="button" type="submit">
+          <button className="button" type="submit">
             Login
           </button>
         </form>
-      ) }
-            {toastMessage && <Toast message={toastMessage} type={toastType} />}
+      )}
+      {toastMessage && <Toast message={toastMessage} type={toastType} />}
     </div>
   );
 }
