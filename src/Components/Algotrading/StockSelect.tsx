@@ -20,8 +20,7 @@ function StockSelect(setter: any,isMulti = false,stock_name = "stock_name") {
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <Select
+            <Select
       onChange={(e) => {
         console.log(e);
         if(isMulti){

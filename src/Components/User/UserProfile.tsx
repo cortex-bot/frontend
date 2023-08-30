@@ -50,54 +50,33 @@ function UserProfile({
 
   // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
   return (<div>
-    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-    <div className="profile-container glassy">
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <div className="profile-header">
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <h2 className="profile-username">{userData ? (userData as any).username : 'Loading...'}</h2>
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <button className="logout-button" onClick={handleLogout}>Logout</button>
+        <div className="profile-container glassy">
+            <div className="profile-header">
+                <h2 className="profile-username">{userData ? (userData as any).username : 'Loading...'}</h2>
+                <button className="logout-button" onClick={handleLogout}>Logout</button>
       </div>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <div className="profile-details">
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        {userData ? (<>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-            <div className="profile-avatar">
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <img src={(userData as any).user_details.profile_pic} alt="User Avatar"/>
+            <div className="profile-details">
+                {userData ? (<>
+                        <div className="profile-avatar">
+                            <img src={(userData as any).user_details.profile_pic} alt="User Avatar"/>
             </div>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-            <div className="profile-info">
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <p className="profile-field"><strong>Email:</strong> {(userData as any).email}</p>
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <p className="profile-field"><strong>PAN:</strong> {(userData as any).pan}</p>
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <p className="profile-field"><strong>Phone:</strong> {(userData as any).phone}</p>
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <p className="profile-field"><strong>Gender:</strong> {(userData as any).user_details.gender}</p>
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <p className="profile-field"><strong>About:</strong> {(userData as any).user_details.about}</p>
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <p className="profile-field"><strong>Date Of Birth:</strong> {(userData as any).user_details.dob}</p>
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <div className="access-pills">
-                {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                <strong>Access:</strong>
-                {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                {(userData as any).access.map((access: any, index: any) => (<span key={index} className="access-pill">{access}</span>))}
+                        <div className="profile-info">
+                            <p className="profile-field"><strong>Email:</strong> {(userData as any).email}</p>
+                            <p className="profile-field"><strong>PAN:</strong> {(userData as any).pan}</p>
+                            <p className="profile-field"><strong>Phone:</strong> {(userData as any).phone}</p>
+                            <p className="profile-field"><strong>Gender:</strong> {(userData as any).user_details.gender}</p>
+                            <p className="profile-field"><strong>About:</strong> {(userData as any).user_details.about}</p>
+                            <p className="profile-field"><strong>Date Of Birth:</strong> {(userData as any).user_details.dob}</p>
+                            <div className="access-pills">
+                                <strong>Access:</strong>
+                                {(userData as any).access.map((access: any, index: any) => (<span key={index} className="access-pill">{access}</span>))}
               </div>
             </div>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          </>) : (<p>Loading user data...</p>)}
+                    </>) : (<p>Loading user data...</p>)}
       </div>
       </div>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <br />
-     {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-     {userData ? <BrokerData clientname={(userData as any).username} className="glassy"/> : <div>USername not found</div>}
+            <br />
+          {userData ? <BrokerData clientname={(userData as any).username} className="glassy"/> : <div>USername not found</div>}
     </div>);
 }
 

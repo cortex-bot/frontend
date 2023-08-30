@@ -66,12 +66,9 @@ const TradeDetails = ({
       overlayClassName="modal-overlay"
     >
       {/* Set z-index for the modal header */}
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <div className="modal-header" >
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <h2>Trade Details</h2>
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <button onClick={onRequestClose} className="cut-button">
+            <div className="modal-header" >
+                <h2>Trade Details</h2>
+                <button onClick={onRequestClose} className="cut-button">
           &#10005;
         </button>
       </div>

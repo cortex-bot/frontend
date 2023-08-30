@@ -12,16 +12,12 @@ const GenerateSignals = () => {
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className="flex flex-row  ">
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <div className="flex-grow bg-white bg-opacity-75 rounded-lg shadow-lg mx-4 my-2 p-4">
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <ShowSelectedStocks stockList={stockList} updateStockList={setStockList} stockListName={stockBucketName} />
+            <div className="flex-grow bg-white bg-opacity-75 rounded-lg shadow-lg mx-4 my-2 p-4">
+                <ShowSelectedStocks stockList={stockList} updateStockList={setStockList} stockListName={stockBucketName} />
       </div>
 
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <div className="flex-shrink bg-white bg-opacity-75 rounded-lg shadow-lg mx-4 my-2 p-4">
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <GenerateSignalsPanel updateStockList={setStockList} updateStockBucketName={setStockBucketName} stockList={stockList} />
+            <div className="flex-shrink bg-white bg-opacity-75 rounded-lg shadow-lg mx-4 my-2 p-4">
+                <GenerateSignalsPanel updateStockList={setStockList} updateStockBucketName={setStockBucketName} stockList={stockList} />
       </div>
     </div>
   );

@@ -192,8 +192,7 @@ function Ranking() {
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div>
 
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <Modal
+            <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
@@ -205,15 +204,11 @@ function Ranking() {
           timeout: 500,
         }}
       >
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <Fade in={open}>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <div className="w-4/5 h-3/4 bg-gray-600 text-white">
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-            <h1>Code</h1>
+                <Fade in={open}>
+                    <div className="w-4/5 h-3/4 bg-gray-600 text-white">
+                        <h1>Code</h1>
 
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-            <Editor code={code} setCode={setCode} />
+                        <Editor code={code} setCode={setCode} />
           </div>
         </Fade>
       </Modal>

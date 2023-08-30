@@ -173,47 +173,38 @@ function GenerateSignalsPanel({
     return (<div>
 
 
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-            <div>
-                    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                    <Paper className="bg-opacity-40 p-4 h-100">
-                        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                        <h1 className="text-center font-bold text-lg">Generate Signals</h1>
+                        <div>
+                                        <Paper className="bg-opacity-40 p-4 h-100">
+                                                <h1 className="text-center font-bold text-lg">Generate Signals</h1>
 
 
-                        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                        <Typography variant="h7" className="text-center text-gray-500 text-bold">
+                                                <Typography variant="h7" className="text-center text-gray-500 text-bold">
                             Select Stocks
                         </Typography>
                         {StockSelect(updateFormValue, false, "stock_list")}
 
 
-                        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                        <Typography variant="h7" className="text-center text-gray-500 text-bold">
+                                                <Typography variant="h7" className="text-center text-gray-500 text-bold">
                             Select Strategy
                         </Typography>
 
-                        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                        <Select onChange={(e) => {
+                                                <Select onChange={(e) => {
         // @ts-expect-error TS(2531): Object is possibly 'null'.
         updateFormValue("strategy_name", e.value);
         // setStrategyName(e["value"]);/
     // @ts-expect-error TS(2322): Type '{ onChange: (e: null) => void; placeholder: ... Remove this comment to see the full error message
     }} placeholder="Select Strategy" isRequired={true} defaultValue={strategyList[0]} options={strategyList}/>
 
-                        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                        <div className="grid md:grid-cols-2 gap-2 mt-3">
+                                                <div className="grid md:grid-cols-2 gap-2 mt-3">
 
-                            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                            <Select onChange={(e) => {
+                                                        <Select onChange={(e) => {
         // @ts-expect-error TS(2531): Object is possibly 'null'.
         updateFormValue("interval", e.value);
         // setStrategyName(e["value"]);/
     // @ts-expect-error TS(2322): Type '{ onChange: (e: null) => void; placeholder: ... Remove this comment to see the full error message
     }} placeholder="Select interval" isRequired={true} defaultValue={intervalList[0]} options={intervalList}/>
 
-                            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                            <Select onChange={(e) => {
+                                                        <Select onChange={(e) => {
         // @ts-expect-error TS(2531): Object is possibly 'null'.
         updateFormValue("broker_name", e.value);
     // @ts-expect-error TS(2322): Type '{ onChange: (e: null) => void; placeholder: ... Remove this comment to see the full error message
@@ -223,31 +214,23 @@ function GenerateSignalsPanel({
                         </div>
 
 
-                    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                    <div className="grid md:grid-cols-2 gap-2 mt-3">
-                        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                        <TextField onChange={handleChange} name="start_date" type="date" value={formValues.start_date} label={"Start Date"}/>
+                                        <div className="grid md:grid-cols-2 gap-2 mt-3">
+                                                <TextField onChange={handleChange} name="start_date" type="date" value={formValues.start_date} label={"Start Date"}/>
 
-                        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                        <TextField onChange={handleChange} name="end_date" type="date" value={formValues.end_date} label={"End Date"}/>
+                                                <TextField onChange={handleChange} name="end_date" type="date" value={formValues.end_date} label={"End Date"}/>
                     </div>
 
-                    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                    <div className="grid md:grid-cols-2 gap-2 mt-3">
+                                        <div className="grid md:grid-cols-2 gap-2 mt-3">
 
-                        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                        <TextField onChange={handleChange} name="username" multiline="false" type="textarea" value={formValues.username} label={" username "}/>
+                                                <TextField onChange={handleChange} name="username" multiline="false" type="textarea" value={formValues.username} label={" username "}/>
 
 
-                        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                        <TextField onChange={handleChange} name="remarks" multiline="true" type="textarea" value={(formValues as any).remarks} label={" remarks "}/>
+                                                <TextField onChange={handleChange} name="remarks" multiline="true" type="textarea" value={(formValues as any).remarks} label={" remarks "}/>
 
 
                     </div>
-                    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                    <div className="grid grid-col-1 grid-flow-col m-3 align-bottom">
-                        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                        <Button className=' bg-green-100' type="submit" onClick={submitGenerateSignalRequest}>
+                                        <div className="grid grid-col-1 grid-flow-col m-3 align-bottom">
+                                                <Button className=' bg-green-100' type="submit" onClick={submitGenerateSignalRequest}>
                             Submit
                         </Button>
 
@@ -258,28 +241,22 @@ function GenerateSignalsPanel({
         </div>
 
 
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <div className='mt-2'>
+                <div className='mt-2'>
 
-                {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                <Paper className="bg-opacity-40 p-4 h-100">
+                                <Paper className="bg-opacity-40 p-4 h-100">
 
-                    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                    <h1 className="text-center font-bold text-lg">Stock Bucket</h1>
+                                        <h1 className="text-center font-bold text-lg">Stock Bucket</h1>
 
 
-                    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                    <Typography variant="h7" className="text-center text-gray-500 text-bold">
+                                        <Typography variant="h7" className="text-center text-gray-500 text-bold">
                         Select Stock Bucket
                     </Typography>
                     {StockBucketSelect(updateFormValue, false, "stockBucketName")}
 
-                    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                    <TextField onChange={handleChange} name="updatedStockBucketName" multiline="false" type="textarea" value={(formValues as any).updatedStockBucketName} label={" stockBucketName "}/>
+                                        <TextField onChange={handleChange} name="updatedStockBucketName" multiline="false" type="textarea" value={(formValues as any).updatedStockBucketName} label={" stockBucketName "}/>
 
 
-                    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                    <Button className=' bg-green-100 btn btn-primary align-left' type="submit" onClick={submitSaveStockBucketRequest}>
+                                        <Button className=' bg-green-100 btn btn-primary align-left' type="submit" onClick={submitSaveStockBucketRequest}>
                         Save Bucket
                     </Button>
                 </Paper>

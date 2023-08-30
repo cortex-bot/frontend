@@ -24,28 +24,17 @@ export default function App() {
     return (
       // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <div className="flex-row row bg-gray-700 min-h-screen">
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <BrowserRouter>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <SideBar />
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <div className="resize-x ml-16 p-1 ">
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-            <Routes>
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <Route path="/" element={<Algotrading />} />
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <Route path="/ranking" element={<Ranking />} />
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <Route path="/executor_cp" element={<ExecutorControlPanel />} />
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <Route path="/strategy_dashboard" element={<StrategyDashboard />} />
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <Route path="/user" element={<UserDashboard />} />
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <Route path="/generate_signals" element={<GenerateSignals />} />
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <Route path="/signals_dashboard" element={<SignalsDashboard />} />
+                <BrowserRouter>
+                    <SideBar />
+                    <div className="resize-x ml-16 p-1 ">
+                        <Routes>
+                            <Route path="/" element={<Algotrading />} />
+                            <Route path="/ranking" element={<Ranking />} />
+                            <Route path="/executor_cp" element={<ExecutorControlPanel />} />
+                            <Route path="/strategy_dashboard" element={<StrategyDashboard />} />
+                            <Route path="/user" element={<UserDashboard />} />
+                            <Route path="/generate_signals" element={<GenerateSignals />} />
+                            <Route path="/signals_dashboard" element={<SignalsDashboard />} />
   
             </Routes>
           </div>

@@ -33,8 +33,7 @@ function Editor({
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className={isFullScreen ? 'editor-fullscreen' : 'editor-container'}>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <AceEditor
+            <AceEditor
         style={{ height: '100%', width: '100%' }}
         placeholder='Start Coding'
         mode='python'
@@ -53,8 +52,7 @@ function Editor({
           tabSize: 4,
         }}
       />
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <button
+            <button
         className={`fullscreen-button ${isFullScreen ? 'exit' : ''}`}
         onClick={toggleFullScreen}
       >

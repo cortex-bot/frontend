@@ -174,23 +174,18 @@ export default function Panel({
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <Paper className="bg-opacity-40 p-4 h-100" >
       {/* style="height:100%; width:100%;"> */}
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <Typography variant="h7" className="text-center text-gray-500 text-bold">
+            <Typography variant="h7" className="text-center text-gray-500 text-bold">
         Select Data
       </Typography>
       {StockSelect(selectDropdown)}
 
 
 
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <div className="grid md:grid-cols-2 md:grid-rows-2 gap-2 mt-3">
+            <div className="grid md:grid-cols-2 md:grid-rows-2 gap-2 mt-3">
 
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <div>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <FormLabel children={"Ranking"} />
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <Switch
+                <div>
+                    <FormLabel children={"Ranking"} />
+                    <Switch
             color="secondary"
             // checked={formValues.ranking}
             name="ranking"
@@ -201,10 +196,8 @@ export default function Panel({
           />
 
         </div>
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <div>
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <Select
+                <div>
+                <Select
           // @ts-expect-error TS(2531): Object is possibly 'null'.
           onChange={(e) => selectDropdown("interval",e.value)}
           placeholder="Interval"
@@ -223,11 +216,9 @@ export default function Panel({
       </div>
 
 
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <div className="grid md:grid-rows-2 gap-3 mt-3" 
+            <div className="grid md:grid-rows-2 gap-3 mt-3" 
       style={{ backgroundColor: 'rgba(144, 238, 144, 0.5)' }}>
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <TextField
+                <TextField
           onChange={handleChange}
           name="start_date"
           type="datetime-local"
@@ -235,8 +226,7 @@ export default function Panel({
           label={"Start Date"}
         />
 
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <TextField
+                <TextField
           onChange={handleChange}
           name="end_date"
           type="datetime-local"
@@ -246,10 +236,8 @@ export default function Panel({
 
       </div>
 
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <div className="grid">
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <TextField
+            <div className="grid">
+                <TextField
           onChange={handleChange}
           name="strategy_name"
           type="input"
@@ -259,8 +247,7 @@ export default function Panel({
         />
 
         {/*  not saved right now */}
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <TextField
+                <TextField
           onChange={handleChange}
           name="description"
           // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'boolean |... Remove this comment to see the full error message
@@ -271,12 +258,9 @@ export default function Panel({
         />
 
       </div>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <div className="grid grid-col-2 grid-flow-col m-3 align-bottom">
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <Button onClick={handleSubmit}>Submit</Button>
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <Button onClick={saveCode}>Save</Button>
+            <div className="grid grid-col-2 grid-flow-col m-3 align-bottom">
+                <Button onClick={handleSubmit}>Submit</Button>
+                <Button onClick={saveCode}>Save</Button>
       </div>
     </Paper>
   );

@@ -21,8 +21,7 @@ function SelectStockBasektType(setter: any) {
     <div>
 
 
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <Select
+            <Select
       onChange={(e) => {
         // @ts-expect-error TS(2531): Object is possibly 'null'.
         setter("stock_basket",e["value"]);

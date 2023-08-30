@@ -47,13 +47,11 @@ export function StrategySelector({
         // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <Paper className="bg-opacity-40 p-4">
             {/* code to write heading in mui  */}
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-            <Typography variant="h7" className="text-center  text-gray-500 text-bold">
+                        <Typography variant="h7" className="text-center  text-gray-500 text-bold">
                 Select Strategy
             </Typography>
             
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-            <Select
+                        <Select
                 onChange={(e) => {
                     // @ts-expect-error TS(2531): Object is possibly 'null'.
                     setStrategyName(e["value"]);

@@ -137,18 +137,14 @@ export default function SpawnExecutors() {
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div>
 <form onSubmit={submitNewExecutorRequest}>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <Paper className="bg-opacity-40 p-4 h-100" >
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <h1 className="text-center font-bold text-lg">Create Executor</h1>
+            <Paper className="bg-opacity-40 p-4 h-100" >
+                <h1 className="text-center font-bold text-lg">Create Executor</h1>
         {/* style="height:100%; width:100%;"> */}
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <Typography variant="h7" className="text-center text-gray-500 text-bold">
+                <Typography variant="h7" className="text-center text-gray-500 text-bold">
           Select Strategy
         </Typography>
 
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <Select
+                <Select
           onChange={(e) => {
             // @ts-expect-error TS(2531): Object is possibly 'null'.
             updateFormValue("strategy_name", e.value)
@@ -161,17 +157,14 @@ export default function SpawnExecutors() {
           options={strategyList}
         />
 
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <Typography variant="h7" className="text-center text-gray-500 text-bold">
+                <Typography variant="h7" className="text-center text-gray-500 text-bold">
           Select Stocks
         </Typography>
         {StockSelect(extractValuesFromMultiSelect, true, "stock_list")}
 
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <div className="grid md:grid-cols-2 gap-2 mt-3">
+                <div className="grid md:grid-cols-2 gap-2 mt-3">
 
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <Select
+                    <Select
             onChange={(e) => {
               // @ts-expect-error TS(2531): Object is possibly 'null'.
               updateFormValue("trade_type", e.value)
@@ -201,10 +194,8 @@ export default function SpawnExecutors() {
         </div>
 
 
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <div className="grid md:grid-cols-2 gap-2 mt-3">
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <TextField
+                <div className="grid md:grid-cols-2 gap-2 mt-3">
+                    <TextField
             onChange={handleChange}
             name="start_date"
             type="date"
@@ -212,8 +203,7 @@ export default function SpawnExecutors() {
             label={"Start Date"}
           />
 
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <TextField
+                    <TextField
             onChange={handleChange}
             name="end_date"
             type="date"
@@ -222,10 +212,8 @@ export default function SpawnExecutors() {
           />
         </div>
 
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <div className="grid md:grid-cols-2 gap-2 mt-3">
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <TextField
+                <div className="grid md:grid-cols-2 gap-2 mt-3">
+                    <TextField
             onChange={handleChange}
             name="remarks"
             // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'boolean |... Remove this comment to see the full error message
@@ -235,8 +223,7 @@ export default function SpawnExecutors() {
             label={" remarks "}
           />
 
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <TextField
+                    <TextField
             onChange={handleChange}
             name="username"
             // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'boolean |... Remove this comment to see the full error message
@@ -247,10 +234,8 @@ export default function SpawnExecutors() {
           />
 
         </div>
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <div className="grid grid-col-1 grid-flow-col m-3 align-bottom">
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <Button className=' bg-green-100'
+                <div className="grid grid-col-1 grid-flow-col m-3 align-bottom">
+                    <Button className=' bg-green-100'
             type = "submit" > Submit </Button>
         </div>
 

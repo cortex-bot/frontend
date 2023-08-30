@@ -20,8 +20,7 @@ function StockBucketSelect(setter: any,isMulti = false,bucket_name = "stockBucke
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <Select
+            <Select
       onChange={(e) => {
         console.log("dropdown updated of stock bucket",e);
         if(isMulti){

@@ -69,19 +69,14 @@ function Algotrading() {
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className="m-1 p-0 min-h-screen flex flex-col">
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <Helmet>
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <HighchartsDependencies /> {/* External Highcharts dependencies */}
+            <Helmet>
+                <HighchartsDependencies /> {/* External Highcharts dependencies */}
       </Helmet>
 
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <div className="m-1 grid md:grid-cols-1 lg:grid-cols-4 gap-4 flex-grow">
+            <div className="m-1 grid md:grid-cols-1 lg:grid-cols-4 gap-4 flex-grow">
         {/* Chart component */}
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <div className="col-span-1 lg:col-span-3">
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <div
+                <div className="col-span-1 lg:col-span-3">
+                    <div
             className="h-96 lg:h-full bg-transparent border border-gray-300 rounded-md overflow-hidden"
             style={{ maxHeight: "55vh" }}
           >
@@ -90,24 +85,19 @@ function Algotrading() {
         </div>
 
         {/* Analysis component */}
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <div className="col-span-1 lg:col-span-1 flex flex-col">
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <div className="text-center font-semibold text-heading mb-3">
+                <div className="col-span-1 lg:col-span-1 flex flex-col">
+                    <div className="text-center font-semibold text-heading mb-3">
             Analysis
           </div>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <div className="flex-grow overflow-x-auto">
+                    <div className="flex-grow overflow-x-auto">
             {analysis ? (
               // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <div className="table-report">
                 {Object.keys(analysis).map((key) => (
                   // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                   <div className="table-row" key={key}>
-                    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                    <div className="key">{key}</div>
-                    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-                    <div className="value">
+                                        <div className="key">{key}</div>
+                                        <div className="value">
                       {typeof analysis[key] === "number"
                         ? Math.round(analysis[key] * 1000) / 1000
                         : String(analysis[key])}
@@ -122,13 +112,10 @@ function Algotrading() {
           </div>
 
           {/* Toggle button for line chart and candlestick visualization */}
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <div className="mt-4">
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-            <Paper className="p-2 flex mb-0">
+                    <div className="mt-4">
+                        <Paper className="p-2 flex mb-0">
               Candle Stick Chart
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <Switch
+                            <Switch
                 checked={isCandleStickChart}
                 name="enable candle stick chart"
                 onChange={updateCandleStickChart}
@@ -143,18 +130,13 @@ function Algotrading() {
 
 {/*// @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
 <div id="filter_code_panel" className="grid md:grid-cols-1 lg:grid-cols-4 gap-4 md:h-100">
-  {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-  <div className="col-span-1 lg:col-span-3 ">
-    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-    <Editor code={code} setCode={setCode} />
+    <div className="col-span-1 lg:col-span-3 ">
+        <Editor code={code} setCode={setCode} />
   </div>
 
-  {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-  <div className="col-span-1 lg:col-span-1 rounded-md shadow-md">
-    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-    <StrategySelector setCode={setCode} formValues={formValues} setFormValues={setFormValues} />
-    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-    <Panel
+    <div className="col-span-1 lg:col-span-1 rounded-md shadow-md">
+        <StrategySelector setCode={setCode} formValues={formValues} setFormValues={setFormValues} />
+        <Panel
       username="alvin369"
       formValues={formValues}
       setFormValues={setFormValues}

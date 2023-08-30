@@ -64,8 +64,7 @@ function Charts() {
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className="">
       {StockSelect(setstock_name)}
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <HighchartsReact
+            <HighchartsReact
         highcharts={Highcharts}
         constructorType={"stockChart"}
         options={options}

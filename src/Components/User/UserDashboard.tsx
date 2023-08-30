@@ -18,10 +18,8 @@ function Toast({
   return visible ? (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className={`toast ${type}`}>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <p className="message">{message}</p>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <button className="close-button" onClick={handleClose}>
+            <p className="message">{message}</p>
+            <button className="close-button" onClick={handleClose}>
         X
       </button>
     </div>
@@ -106,10 +104,8 @@ function UserDashboard() {
       ): (
         // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <form className="login-form" onSubmit={handleSubmit}>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <h2>User Login</h2>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <input
+                    <h2>User Login</h2>
+                    <input
             className="input"
             type="text"
             placeholder="Username"
@@ -118,22 +114,19 @@ function UserDashboard() {
             // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
             onChange={(e) => setUsername(e.target.value)}
           />
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <input
+                    <input
             className="input"
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-          <button className="button" type="submit">
+                    <button className="button" type="submit">
             Login
           </button>
         </form>
       ) }
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      {toastMessage && <Toast message={toastMessage} type={toastType} />}
+            {toastMessage && <Toast message={toastMessage} type={toastType} />}
     </div>
   );
 }

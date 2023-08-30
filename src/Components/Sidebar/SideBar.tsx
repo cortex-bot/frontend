@@ -26,25 +26,17 @@ const SideBar = () => {
 return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className="fixed top-0 left-0 h-screen w-16 m-0 flex flex-col bg-primary text-secondary shadow-lg">
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <SideBarIcon icon={<img alt="logo" src={logo} className="rounded" />} path="/" label="Home" />
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <SideBarIcon icon={<IoStatsChartSharp size="28" />} path="/ranking" label="Ranking" />
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <SideBarIcon icon={<AiOutlineControl size="28" />} path="/executor_cp" label="Executor CP" />
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <SideBarIcon icon={<FaChessKnight size="28" />} path="/strategy_dashboard" label="Strategy Dashboard" />
+            <SideBarIcon icon={<img alt="logo" src={logo} className="rounded" />} path="/" label="Home" />
+            <SideBarIcon icon={<IoStatsChartSharp size="28" />} path="/ranking" label="Ranking" />
+            <SideBarIcon icon={<AiOutlineControl size="28" />} path="/executor_cp" label="Executor CP" />
+            <SideBarIcon icon={<FaChessKnight size="28" />} path="/strategy_dashboard" label="Strategy Dashboard" />
 
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <SideBarIcon icon={<FaSignal size="28" />} path="/generate_signals" label="Generate Signals" />
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <SideBarIcon icon={<FaChartLine size="28" />} path="/signals_dashboard" label="Signals Dashboard" />
+            <SideBarIcon icon={<FaSignal size="28" />} path="/generate_signals" label="Generate Signals" />
+            <SideBarIcon icon={<FaChartLine size="28" />} path="/signals_dashboard" label="Signals Dashboard" />
 
 
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <div className="user-profile-pic ">
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <Link to="/user">
+                <div className="user-profile-pic ">
+                <Link to="/user">
 
       {userProfilePic ? (
           // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
@@ -69,8 +61,7 @@ const SideBarIcon = ({
 }: any) => (
   // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
   <Link to={path}>
-    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-    <div className="sidebar-icon">{icon}</div>
+        <div className="sidebar-icon">{icon}</div>
   </Link>
 );
 
