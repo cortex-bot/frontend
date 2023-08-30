@@ -7,22 +7,22 @@
 // Highcharts.setOptions(darkUnicaTheme);
 
 
-export const addZeroAtstart = (x) => {
+export const addZeroAtstart = (x: any) => {
     if (x < 10) return "0" + x;
     return x;
 };
 
 
-export const convertDictListToDropdown = (data) => {
+export const convertDictListToDropdown = (data: any) => {
     let options = Object.keys(data).map((key) => ({
         label: data[key],
         value: key
     }));
 }
 
-export const convertListToDropdown = (data) => {
-    let options = [];
-    data.forEach((item) => {
+export const convertListToDropdown = (data: any) => {
+    let options: any = [];
+    data.forEach((item: any) => {
         options.push({
             label: item,
             value: item
@@ -34,7 +34,7 @@ export const convertListToDropdown = (data) => {
 }
 
 
-export const convertStockDataToOhlc = (stockData, name) => {
+export const convertStockDataToOhlc = (stockData: any, name: any) => {
     let ohlc = [];
     console.log("stockData: ", stockData.length);
     for (let i = 0; i < stockData.length; i++) {
@@ -135,7 +135,7 @@ export const getTodaysDate = () => {
 };
 
 
-const convertDateToIST = (timestamp) => {
+const convertDateToIST = (timestamp: any) => {
     const date = new Date(timestamp);
     const istOffset = 5*60+30;
     const istTimestamp = date.getTime() + (istOffset) * 60 * 1000;
@@ -146,7 +146,7 @@ const convertDateToIST = (timestamp) => {
 
 
 
-  export function formatDatetime(timestamp) {
+  export function formatDatetime(timestamp: any) {
     const date = new Date(timestamp);
   
     // Convert to IST
@@ -154,39 +154,44 @@ const convertDateToIST = (timestamp) => {
     const minutesIST = date.getUTCMinutes(); // Add 30 minutes for IST
   
     // Handle cases where hours and/or minutes exceed 24 and 60, respectively
+    // @ts-expect-error TS(2550): Property 'padStart' does not exist on type 'string... Remove this comment to see the full error message
     const formattedHours = (hoursIST % 24).toString().padStart(2, '0');
+    // @ts-expect-error TS(2550): Property 'padStart' does not exist on type 'string... Remove this comment to see the full error message
     const formattedMinutes = (minutesIST % 60).toString().padStart(2, '0');
   
     // Format the date and time string
+    // @ts-expect-error TS(2550): Property 'padStart' does not exist on type 'string... Remove this comment to see the full error message
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    // @ts-expect-error TS(2550): Property 'padStart' does not exist on type 'string... Remove this comment to see the full error message
     const formattedTime = `${formattedHours}:${formattedMinutes}:${date.getSeconds().toString().padStart(2, '0')}`;
     
     return `${formattedDate} ${formattedTime}`;
   }
   
 
-  export const PlotChart = (data, name, trades, isCandleStickChart) => {
+  export const PlotChart = (data: any, name: any, trades: any, isCandleStickChart: any) => {
     const buySellData = trades
       ? trades
-      .map((trade) => ({
-          x: convertDateToIST(trade.timestamp),
-          y: trade.amount*1.002,
-          // color: trade.action === 'BUY' ? 'green' : 'red',
-          quantity: String(trade.quantity),
-          marker:
-          trade.action === 'BUY' ? {
-            symbol: "triangle",
-            fillColor: "#83ff74",
-            lineColor: "black",
-            lineWidth: 1,
-          } : {
-            symbol: "triangle-down",
-            fillColor: "#ff0000",
-            lineColor: "black",
-            lineWidth: 1,
-          }
-          
-        }))
+      .map((trade: any) => ({
+      x: convertDateToIST(trade.timestamp),
+      y: trade.amount*1.002,
+
+      // color: trade.action === 'BUY' ? 'green' : 'red',
+      quantity: String(trade.quantity),
+
+      marker:
+      trade.action === 'BUY' ? {
+        symbol: "triangle",
+        fillColor: "#83ff74",
+        lineColor: "black",
+        lineWidth: 1,
+      } : {
+        symbol: "triangle-down",
+        fillColor: "#ff0000",
+        lineColor: "black",
+        lineWidth: 1,
+      }
+    }))
       : [];
 
     return {
@@ -237,7 +242,7 @@ const convertDateToIST = (timestamp) => {
         shape: 'square',
         headerShape: 'callout',
         pointFormatter: function () {
-          return `<b>Value: ${parseFloat(this.y).toFixed(2)}</b><br/>Time: ${formatDatetime(this.x)}`;
+          return `<b>Value: ${parseFloat((this as any).y).toFixed(2)}</b><br/>Time: ${formatDatetime((this as any).x)}`;
         },
         borderWidth: 0,
         shadow: true,
@@ -260,7 +265,7 @@ const convertDateToIST = (timestamp) => {
     };
   };
   
-  const generateSeriesForGraph = (data, buySellData, isCandleStickChart) => {
+  const generateSeriesForGraph = (data: any, buySellData: any, isCandleStickChart: any) => {
     console.log("stock data: ", data);
   
     if (data == null)
@@ -330,20 +335,21 @@ const convertDateToIST = (timestamp) => {
 
 
 
-export const convertFormValuesToPayload = (formValues) => {
+export const convertFormValuesToPayload = (formValues: any) => {
     // console.log("formValues: ", formValues);
     // let array = [];
     let payload = {};
-    payload.ticker = Array.of(formValues.stock_symbol);
-    payload.startDate = formValues.start_date;
-    payload.endDate = formValues.end_date;
-    payload.strategyName = formValues.strategy_name;
-    payload.ticker = formValues.stock_name
-    payload.enableRanking = formValues.ranking
-    payload.stockBasket = formValues.stock_basket
-    payload.username = formValues.username // doubtful
-    payload.description = formValues.description // doubtful
-    payload.interval = formValues.interval // doubtful
+    (payload as any).ticker = Array.of(formValues.stock_symbol);
+    (payload as any).startDate = formValues.start_date;
+    (payload as any).endDate = formValues.end_date;
+    (payload as any).strategyName = formValues.strategy_name;
+    (payload as any).ticker = formValues.stock_name;
+    (payload as any).enableRanking = formValues.ranking;
+    (payload as any).stockBasket = formValues.stock_basket;
+    (payload as any).username = formValues.username; // doubtful
+ (payload as any).description = formValues.description; // doubtful
+ (payload as any).interval = formValues.interval; // doubtful
+ // doubtful
     return payload;
 }
 // export default PlotChart;

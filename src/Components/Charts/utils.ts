@@ -1,10 +1,10 @@
 
-const convertDateToUTC = (date) => {
+const convertDateToUTC = (date: any) => {
     // console.log(date);
     return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
 }
 
-export const convertStocksMappingToArray = (stocksMapping) => {
+export const convertStocksMappingToArray = (stocksMapping: any) => {
     let stocks = [];
     // console.log("stocksMapping length", stocksMapping);
 
@@ -17,7 +17,7 @@ export const convertStocksMappingToArray = (stocksMapping) => {
 }
 
 
-export const convertListToDropDown = (data) => {
+export const convertListToDropDown = (data: any) => {
     let stocks = [];
 
     for(var i=0 ; i<data.length; i++) { 
@@ -27,9 +27,9 @@ export const convertListToDropDown = (data) => {
     }
     return stocks;
 }
-const PlotChart = (data, name) => {
+const PlotChart = (data: any, name: any) => {
     // split the data set into ohlc and volume
-    const ohlc = data.map((item) => [
+    const ohlc = data.map((item: any) => [
       convertDateToUTC(new Date(item[0])),
       item[1], // open
       item[2], // high
@@ -37,40 +37,35 @@ const PlotChart = (data, name) => {
       item[4] // close
     ]);
   
-    const volume = data.map((item) => [convertDateToUTC(new Date(item[0])), item[5]]);
+    const volume = data.map((item: any) => [convertDateToUTC(new Date(item[0])), item[5]]);
   
     return {
       chart: {
         type: 'line',
         events: {
           load: function () {
-            const yAxis = this.yAxis[0];
+            const yAxis = (this as any).yAxis[0];
   
             // Attach event listeners to the yAxis group for drag events
-            yAxis.group.on('mousedown', (e) => {
-              const plotTop = this.plotTop;
-              const plotHeight = this.plotHeight;
-              const axisMin = yAxis.min;
-              const axisMax = yAxis.max;
-  
-              const yAxisClickPosition = e.chartY - plotTop;
-              const yAxisPositionRatio = yAxisClickPosition / plotHeight;
-              const yAxisValueAtClick = axisMax - (axisMax - axisMin) * yAxisPositionRatio;
-  
-              document.addEventListener('mousemove', onMouseMove);
-              document.addEventListener('mouseup', onMouseUp);
-  
-              function onMouseMove(e) {
-                const newAxisValue =
-                  yAxisValueAtClick - ((e.chartY - plotTop) / plotHeight) * (axisMax - axisMin);
-                yAxis.setExtremes(Math.min(axisMax, newAxisValue), axisMax, false);
-              }
-  
-              function onMouseUp() {
-                document.removeEventListener('mousemove', onMouseMove);
-                document.removeEventListener('mouseup', onMouseUp);
-              }
-            });
+yAxis.group.on('mousedown', (e: any) => {
+    const plotTop = (this as any).plotTop;
+    const plotHeight = (this as any).plotHeight;
+    const axisMin = yAxis.min;
+    const axisMax = yAxis.max;
+    const yAxisClickPosition = e.chartY - plotTop;
+    const yAxisPositionRatio = yAxisClickPosition / plotHeight;
+    const yAxisValueAtClick = axisMax - (axisMax - axisMin) * yAxisPositionRatio;
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+    function onMouseMove(e: any) {
+        const newAxisValue = yAxisValueAtClick - ((e.chartY - plotTop) / plotHeight) * (axisMax - axisMin);
+        yAxis.setExtremes(Math.min(axisMax, newAxisValue), axisMax, false);
+    }
+    function onMouseUp() {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+    }
+});
           }
         }
       },
@@ -105,8 +100,8 @@ const PlotChart = (data, name) => {
         headerShape: 'callout',
         borderWidth: 0,
         shadow: true,
-        positioner: function (width, height, point) {
-          const chart = this.chart;
+        positioner: function (width: any, height: any, point: any) {
+          const chart = (this as any).chart;
           let position;
   
           if (point.isHeader) {

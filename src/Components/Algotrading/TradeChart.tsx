@@ -8,6 +8,7 @@ import fullScreen from "highcharts/modules/full-screen";
 import stockTools from "highcharts/modules/stock-tools";
 import axios from "axios";
 import { PlotChart } from "./Utils";
+// @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import { dataService, getStockData } from "../../configs.json";
 
 indicatorsAll(Highcharts);
@@ -19,7 +20,7 @@ stockTools(Highcharts);
 // Apply the theme using setOptions()
 // Highcharts.setOptions(Highcharts.theme.darkUnicaTheme);
 
-function TradeChart(formValues, trades, className, isCandleStickChart) {
+function TradeChart(formValues: any, trades: any, className: any, isCandleStickChart: any) {
   const [options, setOptions] = useState(null);
   const [stockData, setStockData] = useState(null);
   const [stockName, setStockName] = useState(null);
@@ -41,9 +42,12 @@ function TradeChart(formValues, trades, className, isCandleStickChart) {
     };
 
     if (localStorage.getItem("username") != null) {
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       payload["username"] = localStorage.getItem("username");
       if (localStorage.getItem("brokerDetails") != null)
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         payload["broker_name"] = JSON.parse(
+          // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
           localStorage.getItem("brokerDetails")
         )["name"];
       // payload["interval"] = "1d";
@@ -53,6 +57,7 @@ function TradeChart(formValues, trades, className, isCandleStickChart) {
     axios
       .post(api_url, payload, config)
       .then((data) => {
+        // @ts-expect-error TS(2345): Argument of type '{ navigation: { bindingsClassNam... Remove this comment to see the full error message
         setOptions(PlotChart(data.data.data, payload.ticker, trades, isCandleStickChart));
         setStockData(data.data.data);
         setStockName(payload.ticker);
@@ -62,8 +67,10 @@ function TradeChart(formValues, trades, className, isCandleStickChart) {
   }, [formValues.stock_name, formValues.start_date, formValues.end_date, formValues.interval, trades, isCandleStickChart]);
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className={className} style={{ minHeight: "40vh", width: "100%", position: "relative" }}>
       {options && (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <HighchartsReact
           highcharts={Highcharts}
           constructorType={"stockChart"}

@@ -1,19 +1,30 @@
 import { Button, Paper, Switch, FormLabel, Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
+// @ts-expect-error TS(6142): Module './StockSelect' was resolved to 'D:/workspa... Remove this comment to see the full error message
 import StockSelect from "./StockSelect";
 import Select from "react-select";
 import { convertListToDropdown,convertDictListToDropdown } from '../Algotrading/Utils';
 
+// @ts-expect-error TS(6142): Module './SelectStockBasketType' was resolved to '... Remove this comment to see the full error message
 import SelectStockBasektType from "./SelectStockBasketType";
 // import { getTodaysDate, getExtraCharges } from "../utils";
+// @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import { host, executeStrategy, saveStrategy,getIntervalList } from "../../configs.json";
 import { convertFormValuesToPayload } from "./Utils";
 import { useEffect,useState } from "react";
 
 
 
-export default function Panel({ username, formValues, setFormValues, code, settrades, setAnalysis, description }) {
+export default function Panel({
+  username,
+  formValues,
+  setFormValues,
+  code,
+  settrades,
+  setAnalysis,
+  description
+}: any) {
 
   //   const handleReset = () => setFormValues(defaultValues);
 
@@ -44,12 +55,16 @@ export default function Panel({ username, formValues, setFormValues, code, settr
     // ------------------------ Create the payload from the form values -------------------------
     let payload = convertFormValuesToPayload(formValues);
     console.log("post request", payload)
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     payload['strategy_code'] = code;
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     payload["backtestEngine"] = "simple_engine";
     
     if(localStorage.getItem("username")!=null){
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       payload["username"] = localStorage.getItem("username")
       if(localStorage.getItem("brokerDetails") !=null)
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         payload["broker_name"] = JSON.parse(localStorage.getItem("brokerDetails"))["name"]
       // payload["interval"] = "1d";
       console.log("post request upd", payload)
@@ -120,7 +135,7 @@ export default function Panel({ username, formValues, setFormValues, code, settr
 
   // common functino to handle the change in the formValues.
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     // console.log("state = ", formValues,code);
     const { name, value } = e.target;
     setFormValues({
@@ -134,7 +149,7 @@ export default function Panel({ username, formValues, setFormValues, code, settr
 
 
 
-  const handleChangeSwitch = (e) => {
+  const handleChangeSwitch = (e: any) => {
     const { name, checked } = e.target;
     setFormValues({
       ...formValues,
@@ -144,17 +159,22 @@ export default function Panel({ username, formValues, setFormValues, code, settr
     // console.log(formValues);
   };
 
-  const selectDropdown = (name, value) => {
+  const selectDropdown = (name: any, value: any) => {
     let d = {};
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     d["target"] = {};
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     d["target"]["name"] = name;
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     d["target"]["value"] = value;
     handleChange(d);
   };
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <Paper className="bg-opacity-40 p-4 h-100" >
       {/* style="height:100%; width:100%;"> */}
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Typography variant="h7" className="text-center text-gray-500 text-bold">
         Select Data
       </Typography>
@@ -162,25 +182,34 @@ export default function Panel({ username, formValues, setFormValues, code, settr
 
 
 
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <div className="grid md:grid-cols-2 md:grid-rows-2 gap-2 mt-3">
 
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <div>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <FormLabel children={"Ranking"} />
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Switch
             color="secondary"
             // checked={formValues.ranking}
             name="ranking"
             onChange={handleChangeSwitch}
             // value={formValues.ranking}
+            // @ts-expect-error TS(2322): Type '{ color: "secondary"; name: string; onChange... Remove this comment to see the full error message
             label={"Use code for Ranking Service"}
           />
 
         </div>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <div>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Select
+          // @ts-expect-error TS(2531): Object is possibly 'null'.
           onChange={(e) => selectDropdown("interval",e.value)}
           placeholder="Interval"
           name="interval"
+          // @ts-expect-error TS(2322): Type '{ onChange: (e: null) => void; placeholder: ... Remove this comment to see the full error message
           isRequired={true}
           defaultValue={intervalList[0]}
           options={intervalList}
@@ -194,8 +223,10 @@ export default function Panel({ username, formValues, setFormValues, code, settr
       </div>
 
 
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <div className="grid md:grid-rows-2 gap-3 mt-3" 
       style={{ backgroundColor: 'rgba(144, 238, 144, 0.5)' }}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <TextField
           onChange={handleChange}
           name="start_date"
@@ -204,6 +235,7 @@ export default function Panel({ username, formValues, setFormValues, code, settr
           label={"Start Date"}
         />
 
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <TextField
           onChange={handleChange}
           name="end_date"
@@ -214,7 +246,9 @@ export default function Panel({ username, formValues, setFormValues, code, settr
 
       </div>
 
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <div className="grid">
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <TextField
           onChange={handleChange}
           name="strategy_name"
@@ -225,9 +259,11 @@ export default function Panel({ username, formValues, setFormValues, code, settr
         />
 
         {/*  not saved right now */}
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <TextField
           onChange={handleChange}
           name="description"
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'boolean |... Remove this comment to see the full error message
           multiline="true"
           type="textarea"
           value={formValues.description}
@@ -235,8 +271,11 @@ export default function Panel({ username, formValues, setFormValues, code, settr
         />
 
       </div>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <div className="grid grid-col-2 grid-flow-col m-3 align-bottom">
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Button onClick={handleSubmit}>Submit</Button>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Button onClick={saveCode}>Save</Button>
       </div>
     </Paper>

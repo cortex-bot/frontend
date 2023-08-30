@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+// @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import { host, brokerLogin, getUserHoldings,brokerLogout } from "../../configs.json";
 import './BrokerData.css';
 
-export default function BrokerData({ clientname }) {
+export default function BrokerData({
+  clientname
+}: any) {
   const [brokerDetails, setBrokerDetails] = useState(null);
   const [holdings, setHoldings] = useState([]);
   const [otp, setOtp] = useState('');
@@ -76,6 +79,7 @@ export default function BrokerData({ clientname }) {
             const data = await response.json();
 
         if(data.status == "SUCCESS"){
+            // @ts-expect-error TS(2345): Argument of type '{ name: any; clientId: any; brok... Remove this comment to see the full error message
             setBrokerDetails({name : data.data.broker_name,clientId: data.data.client_id,
                 brokerSessionId:data.data.session_id});
             setIsLoggedIn(true);
@@ -131,66 +135,79 @@ export default function BrokerData({ clientname }) {
 
 
   useEffect(() => {
+    // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
     setBrokerDetails(JSON.parse(localStorage.getItem("brokerDetails")));
+    // @ts-expect-error TS(2345): Argument of type 'boolean' is not assignable to pa... Remove this comment to see the full error message
     if(JSON.parse(localStorage.getItem("brokerDetails") != null))
         {setIsLoggedIn(true);}
   }, []);
 
 
-  return (
-    <div className="broker-container">
-      {brokerDetails ? (
-        <>
+  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+  return (<div className="broker-container">
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+      {brokerDetails ? (<>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <div className="profile-header">
-        <h2 className="profile-username">{brokerDetails.name}</h2>
-        <p>Broker ID: {brokerDetails.clientId}</p>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+        <h2 className="profile-username">{(brokerDetails as any).name}</h2>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+        <p>Broker ID: {(brokerDetails as any).clientId}</p>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <button className="logout-button" onClick={handleLogout}>Logout</button>
       </div>
 
           {/* <div className="broker-details">
-            <h3><center><b>{brokerDetails.name}</b></center></h3>
-            <p>Broker ID: {brokerDetails.clientId}</p>
-          </div> */}
+          <h3><center><b>{brokerDetails.name}</b></center></h3>
+          <p>Broker ID: {brokerDetails.clientId}</p>
+        </div> */}
           {/* <button className="logout-button" onClick={handleLogout}>Logout</button> */}
-        </>
-      ) : (
-        <div className="broker-login">
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+        </>) : (<div className="broker-login">
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <h3>Broker Login</h3>
-          <input type="text" placeholder="Enter OTP" value={otp} onChange={(e) => setOtp(e.target.value)} />
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+          <input type="text" placeholder="Enter OTP" value={otp} onChange={(e) => setOtp(e.target.value)}/>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <button onClick={handleBrokerLogin}>Login</button>
-        </div>
-      )}
+        </div>)}
 
-    {
-      holdings.length > 0 ? 
-      (
-        <div className="holdings-table">
+    {holdings.length > 0 ?
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+        (<div className="holdings-table">
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <h3>Holdings</h3>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <table>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <thead>
+              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <tr>
+                {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <th>tradingsymbol</th>
+                {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <th>Quantity</th>
+                {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <th>Price</th>
               </tr>
             </thead>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <tbody>
-              {holdings.map((holding, index) => (
-                <tr key={index}>
-                  <td>{holding.tradingsymbol}</td>
-                  <td>{holding.quantity}</td>
-                  <td>{holding.averageprice}</td>
-                </tr>
-              ))}
+              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+              {holdings.map((holding, index) => (<tr key={index}>
+                  {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+                  <td>{(holding as any).tradingsymbol}</td>
+                  {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+                  <td>{(holding as any).quantity}</td>
+                  {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+                  <td>{(holding as any).averageprice}</td>
+                </tr>))}
             </tbody>
           </table>
-        </div>
-      ):<div/>
-      
-      } 
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+        </div>) : <div />} 
 
 
 
-    </div>
-  );
+    </div>);
 }

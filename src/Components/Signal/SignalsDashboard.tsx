@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+// @ts-expect-error TS(6142): Module './TradeDetails' was resolved to 'D:/worksp... Remove this comment to see the full error message
 import TradeDetails from './TradeDetails';
 import './SignalsDashboard.css';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import ReactModal from 'react-modal';
 import { getColumns, extractTradeSingals } from "../../utils/utils.js";
 
@@ -9,11 +11,12 @@ import { getColumns, extractTradeSingals } from "../../utils/utils.js";
 import { Button } from "@material-ui/core";
 import MuiTable from '../../utils/MuiTable';
 
+// @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import { host, getAllSignalList, deleteSignalData } from '../../configs.json';
 
 ReactModal.setAppElement('#root');
 
-const handleDeleteSignal = async (signalId, username) => {
+const handleDeleteSignal = async (signalId: any, username: any) => {
   try {
     const response = await axios.post(host + deleteSignalData, {
       signal_id: signalId,
@@ -56,13 +59,15 @@ const SignalsDashboard = () => {
   };
   // import { Button } from "@material-ui/core";
 
-  const renderButton = (params, isSummary) => {
+  const renderButton = (params: any, isSummary: any) => {
     const color = isSummary ? "#c5aa20" : "primary";
     const label = isSummary ? "Summary" : "Report";
   
     return (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <Button
         variant="contained"
+        // @ts-expect-error TS(2769): No overload matches this call.
         color={color}
         onClick={(e) => {
           e.stopPropagation();
@@ -74,7 +79,7 @@ const SignalsDashboard = () => {
     );
   };
   
-  const handleSignalClick = (signal, isSummaryFlag) => {
+  const handleSignalClick = (signal: any, isSummaryFlag: any) => {
     setSelectedSignal(signal);
     setIsSummary(isSummaryFlag);
   };
@@ -84,10 +89,12 @@ const SignalsDashboard = () => {
     setIsSummary(null);
   };
   
+  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
   const notFound = <div className="loading">Loading data</div>;
   
-  const renderDeleteButton = (params) => {
+  const renderDeleteButton = (params: any) => {
     return (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <Button
         variant="contained"
         color="secondary"
@@ -101,11 +108,11 @@ const SignalsDashboard = () => {
     );
   };
   
-  const renderSummaryButton = (params) => {
+  const renderSummaryButton = (params: any) => {
     return renderButton(params, true);
   };
   
-  const renderReportButton = (params) => {
+  const renderReportButton = (params: any) => {
     return renderButton(params, false);
   };
   
@@ -128,10 +135,12 @@ const SignalsDashboard = () => {
 
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className='signals-dashboard'>
     {tradeSignals && columns ? MuiTable('Trade Signals', tradeSignals, columns) : notFound}
 
       {selectedSignal && (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <TradeDetails signal={selectedSignal} isOpen={true} onRequestClose={handleModalClose} isSummary ={isSummary} />
       )}
     </div>

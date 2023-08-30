@@ -10,7 +10,9 @@ import FullScreen from "highcharts/modules/full-screen.js";
 import StockTools from "highcharts/modules/stock-tools.js";
 
 import "./Charts.css";
+// @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import { host, getStockData, stockDataUpdate } from "../../configs.json";
+// @ts-expect-error TS(2307): Cannot find module './StockSelect' or its correspo... Remove this comment to see the full error message
 import StockSelect from "./StockSelect";
 
 import PlotChart from "./utils";
@@ -40,24 +42,29 @@ function Charts() {
     // const api_url = "https://demo-live-data.highcharts.com/aapl-ohlc.json";
     axios
       .post(api_url, payload)
+      // @ts-expect-error TS(2345): Argument of type '(data: AxiosResponse<any, any>) ... Remove this comment to see the full error message
       .then((data) => {
+        // @ts-expect-error TS(2345): Argument of type '{ chart: { type: string; events:... Remove this comment to see the full error message
         setoptions(PlotChart(data.data.data, stock_name));
       }, [])
 
       .catch((error) => alert(error));
   }, [stock_name]);
 
-  function updateData(e) {
+  function updateData(e: any) {
     const payload_update_data = { update: true };
     const api_url = host + stockDataUpdate;
+    // @ts-expect-error TS(2345): Argument of type '(data: AxiosResponse<any, any>) ... Remove this comment to see the full error message
     axios.post(api_url, payload_update_data).then((data) => {
       alert(data.data.data);
     }, []);
   }
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className="">
       {StockSelect(setstock_name)}
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <HighchartsReact
         highcharts={Highcharts}
         constructorType={"stockChart"}

@@ -4,6 +4,7 @@ import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getColumns } from "../../utils/utils";
+// @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import { host, getStrategyCodeFromRanking, getRankingDataList, deleteRankingRecord } from "../../configs.json";
 // import ShowCode from "./ShowCode";
 
@@ -11,10 +12,11 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
+// @ts-expect-error TS(6142): Module '../Algotrading/Editor' was resolved to 'D:... Remove this comment to see the full error message
 import Editor from '../Algotrading/Editor'
 import MuiTable from '../../utils/MuiTable'
 
-const ShowCodeModal = (e) => {
+const ShowCodeModal = (e: any) => {
   // console.log("logs",e)
   return (
     alert("code is " + e)
@@ -58,8 +60,9 @@ function Ranking() {
   };
 
   // Modal view
-  const renderShowCode = (params) => {
+  const renderShowCode = (params: any) => {
 
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     return (<Button variant="contained"
       color="primary"
       onClick={(event) => {
@@ -69,8 +72,9 @@ function Ranking() {
       Code        </Button>);
   }
 
-  const renderDeleteRanking = (params) => {
+  const renderDeleteRanking = (params: any) => {
 
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     return (<Button variant="contained"
       className="bg-danger"
       onClick={(event) => {
@@ -80,6 +84,7 @@ function Ranking() {
       }
         // https://stackoverflow.com/questions/51069552/axios-delete-request-with-request-body-and-headers
         axios
+          // @ts-expect-error TS(2554): Expected 1-2 arguments, but got 3.
           .delete(host + deleteRankingRecord, {data:payload},config)
           .then((response) => {
             console.log("delete requested");
@@ -93,8 +98,9 @@ function Ranking() {
       Delete Strategy</Button>);
   }
 
-  const renderAnalysis = (params) => {
+  const renderAnalysis = (params: any) => {
     return (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <Button variant="contained"
         color="secondary"
         onClick={(event) => {
@@ -179,11 +185,14 @@ function Ranking() {
 
 
 
+  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
   const notFound = <div className="loading">Loading data</div>;
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div>
 
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -196,10 +205,14 @@ function Ranking() {
           timeout: 500,
         }}
       >
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Fade in={open}>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <div className="w-4/5 h-3/4 bg-gray-600 text-white">
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <h1>Code</h1>
 
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Editor code={code} setCode={setCode} />
           </div>
         </Fade>

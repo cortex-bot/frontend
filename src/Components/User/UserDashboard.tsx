@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './UserDashboard.css';
+// @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import { host, userLogin, brokerLogin } from "../../configs.json";
+// @ts-expect-error TS(6142): Module './UserProfile' was resolved to 'D:/workspa... Remove this comment to see the full error message
 import UserProfile from "./UserProfile";
 
-function Toast({ message, type }) {
+function Toast({
+  message,
+  type
+}: any) {
   const [visible, setVisible] = useState(true);
 
   const handleClose = () => {
@@ -11,8 +16,11 @@ function Toast({ message, type }) {
   };
 
   return visible ? (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className={`toast ${type}`}>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <p className="message">{message}</p>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <button className="close-button" onClick={handleClose}>
         X
       </button>
@@ -39,7 +47,9 @@ function UserDashboard() {
     if (sessionID_browser && username_browser && sessionExpiry ){
         // && currentTime < sessionExpiry) {÷
       // User already logged in, fetch user details
+      // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
       setUsername(username_browser);
+      // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
       setSesssionID(sessionID_browser)
     }
   };
@@ -50,7 +60,7 @@ function UserDashboard() {
     checkSession();
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
@@ -68,6 +78,7 @@ function UserDashboard() {
         if (data.status === 'SUCCESS') {
           localStorage.setItem('sessionID', data.data.session_id);
           localStorage.setItem('username', data.data.username);
+          // @ts-expect-error TS(2345): Argument of type 'number' is not assignable to par... Remove this comment to see the full error message
           localStorage.setItem('sessionExpiry', new Date(data.data.session_expiry_at).getTime());
           setToastMessage('Login Successful!');
           setToastType('success');
@@ -87,19 +98,27 @@ function UserDashboard() {
   };
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className="container">
       {(username && sessionID) ? (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <UserProfile username={username} session_id = {sessionID} />
       ): (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <form className="login-form" onSubmit={handleSubmit}>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <h2>User Login</h2>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <input
             className="input"
             type="text"
             placeholder="Username"
+            // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
             value={username}
+            // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
             onChange={(e) => setUsername(e.target.value)}
           />
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <input
             className="input"
             type="password"
@@ -107,11 +126,13 @@ function UserDashboard() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <button className="button" type="submit">
             Login
           </button>
         </form>
       ) }
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       {toastMessage && <Toast message={toastMessage} type={toastType} />}
     </div>
   );

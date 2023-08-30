@@ -1,4 +1,5 @@
 import MuiTable from "../../utils/MuiTable";
+// @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import { host, strategyMetadataList, deleteStrategy,getStrategyCode } from "../../configs.json";
 import { useEffect, useState } from "react";
 import axios from 'axios';
@@ -10,9 +11,10 @@ import { Button } from "@material-ui/core";
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+// @ts-expect-error TS(6142): Module '../Algotrading/Editor' was resolved to 'D:... Remove this comment to see the full error message
 import Editor from '../Algotrading/Editor'
 
-const ShowCodeModal = (e) => {
+const ShowCodeModal = (e: any) => {
     // console.log("logs",e)
     return (
         alert("code is " + e)
@@ -59,8 +61,9 @@ export default function StrategyDashboard() {
     };
 
     // Modal view
-    const renderShowCode = (params) => {
+    const renderShowCode = (params: any) => {
 
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         return (<Button variant="contained"
             color="primary"
             onClick={(event) => {
@@ -71,8 +74,9 @@ export default function StrategyDashboard() {
             Code        </Button>);
     }
 
-    const renderDeleteRanking = (params) => {
+    const renderDeleteRanking = (params: any) => {
 
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         return (<Button variant="contained"
             className="bg-danger"
             onClick={(event) => {
@@ -82,6 +86,7 @@ export default function StrategyDashboard() {
                 }
                 // https://stackoverflow.com/questions/51069552/axios-delete-request-with-request-body-and-headers
                 axios
+                    // @ts-expect-error TS(2554): Expected 1-2 arguments, but got 3.
                     .delete(host + deleteStrategy, { data: payload }, config)
                     .then((response) => {
                         console.log("delete requested");
@@ -95,8 +100,9 @@ export default function StrategyDashboard() {
             Delete Strategy</Button>);
     }
 
-    const renderAnalysis = (params) => {
+    const renderAnalysis = (params: any) => {
         return (
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <Button variant="contained"
                 color="secondary"
                 onClick={(event) => {
@@ -181,7 +187,9 @@ export default function StrategyDashboard() {
   }, [code_id]);
 
     return (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <div className="grid container m-2 p-2">
+ {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
  <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -194,10 +202,14 @@ export default function StrategyDashboard() {
           timeout: 500,
         }}
       >
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Fade in={open}>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <div className="w-4/5 h-3/4 bg-gray-600 text-white">
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <h1>Code</h1>
 
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Editor code={code} setCode={setCode} />
           </div>
         </Fade>

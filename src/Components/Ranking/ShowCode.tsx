@@ -32,6 +32,7 @@ function ShowCode() {
     //     setOpen(false);
     // };
     return (  
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -44,7 +45,9 @@ function ShowCode() {
                     timeout: 500,
                 }}
             >
+                {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <Fade in={true}>
+                    {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                     <div >
                         Data
                     </div>
