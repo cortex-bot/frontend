@@ -1,0 +1,45 @@
+name: Build and Deploy to GCS
+
+on:
+  push:
+    branches:
+      - main  # Change this to your main branch name
+
+env:
+  GCS_BUCKET: cortex-bucket-24
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16 # Change to your preferred Node.js version
+
+      - name: Install Dependencies
+        run: npm install # Or yarn install, depending on your setup
+
+      - name: Set CI Environment Variable
+        run: echo "CI=false" >> $GITHUB_ENV
+
+      - name: Build React App
+        run: npm run build # Replace with your build command
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+
+      - name: Upload to GCS
+        run: |
+          gsutil -m rsync -r -d build gs://$GCS_BUCKET/
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
