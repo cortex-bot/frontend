@@ -6,18 +6,13 @@ import ReactModal from 'react-modal';
 import {
   host,
   getSignalData,
-  getSignalSummaryReport
-// @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
-} from "../../configs.json";
+  getSignalSummaryReport,
+  // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
+} from '../../configs.json';
 import MuiTable from '../../utils/MuiTable';
-import { getColumns, extractTradeSingals } from "../../utils/utils";
+import { getColumns, extractTradeSingals } from '../../utils/utils';
 
-const TradeDetails = ({
-  signal,
-  isOpen,
-  onRequestClose,
-  isSummary
-}: any) => {
+const TradeDetails = ({ signal, isOpen, onRequestClose, isSummary }: any) => {
   const [tradeData, setTradeData] = useState([]);
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
@@ -29,25 +24,29 @@ const TradeDetails = ({
   const fetchTradeData = async (isSummary: any) => {
     try {
       let response;
-      var cols ;
-      if(isSummary){
-        response =  await axios.get(host + getSignalSummaryReport, { params: { request: signal.signal_id } });
-        console.log("fetchTradeData summary active ",response);
+      var cols;
+      if (isSummary) {
+        response = await axios.get(host + getSignalSummaryReport, {
+          params: { request: signal.signal_id },
+        });
+        console.log('fetchTradeData summary active ', response);
 
-      setData(response.data);
-      cols = getColumns(response.data);
-      }else{
-        response = await axios.get(host + getSignalData, { params: { request: signal.signal_id } });
+        setData(response.data);
+        cols = getColumns(response.data);
+      } else {
+        response = await axios.get(host + getSignalData, {
+          params: { request: signal.signal_id },
+        });
 
-      setData(extractTradeSingals(response.data.report));
-       cols = getColumns(extractTradeSingals(response.data.report));
+        setData(extractTradeSingals(response.data.report));
+        cols = getColumns(extractTradeSingals(response.data.report));
       }
-      
+
       setTradeData(response.data);
       // console.log("response trade data", extractTradeSingals(response.data.report));
 
       setColumns(cols);
-      console.log("column ", cols);
+      console.log('column ', cols);
     } catch (error) {
       console.error('Error fetching trade details:', error);
     }
@@ -66,16 +65,19 @@ const TradeDetails = ({
       overlayClassName="modal-overlay"
     >
       {/* Set z-index for the modal header */}
-            <div className="modal-header" >
-                <h2>Trade Details</h2>
-                <button onClick={onRequestClose} className="cut-button">
+      <div className="modal-header">
+        <h2>Trade Details</h2>
+        <button onClick={onRequestClose} className="cut-button">
           &#10005;
         </button>
       </div>
-      {data && columns ? MuiTable(`Signal id ${signal.signal_id}`, data, columns,{zIndex:10}) : notFound}
+      {data && columns
+        ? MuiTable(`Signal id ${signal.signal_id}`, data, columns, {
+            zIndex: 10,
+          })
+        : notFound}
     </ReactModal>
   );
-  
 };
 
 export default TradeDetails;

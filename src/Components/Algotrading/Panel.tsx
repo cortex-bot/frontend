@@ -1,20 +1,32 @@
-import { Button, Paper, Switch, FormLabel, Typography } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
-import axios from "axios";
+import {
+  Button,
+  Paper,
+  Switch,
+  FormLabel,
+  Typography,
+} from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import axios from 'axios';
 // @ts-expect-error TS(6142): Module './StockSelect' was resolved to 'D:/workspa... Remove this comment to see the full error message
-import StockSelect from "./StockSelect";
-import Select from "react-select";
-import { convertListToDropdown,convertDictListToDropdown } from '../Algotrading/Utils';
+import StockSelect from './StockSelect';
+import Select from 'react-select';
+import {
+  convertListToDropdown,
+  convertDictListToDropdown,
+} from '../Algotrading/Utils';
 
 // @ts-expect-error TS(6142): Module './SelectStockBasketType' was resolved to '... Remove this comment to see the full error message
-import SelectStockBasektType from "./SelectStockBasketType";
+import SelectStockBasektType from './SelectStockBasketType';
 // import { getTodaysDate, getExtraCharges } from "../utils";
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
-import { host, executeStrategy, saveStrategy,getIntervalList } from "../../configs.json";
-import { convertFormValuesToPayload } from "./Utils";
-import { useEffect,useState } from "react";
-
-
+import {
+  host,
+  executeStrategy,
+  saveStrategy,
+  getIntervalList,
+} from '../../configs.json';
+import { convertFormValuesToPayload } from './Utils';
+import { useEffect, useState } from 'react';
 
 export default function Panel({
   username,
@@ -23,115 +35,97 @@ export default function Panel({
   code,
   settrades,
   setAnalysis,
-  description
+  description,
 }: any) {
-
   //   const handleReset = () => setFormValues(defaultValues);
 
   const [intervalList, setIntervalList] = useState([]);
 
   useEffect(() => {
-
-
-    axios
-      .get(host + getIntervalList)
-      .then((response) => {
-        console.log("response for interval list: " + response);
-        setIntervalList(convertListToDropdown(response.data.data));
-      }
-      );
-
-
-  },[]);
+    axios.get(host + getIntervalList).then((response) => {
+      console.log('response for interval list: ' + response);
+      setIntervalList(convertListToDropdown(response.data.data));
+    });
+  }, []);
 
   const handleSubmit = () => {
-
     // console.log("Code Pushed");
-    if (formValues.strategy_name === "") alert("Please enter Strategy name")
-    if (formValues.start_date === "") alert("Please enter start_date ")
-    if (formValues.end_date === "") alert("Please enter end_date")
-    if (formValues.interval === "") alert("Please select Interval")
+    if (formValues.strategy_name === '') alert('Please enter Strategy name');
+    if (formValues.start_date === '') alert('Please enter start_date ');
+    if (formValues.end_date === '') alert('Please enter end_date');
+    if (formValues.interval === '') alert('Please select Interval');
 
     // ------------------------ Create the payload from the form values -------------------------
     let payload = convertFormValuesToPayload(formValues);
-    console.log("post request", payload)
+    console.log('post request', payload);
     // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     payload['strategy_code'] = code;
     // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-    payload["backtestEngine"] = "simple_engine";
-    
-    if(localStorage.getItem("username")!=null){
+    payload['backtestEngine'] = 'simple_engine';
+
+    if (localStorage.getItem('username') != null) {
       // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-      payload["username"] = localStorage.getItem("username")
-      if(localStorage.getItem("brokerDetails") !=null)
+      payload['username'] = localStorage.getItem('username');
+      if (localStorage.getItem('brokerDetails') != null)
         // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-        payload["broker_name"] = JSON.parse(localStorage.getItem("brokerDetails"))["name"]
+        payload['broker_name'] = JSON.parse(
+          localStorage.getItem('brokerDetails'),
+        )['name'];
       // payload["interval"] = "1d";
-      console.log("post request upd", payload)
+      console.log('post request upd', payload);
     }
-    
-
-
 
     axios
       .post(host + executeStrategy, payload)
       .then((response) => {
-        console.log("trade data", response.data);
+        console.log('trade data', response.data);
 
-        if (response.data.status == "SUCCESS") {
+        if (response.data.status == 'SUCCESS') {
+          if (response.data.data == 'RANKING') {
+            // console.log("trades received from server",response.data.trades)
+            // alert("Strategy Sent To Queue..");
+            alert('Strategy Executed and Updated in Ranking');
+          } else {
+            // console.log("trades received from server",response.data.trades)
 
-        if (response.data.data == "RANKING") {
-          // console.log("trades received from server",response.data.trades)
-          // alert("Strategy Sent To Queue..");
-          alert("Strategy Executed and Updated in Ranking");
-        }else{
-          // console.log("trades received from server",response.data.trades)
-
-          // console.log("backtest received from server",response.data.backtestResult)
-          settrades(response.data.data.trades);
-          delete response.data.data.trades;
-          setAnalysis(response.data.data);
+            // console.log("backtest received from server",response.data.backtestResult)
+            settrades(response.data.data.trades);
+            delete response.data.data.trades;
+            setAnalysis(response.data.data);
+          }
+        } else {
+          alert('Error: ' + response.data.error_description);
         }
-      }
-
-
-        else {
-          alert("Error: " + response.data.error_description)
-        }
-
       })
-      .catch((error) => alert("Algo trade data " + error));
+      .catch((error) => alert('Algo trade data ' + error));
   };
-
 
   // save the code using the api providede by analysis service.
   const saveCode = () => {
-
     // create payload.
     var payload = {
-      code: code, strategy_name: formValues.strategy_name,
-      username: formValues.username == null ? localStorage.getItem("username") : "Anonymous",
-      description: formValues.description
-    }
+      code: code,
+      strategy_name: formValues.strategy_name,
+      username:
+        formValues.username == null
+          ? localStorage.getItem('username')
+          : 'Anonymous',
+      description: formValues.description,
+    };
 
-
-    console.log("view payload", payload)
+    console.log('view payload', payload);
 
     axios
       .post(host + saveStrategy, payload)
       .then((response) => {
-        console.log("strategy save response", response);
+        console.log('strategy save response', response);
         if (response.data.status == 'success'.toUpperCase())
-          alert("Strategy Saved, id = " + response.data.data.strategy_id);
-        else alert("failed to save the strategy")
+          alert('Strategy Saved, id = ' + response.data.data.strategy_id);
+        else alert('failed to save the strategy');
       })
 
-
       .catch((error) => alert(error));
-
   };
-
-
 
   // common functino to handle the change in the formValues.
 
@@ -147,8 +141,6 @@ export default function Panel({
     // console.log(formValues);
   };
 
-
-
   const handleChangeSwitch = (e: any) => {
     const { name, checked } = e.target;
     setFormValues({
@@ -162,107 +154,98 @@ export default function Panel({
   const selectDropdown = (name: any, value: any) => {
     let d = {};
     // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-    d["target"] = {};
+    d['target'] = {};
     // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-    d["target"]["name"] = name;
+    d['target']['name'] = name;
     // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-    d["target"]["value"] = value;
+    d['target']['value'] = value;
     handleChange(d);
   };
 
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <Paper className="bg-opacity-40 p-4 h-100" >
+    <Paper className="bg-opacity-40 p-4 h-100">
       {/* style="height:100%; width:100%;"> */}
-            <Typography variant="h7" className="text-center text-gray-500 text-bold">
+      <Typography variant="h7" className="text-center text-gray-500 text-bold">
         Select Data
       </Typography>
       {StockSelect(selectDropdown)}
 
-
-
-            <div className="grid md:grid-cols-2 md:grid-rows-2 gap-2 mt-3">
-
-                <div>
-                    <FormLabel children={"Ranking"} />
-                    <Switch
+      <div className="grid md:grid-cols-2 md:grid-rows-2 gap-2 mt-3">
+        <div>
+          <FormLabel children={'Ranking'} />
+          <Switch
             color="secondary"
             // checked={formValues.ranking}
             name="ranking"
             onChange={handleChangeSwitch}
             // value={formValues.ranking}
             // @ts-expect-error TS(2322): Type '{ color: "secondary"; name: string; onChange... Remove this comment to see the full error message
-            label={"Use code for Ranking Service"}
+            label={'Use code for Ranking Service'}
           />
-
         </div>
-                <div>
-                <Select
-          // @ts-expect-error TS(2531): Object is possibly 'null'.
-          onChange={(e) => selectDropdown("interval",e.value)}
-          placeholder="Interval"
-          name="interval"
-          // @ts-expect-error TS(2322): Type '{ onChange: (e: null) => void; placeholder: ... Remove this comment to see the full error message
-          isRequired={true}
-          defaultValue={intervalList[0]}
-          options={intervalList}
-        />
-       
+        <div>
+          <Select
+            // @ts-expect-error TS(2531): Object is possibly 'null'.
+            onChange={(e) => selectDropdown('interval', e.value)}
+            placeholder="Interval"
+            name="interval"
+            // @ts-expect-error TS(2322): Type '{ onChange: (e: null) => void; placeholder: ... Remove this comment to see the full error message
+            isRequired={true}
+            defaultValue={intervalList[0]}
+            options={intervalList}
+          />
         </div>
-
 
         {SelectStockBasektType(selectDropdown)}
-
       </div>
 
-
-            <div className="grid md:grid-rows-2 gap-3 mt-3" 
-      style={{ backgroundColor: 'rgba(144, 238, 144, 0.5)' }}>
-                <TextField
+      <div
+        className="grid md:grid-rows-2 gap-3 mt-3"
+        style={{ backgroundColor: 'rgba(144, 238, 144, 0.5)' }}
+      >
+        <TextField
           onChange={handleChange}
           name="start_date"
           type="datetime-local"
           value={formValues.start_date}
-          label={"Start Date"}
+          label={'Start Date'}
         />
 
-                <TextField
+        <TextField
           onChange={handleChange}
           name="end_date"
           type="datetime-local"
           value={formValues.end_date}
-          label={"End Date"}
-        /> 
-
+          label={'End Date'}
+        />
       </div>
 
-            <div className="grid">
-                <TextField
+      <div className="grid">
+        <TextField
           onChange={handleChange}
           name="strategy_name"
           type="input"
           value={formValues.strategy_name}
-          label={"Strategy name"}
+          label={'Strategy name'}
           required
         />
 
         {/*  not saved right now */}
-                <TextField
+        <TextField
           onChange={handleChange}
           name="description"
           // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'boolean |... Remove this comment to see the full error message
           multiline="true"
           type="textarea"
           value={formValues.description}
-          label={" description "}
+          label={' description '}
         />
-
       </div>
-            <div className="grid grid-col-2 grid-flow-col m-3 align-bottom">
-                <Button onClick={handleSubmit}>Submit</Button>
-                <Button onClick={saveCode}>Save</Button>
+      <div className="grid grid-col-2 grid-flow-col m-3 align-bottom">
+        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={saveCode}>Save</Button>
       </div>
     </Paper>
   );
 }
-

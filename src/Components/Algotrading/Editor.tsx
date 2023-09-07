@@ -6,10 +6,7 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/ext-beautify';
 import './Editor.css'; // Import the CSS file for custom styling
 
-function Editor({
-  code,
-  setCode
-}: any) {
+function Editor({ code, setCode }: any) {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   useEffect(() => {
@@ -33,12 +30,12 @@ function Editor({
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className={isFullScreen ? 'editor-fullscreen' : 'editor-container'}>
-            <AceEditor
+      <AceEditor
         style={{ height: '100%', width: '100%' }}
-        placeholder='Start Coding'
-        mode='python'
-        theme='monokai'
-        name='basic-code-editor'
+        placeholder="Start Coding"
+        mode="python"
+        theme="monokai"
+        name="basic-code-editor"
         onChange={(currentCode) => setCode(currentCode)}
         fontSize={14}
         // showPrintMargin={true}
@@ -52,7 +49,7 @@ function Editor({
           tabSize: 4,
         }}
       />
-            <button
+      <button
         className={`fullscreen-button ${isFullScreen ? 'exit' : ''}`}
         onClick={toggleFullScreen}
       >
