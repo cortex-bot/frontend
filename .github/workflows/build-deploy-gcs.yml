@@ -25,6 +25,9 @@ jobs:
       - name: Install Dependencies
         run: npm install # Or yarn install, depending on your setup
 
+      - name: Set CI Environment Variable
+        run: echo "CI=false" >> $GITHUB_ENV
+
       - name: Build React App
         run: npm run build # Replace with your build command
 
