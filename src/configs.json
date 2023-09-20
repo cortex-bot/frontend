@@ -1,6 +1,6 @@
 {
-  "host": "https://cortexbot.onrender.com",
-  "dataService": "https://data-cortexbot.onrender.com",
+  "host": "http://127.0.0.1:8080",
+  "dataService": "http://127.0.0.1:5001",
 
 
   "cortexUrl": "https://cortexbot.onrender.com",

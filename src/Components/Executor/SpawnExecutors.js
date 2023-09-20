@@ -19,7 +19,7 @@ const defaultValues = {
   // end_date: "2021-11-20",
   strategy_name: "Random",
   remarks: "",
-  username: "pankaj369",
+  username: "pankaj",
   trade_type: "HISTORICAL_TRADING",
   broker_name: "PAPER_TRADING"
 };
