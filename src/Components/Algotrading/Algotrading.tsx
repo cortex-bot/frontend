@@ -26,18 +26,17 @@ import './Algotrading.css';
 // Utility function to get stock market open time
 const getStockMarketOpenTime = () => {
   const currentDate = new Date();
-  currentDate.setDate(currentDate.getDate() - 1);
-  currentDate.setHours(9);
-  currentDate.setMinutes(15);
-  return currentDate.toLocaleString();
+  const yesterday = new Date(currentDate)
+  yesterday.setDate(currentDate.getDate() - 1);
+  yesterday.setHours(9, 15);
+  return yesterday.toLocaleString('sv');
 };
 
 // Utility function to get stock market end time
 const getStockMarketEndTime = () => {
   const currentDate = new Date();
-  currentDate.setHours(15);
-  currentDate.setMinutes(30);
-  return currentDate.toLocaleString();
+  currentDate.setHours(15, 30);
+  return currentDate.toLocaleString('sv');
 };
 
 // Default values for the form
