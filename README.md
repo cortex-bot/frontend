@@ -24,3 +24,9 @@ npm install tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer
 - npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 - npm install @craco/craco
 - npx tailwindcss-cli@latest init
+
+
+# NPM issues
+- curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+- nvm install 16
+- node -v
