@@ -47,24 +47,21 @@ const defaultValues = {
 const createExecutorRequest = (request: any) => {
   console.log('new executor request', request);
 
-  // @ts-expect-error TS(7022): 'executorRequest' implicitly has type 'any' becaus... Remove this comment to see the full error message
-  let executorRequest = ({}(
-    // @ts-expect-error TS(2448): Block-scoped variable 'executorRequest' used befor... Remove this comment to see the full error message
-    executorRequest as any,
-  ).broker_name = request.broker_name); // ANGER_ONE, PAPER_TRADING
-  (executorRequest as any).executor_type = 'ALGORITHM'; // need dropdown at  ui later.
-  (executorRequest as any).trade_type = request.trade_type;
-  (executorRequest as any).username = request.username;
-  (executorRequest as any).remarks = request.remarks;
+  const executorRequest = {
+    broker_name: request.broker_name, // ANGER_ONE, PAPER_TRADING
+    executor_type: "ALGORITHM", // need dropdown at  ui later.
+    trade_type: request.trade_type,
+    username: request.username,
+    remarks: request.remarks,
+    strategy_params: {
+      stock_list: request.stock_list,
+      strategy_name: request.strategy_name,
+      start_date: request.start_date,
+      end_date: request.end_date
+    }
+  }
 
-  (executorRequest as any).strategy_params = {
-    stock_list: request.stock_list,
-    strategy_name: request.strategy_name,
-    start_date: request.start_date,
-    end_date: request.end_date,
-  };
-
-  return executorRequest;
+  return executorRequest
 };
 
 export default function SpawnExecutors() {
