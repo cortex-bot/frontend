@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   Button,
   Paper,
@@ -28,6 +28,7 @@ import StockSelect from '../Algotrading/StockSelect';
 import TextField from '@material-ui/core/TextField';
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import { spawnNewExecutor } from '../../configs.json';
+import { useGetBrokerList, useGetStrategyList, useGetTradeTypeList, useInitiateExecutorApi } from '../../api/executor/requests';
 
 const defaultValues = {
   stock_list: ['INFY'],
@@ -65,38 +66,30 @@ const createExecutorRequest = (request: any) => {
 };
 
 export default function SpawnExecutors() {
-  // drop down selections
-  const [strategyList, setStrategyList] = useState([]);
-  const [brokersList, setBrokersList] = useState([]);
-  const [tradeTypeList, setTradeTypeList] = useState([]);
-
   const [strategyName, setStrategyName] = useState(null);
   const [formValues, setFormValues] = useState(defaultValues);
 
+  const { getStrategyList, data: strategyListData } = useGetStrategyList();
+  const { getBrokersList, data: brokerListData } = useGetBrokerList();
+  const { getTradeTypeList, data: tradeTypeListData } = useGetTradeTypeList();
+  const { inititateExecutor, status: inititateExecutorStatus } = useInitiateExecutorApi();
+
+  // drop down selections
+  const strategyList = useMemo(() => convertListToDropdown(strategyListData ?? []), [strategyListData]);
+  const brokersList = useMemo(() => convertListToDropdown(brokerListData ?? []), [brokerListData]);
+  const tradeTypeList = useMemo(() => convertListToDropdown(tradeTypeListData ?? []), [tradeTypeListData]);
+
   useEffect(() => {
-    axios.get(host + getStrategyList).then((response) => {
-      setStrategyList(convertListToDropdown(response.data.data));
-    });
-
-    axios.get(host + getBrokersList).then((response) => {
-      setBrokersList(convertListToDropdown(response.data.data));
-    });
-
-    axios.get(host + getTradeTypeList).then((response) => {
-      setTradeTypeList(convertListToDropdown(response.data.data));
-    });
+    getStrategyList();
+    getBrokersList();
+    getTradeTypeList();
   }, []);
 
-  const submitNewExecutorRequest = () => {
+  const submitNewExecutorRequest = (event) => {
     console.log('new executor request', formValues);
 
-    axios
-      .post(host + spawnNewExecutor, createExecutorRequest(formValues))
-      .then((response) => {
-        console.log('trade data', response.data);
-        alert('Executor Id ' + response.data.executor_id);
-      })
-      .catch((error) => alert(error));
+    // TODO: catch and show errors
+    inititateExecutor(createExecutorRequest(formValues));
   };
 
   // {stock_list: Array(1), start_date: '2023-05-18', end_date: '2023-06-17', strategy_name: 'Random', remarks: '', …}
@@ -134,7 +127,6 @@ export default function SpawnExecutors() {
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div>
-      <form onSubmit={submitNewExecutorRequest}>
         <Paper className="bg-opacity-40 p-4 h-100">
           <h1 className="text-center font-bold text-lg">Create Executor</h1>
           {/* style="height:100%; width:100%;"> */}
@@ -233,13 +225,12 @@ export default function SpawnExecutors() {
             />
           </div>
           <div className="grid grid-col-1 grid-flow-col m-3 align-bottom">
-            <Button className=" bg-green-100" type="submit">
+            <Button className=" bg-green-100" type="submit" onClick={submitNewExecutorRequest}>
               {' '}
               Submit{' '}
             </Button>
           </div>
         </Paper>
-      </form>
     </div>
   );
 }
