@@ -20,14 +20,12 @@ import {
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  convertListToDropdown,
-  convertDictListToDropdown,
+  convertListToDropdown
 } from '../Algotrading/Utils';
 // @ts-expect-error TS(6142): Module '../Algotrading/StockSelect' was resolved t... Remove this comment to see the full error message
 import StockSelect from '../Algotrading/StockSelect';
 import TextField from '@material-ui/core/TextField';
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
-import { spawnNewExecutor } from '../../configs.json';
 import { useGetBrokerList, useGetStrategyList, useGetTradeTypeList, useInitiateExecutorApi } from '../../api/executor/requests';
 
 const defaultValues = {
@@ -66,29 +64,26 @@ const createExecutorRequest = (request: any) => {
 };
 
 export default function SpawnExecutors() {
-  const [strategyName, setStrategyName] = useState(null);
   const [formValues, setFormValues] = useState(defaultValues);
 
   const { getStrategyList, data: strategyListData } = useGetStrategyList();
   const { getBrokersList, data: brokerListData } = useGetBrokerList();
   const { getTradeTypeList, data: tradeTypeListData } = useGetTradeTypeList();
-  const { inititateExecutor, status: inititateExecutorStatus } = useInitiateExecutorApi();
+  const { inititateExecutor, status: inititateExecutorStatus, error: initiateExecutorError } = useInitiateExecutorApi();
 
   // drop down selections
   const strategyList = useMemo(() => convertListToDropdown(strategyListData ?? []), [strategyListData]);
   const brokersList = useMemo(() => convertListToDropdown(brokerListData ?? []), [brokerListData]);
   const tradeTypeList = useMemo(() => convertListToDropdown(tradeTypeListData ?? []), [tradeTypeListData]);
-
+  
   useEffect(() => {
     getStrategyList();
     getBrokersList();
     getTradeTypeList();
   }, []);
 
-  const submitNewExecutorRequest = (event) => {
+  const submitNewExecutorRequest = () => {
     console.log('new executor request', formValues);
-
-    // TODO: catch and show errors
     inititateExecutor(createExecutorRequest(formValues));
   };
 

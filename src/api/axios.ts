@@ -1,10 +1,12 @@
 import { useState } from "react";
 import axios from 'axios';
 import { host } from '../configs.json';
+import { useStore } from '../stores/store';
 
 type UseAxiosProps = {
-  url: string;
+  url: string
   method: "GET" | "POST" | "PUT" | "DELETE"
+  disableErrorNotification: boolean
 };
 
 type CommonFetch = {
@@ -13,7 +15,8 @@ type CommonFetch = {
 
 type Status = 'SUCCESS' | 'FAILURE' | 'PENDING';
 
-export function useAxios<T> ({ url, method }: UseAxiosProps) {
+export function useAxios<T> ({ url, method, disableErrorNotification = false }: UseAxiosProps) {
+  const addNotification = useStore((state) => state.addNotification);
   const [status, setStatus] = useState<Status>('PENDING');
   const [error, setError] = useState({ code: null, description: null});
   const [data, setData] = useState<T | null>(null);
@@ -29,13 +32,20 @@ export function useAxios<T> ({ url, method }: UseAxiosProps) {
         data: requestBody,
       });
 
-    // TODO: Add error handling
     setStatus(status);
     setData(data);
     setError({
       code: error_code,
       description: error_description,
     })
+
+    if (status === 'FAILURE' && !disableErrorNotification) {
+      addNotification({
+        id: _.uniqueId('notification'),
+        message: error_description,
+        type: 'ERROR',
+      });
+    }
   };
 
   return { status, error, commonFetch, data };

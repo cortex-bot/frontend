@@ -19,12 +19,14 @@ import UserDashboard from './Components/User/UserDashboard';
 import GenerateSignals from './Components/Signal/GenerateSignals';
 // @ts-expect-error TS(6142): Module './Components/Signal/SignalsDashboard' was ... Remove this comment to see the full error message
 import SignalsDashboard from './Components/Signal/SignalsDashboard';
+import NotificationBar from './Components/NotificationBar/NotificationBar';
 export default function App() {
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className="flex-row row bg-gray-700 min-h-screen">
       <BrowserRouter>
         <SideBar />
+        <NotificationBar />
         <div className="resize-x ml-16 p-1 ">
           <Routes>
             <Route path="/" element={<Algotrading />} />
