@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 // import {Button} from '@mui/material/Button';
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -18,7 +18,7 @@ import Fade from "@mui/material/Fade";
 import { makeStyles } from "@mui/styles";
 // @ts-expect-error TS(6142): Module '../Algotrading/Editor' was resolved to 'D:... Remove this comment to see the full error message
 import Editor from "../Algotrading/Editor";
-import MuiTable from "../../utils/MuiTable";
+import MuiTable from "../common/Table/MuiTable";
 
 const ShowCodeModal = (e: any) => {
   // console.log("logs",e)
@@ -187,7 +187,7 @@ function Ranking() {
 
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div>
+    <Box sx={{ p: '20px' }}>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -210,13 +210,11 @@ function Ranking() {
       </Modal>
 
       {data && columns ? (
-        <MuiTable
-        title={"Ranking"}
-        data={data}
-        columns={columns}
-      />
-      ) : notFound}
-    </div>
+        <MuiTable title={"Ranking"} data={data} columns={columns} />
+      ) : (
+        notFound
+      )}
+    </ Box>
     // </div>
   );
 }

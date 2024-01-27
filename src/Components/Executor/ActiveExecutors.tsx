@@ -7,11 +7,11 @@ import {
   deactivateExecutor,
 } from "../../configs.json";
 import { getColumns, getActiveExecutorColumns } from "../../utils/utils";
-import MuiTable from "../../utils/MuiTable";
+import MuiTable from "../common/Table/MuiTable";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 // @ts-expect-error TS(7016): Could not find a declaration file for module '@cra... Remove this comment to see the full error message
 import { log } from "@craco/craco/lib/logger";
 
@@ -68,7 +68,7 @@ function ActiveExecutors() {
     return (
       <Button
         variant="contained"
-        color='warning'
+        color="warning"
         onClick={(event) => {
           updateExecutorStatusApi(params[executorIdName], "PAUSE");
         }}
@@ -84,7 +84,7 @@ function ActiveExecutors() {
       <Button
         variant="contained"
         // @ts-expect-error TS(2769): No overload matches this call.
-        color='error'
+        color="error"
         onClick={(event) => {
           deactivateExecutorApi(params[executorIdName]);
         }}
@@ -133,17 +133,13 @@ function ActiveExecutors() {
   const notFound = <div className="loading">Loading data</div>;
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div>
-      {/* @ts-expect-error TS(2322): Type 'Element | { title: any; }' is not assignable... Remove this comment to see the full error message */}
+    <Box sx={{ flexBasis: "0", flexGrow: "1", minHeight: '400px' }}>
       {data && columns ? (
-        <MuiTable
-          title={"Active Executors"}
-          data={data}
-          columns={columns}
-        />
-      ) : notFound}
-    </div>
+        <MuiTable title={"Active Executors"} data={data} columns={columns} />
+      ) : (
+        notFound
+      )}
+    </Box>
   );
 }
 

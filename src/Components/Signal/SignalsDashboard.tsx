@@ -7,8 +7,8 @@ import "./SignalsDashboard.css";
 import ReactModal from "react-modal";
 import { getColumns, extractTradeSingals } from "../../utils/utils";
 
-import { Button } from "@mui/material";
-import MuiTable from "../../utils/MuiTable";
+import { Button, Box } from "@mui/material";
+import MuiTable from "../common/Table/MuiTable";
 
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import { host, getAllSignalList, deleteSignalData } from "../../configs.json";
@@ -139,7 +139,7 @@ const SignalsDashboard = () => {
 
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className="signals-dashboard">
+    <Box sx={{ p: "20px" }}>
       {tradeSignals && columns ? (
         <MuiTable
           title={"Trade Signals"}
@@ -159,7 +159,7 @@ const SignalsDashboard = () => {
           isSummary={isSummary}
         />
       )}
-    </div>
+    </Box>
   );
 };
 

@@ -42,7 +42,7 @@ declare module "@emotion/react" {
 
 export default function App() {
   return (
-    <StyledEngineProvider>
+    <StyledEngineProvider injectFirst>
       <ThemeProvider theme={createTheme()}>
         <div className="flex-row row bg-gray-700 min-h-screen">
           <BrowserRouter>

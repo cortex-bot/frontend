@@ -1,4 +1,4 @@
-import MuiTable from "../../utils/MuiTable";
+import MuiTable from "../common/Table/MuiTable";
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import {
   host,
@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { getColumns } from "../../utils/utils";
 import { makeStyles } from "@mui/styles";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 import Modal from "@mui/material/Modal";
 import Backdrop from "@mui/material/Backdrop";
@@ -185,8 +185,7 @@ export default function StrategyDashboard() {
   }, [code_id]);
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div>
+    <Box sx={{ p: "20px" }}>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -210,6 +209,6 @@ export default function StrategyDashboard() {
 
       {/* this is causing issue */}
       {<MuiTable title={"Strategy Dashboard"} data={data} columns={columns} />}
-    </div>
+    </Box>
   );
 }

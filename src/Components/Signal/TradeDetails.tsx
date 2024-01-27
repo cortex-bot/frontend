@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './TradeDetails.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./TradeDetails.css";
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import ReactModal from 'react-modal';
+import ReactModal from "react-modal";
 import {
   host,
   getSignalData,
   getSignalSummaryReport,
   // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
-} from '../../configs.json';
-import MuiTable from '../../utils/MuiTable';
-import { getColumns, extractTradeSingals } from '../../utils/utils';
+} from "../../configs.json";
+import MuiTable from "../common/Table/MuiTable";
+import { getColumns, extractTradeSingals } from "../../utils/utils";
 
 const TradeDetails = ({ signal, isOpen, onRequestClose, isSummary }: any) => {
   const [tradeData, setTradeData] = useState([]);
@@ -29,7 +29,7 @@ const TradeDetails = ({ signal, isOpen, onRequestClose, isSummary }: any) => {
         response = await axios.get(host + getSignalSummaryReport, {
           params: { request: signal.signal_id },
         });
-        console.log('fetchTradeData summary active ', response);
+        console.log("fetchTradeData summary active ", response);
 
         setData(response.data);
         cols = getColumns(response.data);
@@ -46,9 +46,9 @@ const TradeDetails = ({ signal, isOpen, onRequestClose, isSummary }: any) => {
       // console.log("response trade data", extractTradeSingals(response.data.report));
 
       setColumns(cols);
-      console.log('column ', cols);
+      console.log("column ", cols);
     } catch (error) {
-      console.error('Error fetching trade details:', error);
+      console.error("Error fetching trade details:", error);
     }
   };
 
@@ -71,17 +71,18 @@ const TradeDetails = ({ signal, isOpen, onRequestClose, isSummary }: any) => {
           &#10005;
         </button>
       </div>
-      {data && columns
-        ? (
-          <MuiTable
-            title={`Signal id ${signal.signal_id}`}
-            data={data}
-            columns={columns}
-            config={{
-              zIndex: 10,
-            }}
-          />
-        ) : notFound}
+      {data && columns ? (
+        <MuiTable
+          title={`Signal id ${signal.signal_id}`}
+          data={data}
+          columns={columns}
+          config={{
+            zIndex: 10,
+          }}
+        />
+      ) : (
+        notFound
+      )}
     </ReactModal>
   );
 };
