@@ -1,33 +1,33 @@
-import React from 'react';
+import React from "react";
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import {
   host,
   activeExecutorsList,
   updateExecutorStatus,
   deactivateExecutor,
-} from '../../configs.json';
-import { getColumns, getActiveExecutorColumns } from '../../utils/utils';
-import MuiTable from '../../utils/MuiTable';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+} from "../../configs.json";
+import { getColumns, getActiveExecutorColumns } from "../../utils/utils";
+import MuiTable from "../../utils/MuiTable";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-import { Button } from '@material-ui/core';
+import { Button } from "@mui/material";
 // @ts-expect-error TS(7016): Could not find a declaration file for module '@cra... Remove this comment to see the full error message
-import { log } from '@craco/craco/lib/logger';
+import { log } from "@craco/craco/lib/logger";
 
 function updateExecutorStatusApi(executorId: any, status: any) {
   const FetchURL = host + updateExecutorStatus;
   let payload = {};
   // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-  payload['status'] = status;
+  payload["status"] = status;
   // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-  payload['executor_id'] = executorId;
+  payload["executor_id"] = executorId;
 
-  console.log('executor id is ' + executorId);
+  console.log("executor id is " + executorId);
 
   axios.post(FetchURL, payload).then((response) => {
-    if (response.data.status != 'SUCCESS')
-      alert('Executor Id ' + executorId + ' not updated');
+    if (response.data.status != "SUCCESS")
+      alert("Executor Id " + executorId + " not updated");
   });
 }
 
@@ -47,8 +47,8 @@ function deactivateExecutorApi(executorId: any) {
   const FetchURL = host + deactivateExecutor;
 
   axios.post(FetchURL, { executor_id: executorId }).then((response) => {
-    if (response.data.status != 'SUCCESS')
-      alert('Executor Id ' + executorId + ' not deactivated');
+    if (response.data.status != "SUCCESS")
+      alert("Executor Id " + executorId + " not deactivated");
   });
   // (async () => {
   //   const result = await axios.post(FetchURL,{"executor_id":executorId});
@@ -61,19 +61,19 @@ function ActiveExecutors() {
   const [data, setdata] = useState([]);
   const [columns, setcolumns] = useState([]);
 
-  const executorIdName = 'executor_id';
+  const executorIdName = "executor_id";
 
   const renderPauseButton = (params: any) => {
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     return (
       <Button
         variant="contained"
-        color="primary"
+        color='warning'
         onClick={(event) => {
-          updateExecutorStatusApi(params[executorIdName], 'PAUSE');
+          updateExecutorStatusApi(params[executorIdName], "PAUSE");
         }}
       >
-        PAUSE{' '}
+        PAUSE{" "}
       </Button>
     );
   };
@@ -84,26 +84,26 @@ function ActiveExecutors() {
       <Button
         variant="contained"
         // @ts-expect-error TS(2769): No overload matches this call.
-        color="danger"
+        color='error'
         onClick={(event) => {
           deactivateExecutorApi(params[executorIdName]);
         }}
       >
-        Deactivate{' '}
+        Deactivate{" "}
       </Button>
     );
   };
 
   const additionalColumn = [
     {
-      title: 'Update Status',
-      field: 'updateStatus',
+      title: "Update Status",
+      field: "updateStatus",
       render: renderPauseButton,
       disableClickEventBubbling: true,
     },
     {
-      title: 'Deactivate Executor',
-      field: 'deactivate',
+      title: "Deactivate Executor",
+      field: "deactivate",
       render: renderDeactivateButton,
       disableClickEventBubbling: true,
     },
@@ -113,12 +113,12 @@ function ActiveExecutors() {
     const FetchURL = host + activeExecutorsList;
     (async () => {
       var result = await axios(FetchURL);
-      console.log('result data', result);
+      console.log("result data", result);
       // @ts-expect-error TS(2739): Type '{ executor_start_time: any; status: any; exe... Remove this comment to see the full error message
       result = parseList(result.data);
-      console.log('result data updated ', result);
+      console.log("result data updated ", result);
       if ((result as any).length === 0) {
-        console.log('null data');
+        console.log("null data");
         return;
       }
       // @ts-expect-error TS(2345): Argument of type 'AxiosResponse<any, any>' is not ... Remove this comment to see the full error message
@@ -136,7 +136,13 @@ function ActiveExecutors() {
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div>
       {/* @ts-expect-error TS(2322): Type 'Element | { title: any; }' is not assignable... Remove this comment to see the full error message */}
-      {data && columns ? MuiTable('Active Executors', data, columns) : notFound}
+      {data && columns ? (
+        <MuiTable
+          title={"Active Executors"}
+          data={data}
+          columns={columns}
+        />
+      ) : notFound}
     </div>
   );
 }

@@ -72,10 +72,16 @@ const TradeDetails = ({ signal, isOpen, onRequestClose, isSummary }: any) => {
         </button>
       </div>
       {data && columns
-        ? MuiTable(`Signal id ${signal.signal_id}`, data, columns, {
-            zIndex: 10,
-          })
-        : notFound}
+        ? (
+          <MuiTable
+            title={`Signal id ${signal.signal_id}`}
+            data={data}
+            columns={columns}
+            config={{
+              zIndex: 10,
+            }}
+          />
+        ) : notFound}
     </ReactModal>
   );
 };

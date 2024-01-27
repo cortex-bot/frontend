@@ -1,40 +1,40 @@
-import { Button } from '@material-ui/core';
+import { Button } from "@mui/material";
 // import {Button} from '@mui/material/Button';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { getColumns } from '../../utils/utils';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { getColumns } from "../../utils/utils";
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import {
   host,
   getStrategyCodeFromRanking,
   getRankingDataList,
   deleteRankingRecord,
-} from '../../configs.json';
+} from "../../configs.json";
 // import ShowCode from "./ShowCode";
 
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import { makeStyles } from '@material-ui/core/styles';
+import Modal from "@mui/material/Modal";
+import Backdrop from "@mui/material/Backdrop";
+import Fade from "@mui/material/Fade";
+import { makeStyles } from "@mui/styles";
 // @ts-expect-error TS(6142): Module '../Algotrading/Editor' was resolved to 'D:... Remove this comment to see the full error message
-import Editor from '../Algotrading/Editor';
-import MuiTable from '../../utils/MuiTable';
+import Editor from "../Algotrading/Editor";
+import MuiTable from "../../utils/MuiTable";
 
 const ShowCodeModal = (e: any) => {
   // console.log("logs",e)
-  return alert('code is ' + e);
+  return alert("code is " + e);
 };
 
 // make styles
 const useStyles = makeStyles((theme) => ({
   modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -65,10 +65,10 @@ function Ranking() {
         color="primary"
         onClick={(event) => {
           setOpen(true);
-          setCode_id(params['Strategy Name']);
+          setCode_id(params["Strategy Name"]);
         }}
       >
-        Code{' '}
+        Code{" "}
       </Button>
     );
   };
@@ -78,18 +78,18 @@ function Ranking() {
     return (
       <Button
         variant="contained"
-        className="bg-danger"
+        color="error"
         onClick={(event) => {
-          var payload = { strategyName: params['Strategy Name'] };
+          var payload = { strategyName: params["Strategy Name"] };
           let config = {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
           };
           // https://stackoverflow.com/questions/51069552/axios-delete-request-with-request-body-and-headers
           axios
             // @ts-expect-error TS(2554): Expected 1-2 arguments, but got 3.
             .delete(host + deleteRankingRecord, { data: payload }, config)
             .then((response) => {
-              console.log('delete requested');
+              console.log("delete requested");
               // if (response.status != "SUCCESS") {
               //   alert("Failed to delete Ranking Record " + response);
               // }
@@ -120,14 +120,14 @@ function Ranking() {
 
   const additionalColumn = [
     {
-      title: 'Show code',
-      field: 'code',
+      title: "Show code",
+      field: "code",
       render: renderShowCode,
       disableClickEventBubbling: true,
     },
     {
-      title: 'Delete Ranking ',
-      field: 'deleteRanking',
+      title: "Delete Ranking ",
+      field: "deleteRanking",
       render: renderDeleteRanking,
       disableClickEventBubbling: true,
     },
@@ -148,7 +148,7 @@ function Ranking() {
     (async () => {
       const result = await axios(FetchURL);
       if (result.data.response.length === 0) {
-        console.log('null data');
+        console.log("null data");
         return;
       }
       setdata(result.data.response);
@@ -156,8 +156,8 @@ function Ranking() {
       cols.push(...additionalColumn);
 
       setcolumns(cols);
-      console.log('column ', columns);
-      console.log('data ', data);
+      console.log("column ", columns);
+      console.log("data ", data);
     })();
   }, []);
 
@@ -209,7 +209,13 @@ function Ranking() {
         </Fade>
       </Modal>
 
-      {data && columns ? MuiTable('Ranking', data, columns) : notFound}
+      {data && columns ? (
+        <MuiTable
+        title={"Ranking"}
+        data={data}
+        columns={columns}
+      />
+      ) : notFound}
     </div>
     // </div>
   );

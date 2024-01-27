@@ -1,19 +1,13 @@
-import Select from 'react-select';
-import { useState, useEffect } from 'react';
+import Select from "react-select";
+import { useState, useEffect } from "react";
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
-import { dataService, stockSymbol } from '../../configs.json';
-import { convertStocksMappingToArray } from '../Charts/utils';
-import {
-  Button,
-  Paper,
-  Switch,
-  FormLabel,
-  Typography,
-} from '@material-ui/core';
-import axios from 'axios';
+import { dataService, stockSymbol } from "../../configs.json";
+import { convertStocksMappingToArray } from "../Charts/utils";
+import { Button, Paper, Switch, FormLabel, Typography } from "@mui/material";
+import axios from "axios";
 
-function StockSelect(setter: any, isMulti = false, stock_name = 'stock_name') {
-  const [options, setoptions] = useState('loading');
+function StockSelect(setter: any, isMulti = false, stock_name = "stock_name") {
+  const [options, setoptions] = useState("loading");
 
   useEffect(() => {
     axios.get(dataService + stockSymbol).then((response) => {
@@ -33,7 +27,7 @@ function StockSelect(setter: any, isMulti = false, stock_name = 'stock_name') {
             setter(stock_name, e);
           } else {
             // @ts-expect-error TS(2531): Object is possibly 'null'.
-            setter(stock_name, e['value']);
+            setter(stock_name, e["value"]);
           }
         }}
         defaultValue={options[0]}

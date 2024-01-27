@@ -1,54 +1,48 @@
 // Import the necessary dependencies
-import React, { useState } from 'react';
+import React, { useState } from "react";
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import { Helmet } from 'react-helmet';
-import {
-  Button,
-  Paper,
-  Switch,
-  FormLabel,
-  Typography,
-} from '@material-ui/core';
+import { Helmet } from "react-helmet";
+import { Button, Paper, Switch, FormLabel, Typography } from "@mui/material";
 // @ts-expect-error TS(6142): Module '../../utils/HighchartDependencies' was res... Remove this comment to see the full error message
-import HighchartsDependencies from '../../utils/HighchartDependencies';
+import HighchartsDependencies from "../../utils/HighchartDependencies";
 // @ts-expect-error TS(6142): Module './Editor' was resolved to 'D:/workspace/pr... Remove this comment to see the full error message
-import Editor from './Editor';
+import Editor from "./Editor";
 // @ts-expect-error TS(6142): Module './Panel' was resolved to 'D:/workspace/pro... Remove this comment to see the full error message
-import Panel from './Panel';
+import Panel from "./Panel";
 // @ts-expect-error TS(6142): Module './TradeChart' was resolved to 'D:/workspac... Remove this comment to see the full error message
-import TradeChart from './TradeChart';
+import TradeChart from "./TradeChart";
 // @ts-expect-error TS(6142): Module './StrategySelector' was resolved to 'D:/wo... Remove this comment to see the full error message
-import { StrategySelector } from './StrategySelector';
+import { StrategySelector } from "./StrategySelector";
 // @ts-expect-error TS(2732): Cannot find module './default_template.json'. Cons... Remove this comment to see the full error message
-import { template } from './default_template.json';
-import './Algotrading.css';
+import { template } from "./default_template.json";
+import "./Algotrading.css";
 
 // Utility function to get stock market open time
 const getStockMarketOpenTime = () => {
   const currentDate = new Date();
-  const yesterday = new Date(currentDate)
+  const yesterday = new Date(currentDate);
   yesterday.setDate(currentDate.getDate() - 1);
   yesterday.setHours(9, 15);
-  return yesterday.toLocaleString('sv');
+  return yesterday.toLocaleString("sv");
 };
 
 // Utility function to get stock market end time
 const getStockMarketEndTime = () => {
   const currentDate = new Date();
   currentDate.setHours(15, 30);
-  return currentDate.toLocaleString('sv');
+  return currentDate.toLocaleString("sv");
 };
 
 // Default values for the form
 const defaultValues = {
-  stock_name: 'ONGC',
+  stock_name: "ONGC",
   start_date: getStockMarketOpenTime(),
   end_date: getStockMarketEndTime(),
-  strategy_name: 'Random',
+  strategy_name: "Random",
   ranking: false,
-  description: '',
+  description: "",
   stock_basket: null,
-  interval: '5m',
+  interval: "5m",
 };
 
 function Algotrading() {
@@ -77,9 +71,9 @@ function Algotrading() {
         <div className="col-span-1 lg:col-span-3">
           <div
             className="h-96 lg:h-full bg-transparent border border-gray-300 rounded-md overflow-hidden"
-            style={{ maxHeight: '55vh' }}
+            style={{ maxHeight: "55vh" }}
           >
-            {TradeChart(formValues, trades, 'h-100 w-100', isCandleStickChart)}
+            {TradeChart(formValues, trades, "h-100 w-100", isCandleStickChart)}
           </div>
         </div>
 
@@ -97,7 +91,7 @@ function Algotrading() {
                   <div className="table-row" key={key}>
                     <div className="key">{key}</div>
                     <div className="value">
-                      {typeof analysis[key] === 'number'
+                      {typeof analysis[key] === "number"
                         ? Math.round(analysis[key] * 1000) / 1000
                         : String(analysis[key])}
                     </div>
