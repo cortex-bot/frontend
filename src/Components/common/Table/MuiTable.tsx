@@ -22,12 +22,15 @@ import {
   noop,
   orderBy,
   partial,
+  size,
+  slice,
   some,
   sortBy,
 } from "lodash";
 
 import React from "react";
 import TitleBar from "./TitleBar";
+import { TablePagination } from "@mui/material";
 
 type OrderType = "asc" | "desc";
 
@@ -37,6 +40,8 @@ const MuiTable = (props: any) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [order, setOrder] = useState<OrderType>("asc");
   const [orderByColumnkey, setOrderByColumnKey] = useState<string | null>(null);
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(25);
 
   const updateSortByColumn = useCallback(
     (columnKey: string) => {
@@ -50,6 +55,14 @@ const MuiTable = (props: any) => {
     },
     [order, orderByColumnkey]
   );
+
+  const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    setPage(newPage);
+  }
+
+  const handleRowsPerPageChange = (event: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>) => {
+    setRowsPerPage(event.target.value);
+  }
 
   const headerRow = useMemo(
     () =>
@@ -75,7 +88,7 @@ const MuiTable = (props: any) => {
           title
         );
 
-        return <TableCell sx={{ color: "#fff" }}>{cellContent}</TableCell>;
+        return <TableCell sx={{ background: '#296E85', color: "#fff" }}>{cellContent}</TableCell>;
       }),
     [columns, data, order, orderByColumnkey, updateSortByColumn]
   );
@@ -97,9 +110,15 @@ const MuiTable = (props: any) => {
     [filteredRows, order, orderByColumnkey]
   );
 
+  const paginatedSortedFilteredRows = useMemo(() => {
+    const startIndex = rowsPerPage * page;
+    const endIndex = startIndex + rowsPerPage;
+    return slice(sortedFilteredRows, startIndex, endIndex);
+  }, [page, rowsPerPage, sortedFilteredRows]);
+
   const gridRows = useMemo(
     () =>
-      map(sortedFilteredRows, (row, index) => {
+      map(paginatedSortedFilteredRows, (row, index) => {
         return (
           <TableRow key={index}>
             {map(columns, (column) => {
@@ -111,7 +130,7 @@ const MuiTable = (props: any) => {
           </TableRow>
         );
       }),
-    [sortedFilteredRows, columns]
+    [paginatedSortedFilteredRows, columns]
   );
 
   return (
@@ -121,14 +140,22 @@ const MuiTable = (props: any) => {
         searchTerm={searchTerm}
         updateSearchTerm={setSearchTerm}
       />
-      <TableContainer component={Box} sx={{ maxHeight: "90vh" }}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <TableContainer component={Box} sx={{ maxHeight: "85vh" }}>
+        <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ backgroundColor: "#296E85" }}>
             <TableRow>{headerRow}</TableRow>
           </TableHead>
           <TableBody>{gridRows}</TableBody>
         </Table>
       </TableContainer>
+      <TablePagination
+        component="div"
+        count={size(sortedFilteredRows)}
+        page={page}
+        onPageChange={handlePageChange}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleRowsPerPageChange}
+      />
     </Paper>
   );
 };
