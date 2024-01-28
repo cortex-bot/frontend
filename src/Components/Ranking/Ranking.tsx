@@ -1,5 +1,4 @@
-import { Box, Button } from "@mui/material";
-// import {Button} from '@mui/material/Button';
+import { Box, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getColumns } from "../../utils/utils";
@@ -10,7 +9,6 @@ import {
   getRankingDataList,
   deleteRankingRecord,
 } from "../../configs.json";
-// import ShowCode from "./ShowCode";
 
 import Modal from "@mui/material/Modal";
 import Backdrop from "@mui/material/Backdrop";
@@ -187,7 +185,7 @@ function Ranking() {
 
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <Box sx={{ p: '20px' }}>
+    <Box sx={{ p: "20px" }}>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -201,11 +199,9 @@ function Ranking() {
         }}
       >
         <Fade in={open}>
-          <div className="w-4/5 h-3/4 bg-gray-600 text-white">
-            <h1>Code</h1>
-
+          <Box sx={{ width: "80%" }}>
             <Editor code={code} setCode={setCode} />
-          </div>
+          </Box>
         </Fade>
       </Modal>
 
@@ -214,7 +210,7 @@ function Ranking() {
       ) : (
         notFound
       )}
-    </ Box>
+    </Box>
     // </div>
   );
 }

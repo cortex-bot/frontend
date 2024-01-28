@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import "./TradeDetails.css";
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import ReactModal from "react-modal";
+import Modal from "@mui/material/Modal";
+import Backdrop from "@mui/material/Backdrop";
 import {
   host,
   getSignalData,
@@ -11,79 +12,102 @@ import {
 } from "../../configs.json";
 import MuiTable from "../common/Table/MuiTable";
 import { getColumns, extractTradeSingals } from "../../utils/utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Fade,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import { Box } from "@mui/system";
+import CloseIcon from "@mui/icons-material/Close";
 
 const TradeDetails = ({ signal, isOpen, onRequestClose, isSummary }: any) => {
   const [tradeData, setTradeData] = useState([]);
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
 
+  const fetchTradeData = useCallback(
+    async (isSummary: any) => {
+      try {
+        let response;
+        var cols;
+        if (isSummary) {
+          response = await axios.get(host + getSignalSummaryReport, {
+            params: { request: signal.signal_id },
+          });
+          console.log("fetchTradeData summary active ", response);
+
+          setData(response.data);
+          cols = getColumns(response.data);
+        } else {
+          response = await axios.get(host + getSignalData, {
+            params: { request: signal.signal_id },
+          });
+
+          setData(extractTradeSingals(response.data.report));
+          cols = getColumns(extractTradeSingals(response.data.report));
+        }
+
+        setTradeData(response.data);
+        // console.log("response trade data", extractTradeSingals(response.data.report));
+
+        setColumns(cols);
+        console.log("column ", cols);
+      } catch (error) {
+        console.error("Error fetching trade details:", error);
+      }
+    },
+    [signal?.signal_id]
+  );
+
   useEffect(() => {
     fetchTradeData(isSummary);
-  }, []);
-
-  const fetchTradeData = async (isSummary: any) => {
-    try {
-      let response;
-      var cols;
-      if (isSummary) {
-        response = await axios.get(host + getSignalSummaryReport, {
-          params: { request: signal.signal_id },
-        });
-        console.log("fetchTradeData summary active ", response);
-
-        setData(response.data);
-        cols = getColumns(response.data);
-      } else {
-        response = await axios.get(host + getSignalData, {
-          params: { request: signal.signal_id },
-        });
-
-        setData(extractTradeSingals(response.data.report));
-        cols = getColumns(extractTradeSingals(response.data.report));
-      }
-
-      setTradeData(response.data);
-      // console.log("response trade data", extractTradeSingals(response.data.report));
-
-      setColumns(cols);
-      console.log("column ", cols);
-    } catch (error) {
-      console.error("Error fetching trade details:", error);
-    }
-  };
+  }, [fetchTradeData, isSummary]);
 
   // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
   const notFound = <div className="loading">Loading data</div>;
 
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <ReactModal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      contentLabel="Trade Details"
-      className="trade-details-modal"
-      overlayClassName="modal-overlay"
+    <Dialog
+      maxWidth={'xl'}
+      open={isOpen}
+      onClose={onRequestClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
     >
-      {/* Set z-index for the modal header */}
-      <div className="modal-header">
-        <h2>Trade Details</h2>
-        <button onClick={onRequestClose} className="cut-button">
-          &#10005;
-        </button>
-      </div>
-      {data && columns ? (
-        <MuiTable
-          title={`Signal id ${signal.signal_id}`}
-          data={data}
-          columns={columns}
-          config={{
-            zIndex: 10,
-          }}
-        />
-      ) : (
-        notFound
-      )}
-    </ReactModal>
+      <DialogTitle
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          px: "20px",
+          pt: "10px",
+          pb: '0',
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h5">Trade Details</Typography>
+        <IconButton aria-label="close" onClick={onRequestClose}>
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent dividers sx={{ p: "0" }}>
+        {data && columns ? (
+          <MuiTable
+            title={`Signal id ${signal?.signal_id}`}
+            data={data}
+            columns={columns}
+            config={{
+              zIndex: 10,
+            }}
+          />
+        ) : (
+          notFound
+        )}
+      </DialogContent>
+    </Dialog>
   );
 };
 

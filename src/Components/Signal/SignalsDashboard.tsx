@@ -3,8 +3,6 @@ import axios from "axios";
 // @ts-expect-error TS(6142): Module './TradeDetails' was resolved to 'D:/worksp... Remove this comment to see the full error message
 import TradeDetails from "./TradeDetails";
 import "./SignalsDashboard.css";
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import ReactModal from "react-modal";
 import { getColumns, extractTradeSingals } from "../../utils/utils";
 
 import { Button, Box } from "@mui/material";
@@ -12,8 +10,6 @@ import MuiTable from "../common/Table/MuiTable";
 
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import { host, getAllSignalList, deleteSignalData } from "../../configs.json";
-
-ReactModal.setAppElement("#root");
 
 const handleDeleteSignal = async (signalId: any, username: any) => {
   try {
@@ -150,15 +146,12 @@ const SignalsDashboard = () => {
         notFound
       )}
 
-      {selectedSignal && (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <TradeDetails
-          signal={selectedSignal}
-          isOpen={true}
-          onRequestClose={handleModalClose}
-          isSummary={isSummary}
-        />
-      )}
+      <TradeDetails
+        signal={selectedSignal}
+        isOpen={!!selectedSignal}
+        onRequestClose={handleModalClose}
+        isSummary={isSummary}
+      />
     </Box>
   );
 };

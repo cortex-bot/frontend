@@ -140,7 +140,7 @@ const MuiTable = (props: any) => {
         searchTerm={searchTerm}
         updateSearchTerm={setSearchTerm}
       />
-      <TableContainer component={Box} sx={{ maxHeight: "85vh" }}>
+      <TableContainer component={Box} sx={{ minHeight: '400px', maxHeight: "85vh" }}>
         <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ backgroundColor: "#296E85" }}>
             <TableRow>{headerRow}</TableRow>
