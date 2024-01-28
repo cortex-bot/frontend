@@ -2,7 +2,7 @@ import { FaUserAlt, FaAlgolia, FaDev } from 'react-icons/fa';
 import { MdRequestPage } from 'react-icons/md';
 import { IoStatsChartSharp } from 'react-icons/io5';
 import { AiOutlineControl } from 'react-icons/ai';
-import { FaChessKnight, FaUser, FaChartLine, FaSignal } from 'react-icons/fa';
+import { FaChessKnight, FaUser, FaChartLine, FaSignal, FaTasks } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 // @ts-expect-error TS(2307): Cannot find module '../../assets/logo.png' or its ... Remove this comment to see the full error message
 import logo from '../../assets/logo.png';
@@ -56,6 +56,11 @@ const SideBar = () => {
         icon={<FaChartLine size="28" />}
         path="/signals_dashboard"
         label="Signals Dashboard"
+      />
+      <SideBarIcon
+        icon={<FaTasks size="28" />}
+        path="/jobs"
+        label="Jobs Dashboard"
       />
 
       <div className="user-profile-pic ">

@@ -28,6 +28,7 @@ import {
   StyledEngineProvider,
   createTheme,
 } from "@mui/material/styles";
+import JobsDashboard from "./Components/Jobs/JobsDashboard";
 
 declare module "@mui/styles/defaultTheme" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -63,6 +64,7 @@ export default function App() {
                   path="/signals_dashboard"
                   element={<SignalsDashboard />}
                 />
+                <Route path="/jobs" element={<JobsDashboard />} />
               </Routes>
             </div>
           </BrowserRouter>

@@ -34,7 +34,18 @@ import { TablePagination } from "@mui/material";
 
 type OrderType = "asc" | "desc";
 
-const MuiTable = (props: any) => {
+type PropTypes = {
+  title: string;
+  data: Array<{ [index: string]: string }>;
+  columns: Array<{
+    field?: string;
+    title: string;
+    render?: () => Element;
+  }>;
+  config?: any;
+}
+
+const MuiTable = (props: PropTypes) => {
   const { title, data, columns, config = {} } = props;
 
   const [searchTerm, setSearchTerm] = useState<string>("");

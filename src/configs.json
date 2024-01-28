@@ -6,6 +6,7 @@
   "cortexUrl": "https://manager-cortexbot.onrender.com",
   "localHost": "http://127.0.0.1:8080",
   "dataServiceHost": "https://data-cortexbot1.onrender.com",
+  "brokerServiceHost": "https://broker-cortexbot1.onrender.com",
   
   "executeStrategy": "/api/v1/manager/execute-strategy",
   "stockSymbol": "/api/v1/stock/get-stocks-symbol",
@@ -49,5 +50,13 @@
 "getStockBucketList": "/api/v1/analysis/get-stock-bucket-list",
 "getStockBucketData": "/api/v1/analysis/get-stock-bucket-data",
 "saveStockBucketData": "/api/v1/analysis/save-stock-bucket-data",
-"daleteStockBucketData": "/api/v1/analysis/delete-bucket"
+"daleteStockBucketData": "/api/v1/analysis/delete-bucket",
+
+
+"__comment__": "Broker APIs",
+"getAllJobs": "/api/v1/scheduler/get-all-jobs",
+"getJob": "/api/v1/scheduler/get-job",
+"pauseJob": "/api/v1/scheduler/pause-job",
+"resumeJob": "/api/v1/scheduler/resume-job",
+"deleteJob": "/api/v1/scheduler/delete-job"
 }
