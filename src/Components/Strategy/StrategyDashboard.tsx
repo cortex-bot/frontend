@@ -185,7 +185,14 @@ export default function StrategyDashboard() {
   }, [code_id]);
 
   return (
-    <Box sx={{ p: "20px" }}>
+    <Box
+      sx={{
+        p: "20px",
+        maxHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

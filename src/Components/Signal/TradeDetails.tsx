@@ -13,15 +13,31 @@ import {
 import MuiTable from "../common/Table/MuiTable";
 import { getColumns, extractTradeSingals } from "../../utils/utils";
 import {
+  createTheme,
   Dialog,
   DialogContent,
   DialogTitle,
   Fade,
   IconButton,
+  ThemeProvider,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
+
+const dialogContentTheme = createTheme({
+  components: {
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          minHeight: "0",
+          display: "flex",
+          flexDirection: "column",
+        },
+      },
+    },
+  },
+});
 
 const TradeDetails = ({ signal, isOpen, onRequestClose, isSummary }: any) => {
   const [tradeData, setTradeData] = useState([]);
@@ -72,7 +88,7 @@ const TradeDetails = ({ signal, isOpen, onRequestClose, isSummary }: any) => {
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <Dialog
-      maxWidth={'xl'}
+      maxWidth={"xl"}
       open={isOpen}
       onClose={onRequestClose}
       aria-labelledby="modal-modal-title"
@@ -84,7 +100,7 @@ const TradeDetails = ({ signal, isOpen, onRequestClose, isSummary }: any) => {
           justifyContent: "space-between",
           px: "20px",
           pt: "10px",
-          pb: '0',
+          pb: "0",
           alignItems: "center",
         }}
       >
@@ -93,20 +109,22 @@ const TradeDetails = ({ signal, isOpen, onRequestClose, isSummary }: any) => {
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent dividers sx={{ p: "0" }}>
-        {data && columns ? (
-          <MuiTable
-            title={`Signal id ${signal?.signal_id}`}
-            data={data}
-            columns={columns}
-            config={{
-              zIndex: 10,
-            }}
-          />
-        ) : (
-          notFound
-        )}
-      </DialogContent>
+      <ThemeProvider theme={dialogContentTheme}>
+        <DialogContent dividers sx={{ p: "0", display: "flex" }}>
+          {data && columns ? (
+            <MuiTable
+              title={`Signal id ${signal?.signal_id}`}
+              data={data}
+              columns={columns}
+              config={{
+                zIndex: 10,
+              }}
+            />
+          ) : (
+            notFound
+          )}
+        </DialogContent>
+      </ThemeProvider>
     </Dialog>
   );
 };

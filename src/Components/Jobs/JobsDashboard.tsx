@@ -10,17 +10,12 @@ import {
   resumeJob,
   useGetAllJobs,
 } from "../../api/jobs/requests";
-import { JobData, Status as JobStatus } from "../../api/jobs/types";
+import { JobData } from "../../api/jobs/types";
 import MuiTable from "../common/Table/MuiTable";
 import { JOB_COLUMNS, POLLING_INTERVAL } from "./consts";
+import { Job } from "./types";
 
 type PropTypes = {};
-type Job = {
-  id: string;
-  name: string;
-  nextRunTime: string;
-  status: JobStatus;
-};
 
 const JobsDashboard = (props: PropTypes) => {
   const addNotification = useStore((state) => state.addNotification);

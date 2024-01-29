@@ -27,25 +27,29 @@ import {
   some,
   sortBy,
 } from "lodash";
-
 import React from "react";
 import TitleBar from "./TitleBar";
-import { TablePagination } from "@mui/material";
+import { createTheme, TablePagination } from "@mui/material";
+import { DateTime } from "luxon";
 
 type OrderType = "asc" | "desc";
+type ValueType = "TEXT" | "DATETIME";
 
-type PropTypes = {
+export type Column<T> = {
+  field?: string;
   title: string;
-  data: Array<{ [index: string]: string }>;
-  columns: Array<{
-    field?: string;
-    title: string;
-    render?: () => Element;
-  }>;
-  config?: any;
-}
+  valueType?: ValueType;
+  render?: (rowData: T) => Element;
+};
 
-const MuiTable = (props: PropTypes) => {
+type PropTypes<T> = {
+  title: string;
+  data: T[];
+  columns: Column<T>[];
+  config?: any;
+};
+
+const MuiTable = <T,>(props: PropTypes<T>) => {
   const { title, data, columns, config = {} } = props;
 
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -67,13 +71,18 @@ const MuiTable = (props: PropTypes) => {
     [order, orderByColumnkey]
   );
 
-  const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+  const handlePageChange = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
     setPage(newPage);
-  }
+  };
 
-  const handleRowsPerPageChange = (event: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleRowsPerPageChange = (
+    event: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setRowsPerPage(event.target.value);
-  }
+  };
 
   const headerRow = useMemo(
     () =>
@@ -99,7 +108,11 @@ const MuiTable = (props: PropTypes) => {
           title
         );
 
-        return <TableCell sx={{ background: '#296E85', color: "#fff" }}>{cellContent}</TableCell>;
+        return (
+          <TableCell sx={{ background: "#296E85", color: "#fff" }}>
+            {cellContent}
+          </TableCell>
+        );
       }),
     [columns, data, order, orderByColumnkey, updateSortByColumn]
   );
@@ -133,8 +146,12 @@ const MuiTable = (props: PropTypes) => {
         return (
           <TableRow key={index}>
             {map(columns, (column) => {
-              const { field, render } = column;
-              const cellContent = isFunction(render) ? render(row) : row[field];
+              const { field, render, valueType } = column;
+              const cellContent = isFunction(render)
+                ? render(row)
+                : valueType === "DATETIME"
+                ? getFormattedDateTime(row[field])
+                : row[field];
 
               return <TableCell>{cellContent}</TableCell>;
             })}
@@ -145,13 +162,13 @@ const MuiTable = (props: PropTypes) => {
   );
 
   return (
-    <Paper>
+    <Paper sx={{ minHeight: 0, display: "flex", flexDirection: "column" }}>
       <TitleBar
         title={title}
         searchTerm={searchTerm}
         updateSearchTerm={setSearchTerm}
       />
-      <TableContainer component={Box} sx={{ minHeight: '400px', maxHeight: "85vh" }}>
+      <TableContainer component={Box} sx={{ minHeight: "400px" }}>
         <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ backgroundColor: "#296E85" }}>
             <TableRow>{headerRow}</TableRow>
@@ -166,9 +183,14 @@ const MuiTable = (props: PropTypes) => {
         onPageChange={handlePageChange}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={handleRowsPerPageChange}
+        sx={{ flexShrink: "0" }}
       />
     </Paper>
   );
+};
+
+const getFormattedDateTime = (isoDateTime: string) => {
+  return DateTime.fromISO(isoDateTime).toLocaleString(DateTime.DATETIME_MED);
 };
 
 export default MuiTable;
