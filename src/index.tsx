@@ -1,17 +1,16 @@
-import React from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import ReactDOM from 'react-dom';
-import './index.css';
+import React from "react";
+import "./index.css";
 // @ts-expect-error TS(6142): Module './App' was resolved to 'D:/workspace/proje... Remove this comment to see the full error message
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { createRoot } from "react-dom/client";
 
-ReactDOM.render(
-  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root'),
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

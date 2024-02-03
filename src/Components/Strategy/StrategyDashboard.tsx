@@ -9,11 +9,9 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getColumns } from "../../utils/utils";
-import { makeStyles } from "@mui/styles";
 import { Box, Button } from "@mui/material";
 
 import Modal from "@mui/material/Modal";
-import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
 // @ts-expect-error TS(6142): Module '../Algotrading/Editor' was resolved to 'D:... Remove this comment to see the full error message
 import Editor from "../Algotrading/Editor";
@@ -23,21 +21,6 @@ const ShowCodeModal = (e: any) => {
   // console.log("logs",e)
   return alert("code is " + e);
 };
-
-// make styles
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
 
 export default function StrategyDashboard() {
   const [columns, setColumns] = useState([]);
@@ -51,7 +34,6 @@ export default function StrategyDashboard() {
   // get code
   const [code, setCode] = useState(null);
 
-  const classes = useStyles();
   const handleOpen = () => {
     setOpen(true);
   };
@@ -196,14 +178,10 @@ export default function StrategyDashboard() {
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        className={classes.modal}
         open={open}
         onClose={handleClose}
         closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
         <Fade in={open}>
           <div className="code-modal">

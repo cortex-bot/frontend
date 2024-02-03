@@ -2,6 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getColumns } from "../../utils/utils";
+import React from "react";
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import {
   host,
@@ -11,10 +12,7 @@ import {
 } from "../../configs.json";
 
 import Modal from "@mui/material/Modal";
-import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
-import { makeStyles } from "@mui/styles";
-// @ts-expect-error TS(6142): Module '../Algotrading/Editor' was resolved to 'D:... Remove this comment to see the full error message
 import Editor from "../Algotrading/Editor";
 import MuiTable from "../common/Table/MuiTable";
 
@@ -23,23 +21,7 @@ const ShowCodeModal = (e: any) => {
   return alert("code is " + e);
 };
 
-// make styles
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
-
 function Ranking() {
-  const classes = useStyles();
   const [data, setdata] = useState([]);
   const [columns, setcolumns] = useState([]);
 
@@ -184,26 +166,14 @@ function Ranking() {
   const notFound = <div className="loading">Loading data</div>;
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <Box
-      sx={{
-        p: "20px",
-        maxHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <React.Fragment>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        className={classes.modal}
         open={open}
         onClose={handleClose}
         closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
         <Fade in={open}>
           <Box sx={{ width: "80%" }}>
@@ -211,13 +181,21 @@ function Ranking() {
           </Box>
         </Fade>
       </Modal>
-
-      {data && columns ? (
-        <MuiTable title={"Ranking"} data={data} columns={columns} />
-      ) : (
-        notFound
-      )}
-    </Box>
+      <Box
+        sx={{
+          p: "20px",
+          maxHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {data && columns ? (
+          <MuiTable title={"Ranking"} data={data} columns={columns} />
+        ) : (
+          notFound
+        )}
+      </Box>
+    </React.Fragment>
     // </div>
   );
 }

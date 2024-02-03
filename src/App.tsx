@@ -20,26 +20,13 @@ import GenerateSignals from "./Components/Signal/GenerateSignals";
 // @ts-expect-error TS(6142): Module './Components/Signal/SignalsDashboard' was ... Remove this comment to see the full error message
 import SignalsDashboard from "./Components/Signal/SignalsDashboard";
 import NotificationBar from "./Components/NotificationBar/NotificationBar";
-import "@emotion/react";
 
 import {
   ThemeProvider,
-  Theme,
   StyledEngineProvider,
   createTheme,
 } from "@mui/material/styles";
 import JobsDashboard from "./Components/Jobs/JobsDashboard";
-
-declare module "@mui/styles/defaultTheme" {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
-
-declare module "@emotion/react" {
-  export interface Theme {
-    color: string;
-  }
-}
 
 export default function App() {
   return (
