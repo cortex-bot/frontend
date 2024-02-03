@@ -27,11 +27,13 @@ import {
   createTheme,
 } from "@mui/material/styles";
 import JobsDashboard from "./Components/Jobs/JobsDashboard";
+import { CssBaseline } from "@mui/material";
 
 export default function App() {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={createTheme()}>
+        <CssBaseline />
         <div className="flex-row row bg-gray-700 min-h-screen">
           <BrowserRouter>
             <SideBar />

@@ -12,8 +12,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { Box, Button } from "@mui/material";
-// @ts-expect-error TS(7016): Could not find a declaration file for module '@cra... Remove this comment to see the full error message
-import { log } from "@craco/craco/lib/logger";
 
 function updateExecutorStatusApi(executorId: any, status: any) {
   const FetchURL = host + updateExecutorStatus;
