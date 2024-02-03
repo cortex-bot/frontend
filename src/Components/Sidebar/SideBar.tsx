@@ -2,6 +2,7 @@ import { FaUserAlt, FaAlgolia, FaDev } from "react-icons/fa";
 import { MdRequestPage } from "react-icons/md";
 import { IoStatsChartSharp } from "react-icons/io5";
 import { AiOutlineControl } from "react-icons/ai";
+import { SiCashapp } from "react-icons/si";
 import {
   FaChessKnight,
   FaUser,
@@ -103,6 +104,11 @@ const SideBar = () => {
         icon={<FaTasks size="28" />}
         path="/jobs"
         label="Jobs Dashboard"
+      />
+      <SideBarIcon
+        icon={<SiCashapp size="28" />}
+        path="/orders"
+        label="Orders"
       />
 
       <div className="user-profile-pic ">

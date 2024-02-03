@@ -20,6 +20,7 @@ import GenerateSignals from "./Components/Signal/GenerateSignals";
 // @ts-expect-error TS(6142): Module './Components/Signal/SignalsDashboard' was ... Remove this comment to see the full error message
 import SignalsDashboard from "./Components/Signal/SignalsDashboard";
 import NotificationBar from "./Components/NotificationBar/NotificationBar";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import {
   ThemeProvider,
@@ -28,36 +29,48 @@ import {
 } from "@mui/material/styles";
 import JobsDashboard from "./Components/Jobs/JobsDashboard";
 import { CssBaseline } from "@mui/material";
+import OrdersDashboard from "./Components/Orders/OrdersDashboard";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={createTheme()}>
-        <CssBaseline />
-        <div className="flex-row row bg-gray-700 min-h-screen">
-          <BrowserRouter>
-            <SideBar />
-            <NotificationBar />
-            <div className="resize-x ml-16 p-1 ">
-              <Routes>
-                <Route path="/" element={<Algotrading />} />
-                <Route path="/ranking" element={<Ranking />} />
-                <Route path="/executor_cp" element={<ExecutorControlPanel />} />
-                <Route
-                  path="/strategy_dashboard"
-                  element={<StrategyDashboard />}
-                />
-                <Route path="/user" element={<UserDashboard />} />
-                <Route path="/generate_signals" element={<GenerateSignals />} />
-                <Route
-                  path="/signals_dashboard"
-                  element={<SignalsDashboard />}
-                />
-                <Route path="/jobs" element={<JobsDashboard />} />
-              </Routes>
-            </div>
-          </BrowserRouter>
-        </div>
+        <QueryClientProvider client={queryClient}>
+          <CssBaseline />
+          <div className="flex-row row bg-gray-700 min-h-screen">
+            <BrowserRouter>
+              <SideBar />
+              <NotificationBar />
+              <div className="resize-x ml-16 p-1 ">
+                <Routes>
+                  <Route path="/" element={<Algotrading />} />
+                  <Route path="/ranking" element={<Ranking />} />
+                  <Route
+                    path="/executor_cp"
+                    element={<ExecutorControlPanel />}
+                  />
+                  <Route
+                    path="/strategy_dashboard"
+                    element={<StrategyDashboard />}
+                  />
+                  <Route path="/user" element={<UserDashboard />} />
+                  <Route
+                    path="/generate_signals"
+                    element={<GenerateSignals />}
+                  />
+                  <Route
+                    path="/signals_dashboard"
+                    element={<SignalsDashboard />}
+                  />
+                  <Route path="/jobs" element={<JobsDashboard />} />
+                  <Route path="/orders" element={<OrdersDashboard />} />
+                </Routes>
+              </div>
+            </BrowserRouter>
+          </div>
+        </QueryClientProvider>
       </ThemeProvider>
     </StyledEngineProvider>
   );

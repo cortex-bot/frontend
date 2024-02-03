@@ -1,13 +1,16 @@
 import { useMemo, useState } from "react";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { host, dataServiceHost, brokerServiceHost } from "../configs.json";
 import { useStore } from "../stores/store";
 import { forEach, get } from "lodash";
 import { url } from "inspector";
-import { GenericResponse, Status } from "./types";
-
-type ServiceType = "MANAGER" | "DATA" | "BROKER";
-type MethodType = "GET" | "POST" | "PUT" | "DELETE";
+import {
+  GenericResponse,
+  MethodType,
+  RequestData,
+  ServiceType,
+  Status,
+} from "./types";
 
 type UseAxiosProps = {
   url: string;
@@ -19,14 +22,6 @@ type UseAxiosProps = {
 type CommonFetch = {
   requestBody?: { [index: string]: any };
   queryParams?: { [index: string]: any };
-};
-
-type RequestData = {
-  endpoint: string;
-  method?: MethodType;
-  requestBody?: { [index: string]: any };
-  queryParams?: { [index: string]: any };
-  service?: ServiceType;
 };
 
 export function useAxios<T>({
@@ -77,20 +72,16 @@ export function useAxios<T>({
 
 export const getRequestPromise = async <T>({
   endpoint,
-  method = 'GET',
+  method = "GET",
   requestBody,
   queryParams,
-  service = 'MANAGER',
+  service = "MANAGER",
 }: RequestData): Promise<GenericResponse<T>> => {
   const hostUrl = getHostUrlForService(service);
   const url = generateUrlString(hostUrl, endpoint, queryParams);
   const {
     data: { data, error_code, error_description, status },
-  } = await axios({
-    method,
-    url,
-    data: requestBody,
-  });
+  } = await axiosFetch({ method, url, data: requestBody });
 
   return {
     status,
@@ -98,6 +89,16 @@ export const getRequestPromise = async <T>({
     errorCode: error_code,
     errorDescription: error_description,
   };
+};
+
+const axiosFetch = ({ method, url, data }: AxiosRequestConfig) => {
+  const username = localStorage.getItem("username");
+  return axios({
+    method,
+    url,
+    data,
+    headers: { "user-account-id": username },
+  });
 };
 
 const getHostUrlForService = (service: ServiceType) => {
