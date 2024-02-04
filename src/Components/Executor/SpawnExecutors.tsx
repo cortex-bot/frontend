@@ -1,5 +1,12 @@
 import React, { useCallback, useMemo } from "react";
-import { Button, Paper, Switch, FormLabel, Typography, Box } from "@mui/material";
+import {
+  Button,
+  Paper,
+  Switch,
+  FormLabel,
+  Typography,
+  Box,
+} from "@mui/material";
 // @ts-expect-error TS(6142): Module '../Algotrading/StrategySelector' was resol... Remove this comment to see the full error message
 import { StrategySelector } from "../Algotrading/StrategySelector";
 import Select from "react-select";
@@ -22,7 +29,7 @@ import {
   useGetBrokerList,
   useGetStrategyList,
   useGetTradeTypeList,
-  useInitiateExecutorApi,
+  useInititateExecutor,
 } from "../../api/executor/requests";
 
 const defaultValues = {
@@ -66,11 +73,8 @@ export default function SpawnExecutors() {
   const { getStrategyList, data: strategyListData } = useGetStrategyList();
   const { getBrokersList, data: brokerListData } = useGetBrokerList();
   const { getTradeTypeList, data: tradeTypeListData } = useGetTradeTypeList();
-  const {
-    inititateExecutor,
-    status: inititateExecutorStatus,
-    error: initiateExecutorError,
-  } = useInitiateExecutorApi();
+
+  const { inititateExecutor } = useInititateExecutor();
 
   // drop down selections
   const strategyList = useMemo(
@@ -196,7 +200,8 @@ export default function SpawnExecutors() {
             name="start_date"
             type="date"
             value={formValues.start_date}
-            label={"Start Date"} />
+            label={"Start Date"}
+          />
 
           <TextField
             variant="standard"
@@ -204,7 +209,8 @@ export default function SpawnExecutors() {
             name="end_date"
             type="date"
             value={formValues.end_date}
-            label={"End Date"} />
+            label={"End Date"}
+          />
         </div>
 
         <div className="grid md:grid-cols-2 gap-2 mt-3">
@@ -216,7 +222,8 @@ export default function SpawnExecutors() {
             multiline="true"
             type="textarea"
             value={formValues.remarks}
-            label={" remarks "} />
+            label={" remarks "}
+          />
 
           <TextField
             variant="standard"
@@ -226,7 +233,8 @@ export default function SpawnExecutors() {
             multiline="false"
             type="textarea"
             value={formValues.username}
-            label={" username "} />
+            label={" username "}
+          />
         </div>
         <div className="grid grid-col-1 grid-flow-col m-3 align-bottom">
           <Button
@@ -239,7 +247,7 @@ export default function SpawnExecutors() {
           </Button>
         </div>
       </Paper>
-    </ Box>
+    </Box>
   );
 }
 

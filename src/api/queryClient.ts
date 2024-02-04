@@ -83,3 +83,43 @@ export const usePut = <T>({
     onSuccess: successHandler,
   });
 };
+
+// TODO: Add success/failure notifications. Think about whether to put it in getRequestPromise or let react query handlers do the job
+export const usePost = <T>({
+  endpoint,
+  service,
+  invalidateEndpoint,
+  successNotificationMessage,
+  failureNotificationMessage,
+}: UsePutData) => {
+  const queryClient = useQueryClient();
+  const successHandler = () => {
+    if (invalidateEndpoint) {
+      queryClient.invalidateQueries({
+        queryKey: getQueryKeyForEndpoint(invalidateEndpoint),
+      });
+    }
+  };
+
+  const postData = async ({
+    requestBody,
+    queryParams,
+  }: {
+    requestBody?: { [index: string]: any };
+    queryParams?: { [index: string]: any };
+  }) => {
+    const response = await getRequestPromise<T>({
+      endpoint,
+      service,
+      method: "POST",
+      requestBody,
+      queryParams,
+    });
+    return response.data;
+  };
+
+  return useMutation({
+    mutationFn: postData,
+    onSuccess: successHandler,
+  });
+};

@@ -9,7 +9,7 @@ import {
   getTradeTypeList as getTradeTypeListEndpoint,
 } from "../../configs.json";
 import { ManagerEndpoints } from "../endpoints";
-import { useGet } from "../queryClient";
+import { useGet, usePost } from "../queryClient";
 
 export const useGetActiveExecutors = () => {
   return useGet<any[]>({
@@ -17,16 +17,19 @@ export const useGetActiveExecutors = () => {
   });
 };
 
-export const useInitiateExecutorApi = () => {
-  const { commonFetch, status, error, data } = useAxios<ExecutorResponse>({
-    url: spawnNewExecutor,
-    method: "POST",
+export const useInititateExecutor = () => {
+  const { mutate } = usePost({
+    endpoint: spawnNewExecutor,
+    invalidateEndpoint: ManagerEndpoints.activeExecutorsList,
   });
 
-  const inititateExecutor = (requestBody: ExecutorRequest) =>
-    commonFetch({ requestBody });
+  const inititateExecutor = (requestBody: ExecutorRequest) => {
+    mutate({
+      requestBody,
+    });
+  };
 
-  return { inititateExecutor, status, error, data };
+  return { inititateExecutor };
 };
 
 export const useGetStrategyList = () => {
