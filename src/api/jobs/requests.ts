@@ -7,14 +7,18 @@ import {
   resumeJob as resumeJobEndpoint,
   deleteJob as deleteJobEndpoint,
 } from "../../configs.json";
+import { useGet, usePut } from "../queryClient";
 
 export const useGetAllJobs = () => {
-  const { commonFetch, status, error, data } = useAxios<JobData[]>({
-    url: getAllJobsEndpoint,
-    method: "GET",
+  return useGet({
+    endpoint: getAllJobsEndpoint,
   });
+  // const { commonFetch, status, error, data } = useAxios<JobData[]>({
+  //   url: getAllJobsEndpoint,
+  //   method: "GET",
+  // });
 
-  return { getAllJobs: commonFetch, status, error, data };
+  // return { getAllJobs: commonFetch, status, error, data };
 };
 
 export const getJob = ({ jobId }: { jobId: string }) => {
@@ -26,32 +30,53 @@ export const getJob = ({ jobId }: { jobId: string }) => {
   });
 };
 
-export const pauseJob = ({ jobId }: { jobId: string }) => {
-  return getRequestPromise<string>({
+export const usePauseJob = () => {
+  const { mutate, isSuccess } = usePut({
     endpoint: pauseJobEndpoint,
-    method: "PUT",
-    queryParams: {
-      ref_id: jobId,
-    },
+    invalidateEndpoint: getAllJobsEndpoint,
   });
+
+  const pauseJob = ({ jobId }: { jobId: string }) => {
+    mutate({
+      queryParams: {
+        ref_id: jobId,
+      },
+    });
+  };
+
+  return { pauseJob, isSuccess };
 };
 
-export const resumeJob = ({ jobId }: { jobId: string }) => {
-  return getRequestPromise<string>({
+export const useResumeJob = () => {
+  const { mutate } = usePut({
     endpoint: resumeJobEndpoint,
-    method: "PUT",
-    queryParams: {
-      ref_id: jobId,
-    },
+    invalidateEndpoint: getAllJobsEndpoint,
   });
+
+  const resumeJob = ({ jobId }: { jobId: string }) => {
+    mutate({
+      queryParams: {
+        ref_id: jobId,
+      },
+    });
+  };
+
+  return { resumeJob };
 };
 
 export const deleteJob = ({ jobId }: { jobId: string }) => {
-  return getRequestPromise<string>({
+  const { mutate } = usePut({
     endpoint: deleteJobEndpoint,
-    method: "PUT",
-    queryParams: {
-      ref_id: jobId,
-    },
+    invalidateEndpoint: getAllJobsEndpoint,
   });
+
+  const deleteJob = ({ jobId }: { jobId: string }) => {
+    mutate({
+      queryParams: {
+        ref_id: jobId,
+      },
+    });
+  };
+
+  return { deleteJob };
 };

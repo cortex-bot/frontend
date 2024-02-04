@@ -1,32 +1,24 @@
 import Button from "@mui/material/Button";
 import { Box } from "@mui/system";
-import { clone, forEach, has, map, uniqueId, values } from "lodash";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useStore } from "../../stores/store";
+import { map } from "lodash";
+import { useMemo } from "react";
 import {
   deleteJob,
-  getJob,
-  pauseJob,
-  resumeJob,
   useGetAllJobs,
+  usePauseJob,
+  useResumeJob,
 } from "../../api/jobs/requests";
 import { JobData } from "../../api/jobs/types";
 import MuiTable from "../common/Table/MuiTable";
-import { JOB_COLUMNS, POLLING_INTERVAL } from "./consts";
+import { JOB_COLUMNS } from "./consts";
 import { Job } from "./types";
 
 type PropTypes = {};
 
 const JobsDashboard = (props: PropTypes) => {
-  const addNotification = useStore((state) => state.addNotification);
-  const { getAllJobs, data: jobs } = useGetAllJobs();
-
-  useEffect(() => {
-    getAllJobs();
-    const intervalId = setInterval(getAllJobs, POLLING_INTERVAL, true);
-
-    return () => clearInterval(intervalId);
-  }, []);
+  const { data: jobs } = useGetAllJobs();
+  const { pauseJob } = usePauseJob();
+  const { resumeJob } = useResumeJob();
 
   const parseJobData = (data: JobData): Job => {
     return {
@@ -40,14 +32,7 @@ const JobsDashboard = (props: PropTypes) => {
   const parsedJobs = useMemo(() => map(jobs, parseJobData), [jobs]);
 
   const handlePauseJob = async (jobId: string) => {
-    const { status } = await pauseJob({ jobId });
-    if (status === "SUCCESS") {
-      addNotification({
-        id: uniqueId("notification"),
-        message: `Job: ${jobId} paused successfully`,
-        type: "SUCCESS",
-      });
-    }
+    pauseJob({ jobId });
   };
 
   const handleResumeJob = (jobId: string) => {

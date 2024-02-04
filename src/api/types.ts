@@ -11,6 +11,7 @@ export type RequestData = {
   requestBody?: { [index: string]: any };
   queryParams?: { [index: string]: any };
   service?: ServiceType;
+  invalidateEndpoint?: string;
 };
 
 export type GenericResponse<T> = {

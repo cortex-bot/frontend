@@ -14,9 +14,7 @@ const OrdersDashboard = () => {
         flexDirection: "column",
       }}
     >
-      {ordersLoaded && (
-        <MuiTable title="Orders" data={orders} columns={ORDER_COLUMNS} />
-      )}
+      <MuiTable title="Orders" data={orders} columns={ORDER_COLUMNS} />
     </Box>
   );
 };
