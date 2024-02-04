@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { Box, Button } from "@mui/material";
+import { useGetActiveExecutors } from "../../api/executor/requests";
+import { EXECUTOR_COLUMNS } from "./consts";
 
 function updateExecutorStatusApi(executorId: any, status: any) {
   const FetchURL = host + updateExecutorStatus;
@@ -56,8 +58,7 @@ function deactivateExecutorApi(executorId: any) {
 }
 
 function ActiveExecutors() {
-  const [data, setdata] = useState([]);
-  const [columns, setcolumns] = useState([]);
+  const { data: activeExecutorsList } = useGetActiveExecutors();
 
   const executorIdName = "executor_id";
 
@@ -92,51 +93,33 @@ function ActiveExecutors() {
     );
   };
 
-  const additionalColumn = [
-    {
-      title: "Update Status",
-      field: "updateStatus",
-      render: renderPauseButton,
-      disableClickEventBubbling: true,
-    },
-    {
-      title: "Deactivate Executor",
-      field: "deactivate",
-      render: renderDeactivateButton,
-      disableClickEventBubbling: true,
-    },
-  ];
-
-  useEffect(() => {
-    const FetchURL = host + activeExecutorsList;
-    (async () => {
-      var result = await axios(FetchURL);
-      console.log("result data", result);
-      // @ts-expect-error TS(2739): Type '{ executor_start_time: any; status: any; exe... Remove this comment to see the full error message
-      result = parseList(result.data);
-      console.log("result data updated ", result);
-      if ((result as any).length === 0) {
-        console.log("null data");
-        return;
-      }
-      // @ts-expect-error TS(2345): Argument of type 'AxiosResponse<any, any>' is not ... Remove this comment to see the full error message
-      setdata(result);
-      var cols = getColumns(result);
-      cols.push(...additionalColumn);
-      setcolumns(cols);
-    })();
-  }, []);
+  const getActionColumns = () => {
+    return [
+      {
+        title: "Update Status",
+        render: renderPauseButton,
+      },
+      {
+        title: "Deactivate Executor",
+        render: renderDeactivateButton,
+      },
+    ];
+  };
 
   // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
   const notFound = <div className="loading">Loading data</div>;
 
+  const getColumns = () => {
+    return [...EXECUTOR_COLUMNS, ...getActionColumns()];
+  };
+
   return (
-    <Box sx={{ flexBasis: "0", flexGrow: "1", minHeight: '400px' }}>
-      {data && columns ? (
-        <MuiTable title={"Active Executors"} data={data} columns={columns} />
-      ) : (
-        notFound
-      )}
+    <Box sx={{ flexBasis: "0", flexGrow: "1", minHeight: "400px" }}>
+      <MuiTable
+        title={"Active Executors"}
+        data={activeExecutorsList}
+        columns={getColumns()}
+      />
     </Box>
   );
 }

@@ -14,8 +14,10 @@ import { visuallyHidden } from "@mui/utils";
 import {
   filter,
   forEach,
+  get,
   has,
   includes,
+  isEmpty,
   isFunction,
   lowerCase,
   map,
@@ -140,19 +142,32 @@ const MuiTable = <T,>(props: PropTypes<T>) => {
     return slice(sortedFilteredRows, startIndex, endIndex);
   }, [page, rowsPerPage, sortedFilteredRows]);
 
+  const getCellContent = <T,>(column: Column<T>, row) => {
+    const { field, render, valueType } = column;
+    if (isFunction(render)) {
+      return render(row);
+    }
+
+    if (isEmpty(field)) {
+      return null;
+    }
+
+    const cellValue = get(row, field);
+
+    if (valueType === "DATETIME") {
+      return getFormattedDateTime(cellValue);
+    }
+
+    return cellValue;
+  };
+
   const gridRows = useMemo(
     () =>
       map(paginatedSortedFilteredRows, (row, index) => {
         return (
           <TableRow key={index}>
             {map(columns, (column) => {
-              const { field, render, valueType } = column;
-              const cellContent = isFunction(render)
-                ? render(row)
-                : valueType === "DATETIME"
-                ? getFormattedDateTime(row[field])
-                : row[field];
-
+              const cellContent = getCellContent<T>(column, row);
               return <TableCell>{cellContent}</TableCell>;
             })}
           </TableRow>
@@ -190,6 +205,10 @@ const MuiTable = <T,>(props: PropTypes<T>) => {
 };
 
 const getFormattedDateTime = (isoDateTime: string) => {
+  if (isEmpty(isoDateTime)) {
+    return "";
+  }
+
   return DateTime.fromISO(isoDateTime).toLocaleString(DateTime.DATETIME_MED);
 };
 
