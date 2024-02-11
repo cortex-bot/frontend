@@ -5,7 +5,7 @@
 // Highcharts.setOptions(darkUnicaTheme);
 
 export const addZeroAtstart = (x: any) => {
-  if (x < 10) return '0' + x;
+  if (x < 10) return "0" + x;
   return x;
 };
 
@@ -30,7 +30,7 @@ export const convertListToDropdown = (data: any) => {
 
 export const convertStockDataToOhlc = (stockData: any, name: any) => {
   let ohlc = [];
-  console.log('stockData: ', stockData.length);
+  console.log("stockData: ", stockData.length);
   for (let i = 0; i < stockData.length; i++) {
     ohlc.push([
       convertDateToIST(new Date(stockData[i].Date)),
@@ -45,7 +45,7 @@ export const convertStockDataToOhlc = (stockData: any, name: any) => {
 
   return {
     navigation: {
-      bindingsClassName: 'tools-container', // informs Stock Tools where to look for HTML elements for adding technical indicators, annotations etc.
+      bindingsClassName: "tools-container", // informs Stock Tools where to look for HTML elements for adding technical indicators, annotations etc.
     },
     stockTools: {
       gui: {
@@ -54,44 +54,44 @@ export const convertStockDataToOhlc = (stockData: any, name: any) => {
     },
     xAxis: [
       {
-        type: 'datetime',
+        type: "datetime",
         dateTimeLabelFormats: {
-          month: '%e. %b',
-          year: '%b',
+          month: "%e. %b",
+          year: "%b",
         },
-        title: { text: 'Dates' },
+        title: { text: "Dates" },
       },
     ],
     yAxis: [
       {
         labels: {
-          align: 'left',
+          align: "left",
         },
-        height: '100%',
+        height: "100%",
         resize: {
           enabled: true,
         },
       },
       {
         labels: {
-          align: 'left',
+          align: "left",
         },
-        top: '80%',
-        height: '80%',
+        top: "80%",
+        height: "80%",
         offset: 0,
       },
     ],
     tooltip: {
-      shape: 'square',
-      headerShape: 'callout',
+      shape: "square",
+      headerShape: "callout",
       borderWidth: 0,
       shadow: false,
     },
     series: [
       {
-        type: 'candlestick',
-        id: name + '-ohlc',
-        name: name + ' Stock Price',
+        type: "candlestick",
+        id: name + "-ohlc",
+        name: name + " Stock Price",
         data: ohlc,
       },
       // {
@@ -123,9 +123,9 @@ export const getTodaysDate = () => {
   let today = new Date();
   return (
     today.getFullYear() +
-    '-' +
+    "-" +
     addZeroAtstart(today.getMonth()) +
-    '-' +
+    "-" +
     addZeroAtstart(today.getDate())
   );
 };
@@ -147,20 +147,20 @@ export function formatDatetime(timestamp: any) {
 
   // Handle cases where hours and/or minutes exceed 24 and 60, respectively
   // @ts-expect-error TS(2550): Property 'padStart' does not exist on type 'string... Remove this comment to see the full error message
-  const formattedHours = (hoursIST % 24).toString().padStart(2, '0');
+  const formattedHours = (hoursIST % 24).toString().padStart(2, "0");
   // @ts-expect-error TS(2550): Property 'padStart' does not exist on type 'string... Remove this comment to see the full error message
-  const formattedMinutes = (minutesIST % 60).toString().padStart(2, '0');
+  const formattedMinutes = (minutesIST % 60).toString().padStart(2, "0");
 
   // Format the date and time string
   // @ts-expect-error TS(2550): Property 'padStart' does not exist on type 'string... Remove this comment to see the full error message
   const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
     .toString()
-    .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
   // @ts-expect-error TS(2550): Property 'padStart' does not exist on type 'string... Remove this comment to see the full error message
   const formattedTime = `${formattedHours}:${formattedMinutes}:${date
     .getSeconds()
     .toString()
-    .padStart(2, '0')}`;
+    .padStart(2, "0")}`;
 
   return `${formattedDate} ${formattedTime}`;
 }
@@ -169,7 +169,7 @@ export const PlotChart = (
   data: any,
   name: any,
   trades: any,
-  isCandleStickChart: any,
+  isCandleStickChart: any
 ) => {
   const buySellData = trades
     ? trades.map((trade: any) => ({
@@ -180,17 +180,17 @@ export const PlotChart = (
         quantity: String(trade.quantity),
 
         marker:
-          trade.action === 'BUY'
+          trade.action === "BUY"
             ? {
-                symbol: 'triangle',
-                fillColor: '#83ff74',
-                lineColor: 'black',
+                symbol: "triangle",
+                fillColor: "#83ff74",
+                lineColor: "black",
                 lineWidth: 1,
               }
             : {
-                symbol: 'triangle-down',
-                fillColor: '#ff0000',
-                lineColor: 'black',
+                symbol: "triangle-down",
+                fillColor: "#ff0000",
+                lineColor: "black",
                 lineWidth: 1,
               },
       }))
@@ -199,53 +199,58 @@ export const PlotChart = (
   return {
     // themes: darkUnicaTheme,
     navigation: {
-      bindingsClassName: 'tools-container',
+      bindingsClassName: "tools-container",
     },
     stockTools: {
       gui: {
         enabled: true,
       },
     },
+    containerProps: {
+      style: {
+        height: "100%",
+      },
+    },
     xAxis: {
-      type: 'datetime',
+      type: "datetime",
       dateTimeLabelFormats: {
-        millisecond: '%H:%M:%S.%L',
-        second: '%H:%M:%S',
-        minute: '%H:%M',
-        hour: '%H:%M',
-        day: '%e %b',
-        month: '%e. %b',
-        year: '%b',
+        millisecond: "%H:%M:%S.%L",
+        second: "%H:%M:%S",
+        minute: "%H:%M",
+        hour: "%H:%M",
+        day: "%e %b",
+        month: "%e. %b",
+        year: "%b",
       },
       title: {
-        text: 'Timestamp',
+        text: "Timestamp",
       },
     },
     yAxis: [
       {
         labels: {
-          align: 'left',
+          align: "left",
         },
-        height: '80%',
+        height: "80%",
         resize: {
           enabled: true,
         },
       },
       {
         labels: {
-          align: 'left',
+          align: "left",
         },
-        top: '80%',
-        height: '20%',
+        top: "80%",
+        height: "20%",
         offset: 0,
       },
     ],
     tooltip: {
-      shape: 'square',
-      headerShape: 'callout',
+      shape: "square",
+      headerShape: "callout",
       pointFormatter: function () {
         return `<b>Value: ${parseFloat((this as any).y).toFixed(
-          2,
+          2
         )}</b><br/>Time: ${formatDatetime((this as any).x)}`;
       },
       borderWidth: 0,
@@ -272,15 +277,15 @@ export const PlotChart = (
 const generateSeriesForGraph = (
   data: any,
   buySellData: any,
-  isCandleStickChart: any,
+  isCandleStickChart: any
 ) => {
-  console.log('stock data: ', data);
+  console.log("stock data: ", data);
 
   if (data == null)
     return {
-      type: 'candlestick',
-      id: 'candlestick',
-      name: 'Stock Price',
+      type: "candlestick",
+      id: "candlestick",
+      name: "Stock Price",
       data: null,
     };
 
@@ -297,15 +302,15 @@ const generateSeriesForGraph = (
 
     return [
       {
-        type: 'spline',
-        id: 'line chart',
-        name: 'Stock Price',
+        type: "spline",
+        id: "line chart",
+        name: "Stock Price",
         data: plotData,
       },
       {
-        type: 'scatter',
-        id: 'buySignal',
-        name: 'Buy sell Signal',
+        type: "scatter",
+        id: "buySignal",
+        name: "Buy sell Signal",
         data: buySellData,
       },
     ];
@@ -323,15 +328,15 @@ const generateSeriesForGraph = (
 
     return [
       {
-        type: 'candlestick',
-        id: 'candlestick',
-        name: 'Stock Price',
+        type: "candlestick",
+        id: "candlestick",
+        name: "Stock Price",
         data: plotData,
       },
       {
-        type: 'scatter',
-        id: 'buySignal',
-        name: 'Buy sell Signal',
+        type: "scatter",
+        id: "buySignal",
+        name: "Buy sell Signal",
         data: buySellData,
       },
     ];

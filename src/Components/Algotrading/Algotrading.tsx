@@ -15,7 +15,7 @@ import TradeChart from "./TradeChart";
 import { StrategySelector } from "./StrategySelector";
 // @ts-expect-error TS(2732): Cannot find module './default_template.json'. Cons... Remove this comment to see the full error message
 import { template } from "./default_template.json";
-import "./Algotrading.css";
+import "./styles/Algotrading.css";
 
 // Utility function to get stock market open time
 const getStockMarketOpenTime = () => {
@@ -61,11 +61,7 @@ function Algotrading() {
 
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className="m-1 p-0 min-h-screen flex flex-col">
-      <Helmet>
-        <HighchartsDependencies /> {/* External Highcharts dependencies */}
-      </Helmet>
-
+    <div className="m-1 p-0 h-screen flex flex-col gap-4">
       <div className="m-1 grid md:grid-cols-1 lg:grid-cols-4 gap-4 flex-grow">
         {/* Chart component */}
         <div className="col-span-1 lg:col-span-3">
@@ -73,7 +69,12 @@ function Algotrading() {
             className="h-96 lg:h-full bg-transparent border border-gray-300 rounded-md overflow-hidden"
             style={{ maxHeight: "55vh" }}
           >
-            {TradeChart(formValues, trades, "h-100 w-100", isCandleStickChart)}
+            <TradeChart
+              formValues={formValues}
+              trades={trades}
+              className="h-100 w-100"
+              isCandleStickChart={isCandleStickChart}
+            />
           </div>
         </div>
 
