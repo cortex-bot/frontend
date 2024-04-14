@@ -1,2 +1,11 @@
 @import "https://code.highcharts.com/css/stocktools/gui.css";
 @import "https://code.highcharts.com/css/annotations/popup.css";
+
+
+/* Note: this is brittle. It's needed because highcharts renders the buttons as span and sets a 
+background-image. this should be fixed in highcharts library */
+.highcharts-menu-item-btn {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
