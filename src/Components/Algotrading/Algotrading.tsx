@@ -2,7 +2,15 @@
 import React, { useState } from "react";
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import { Helmet } from "react-helmet";
-import { Button, Paper, Switch, FormLabel, Typography } from "@mui/material";
+import {
+  Button,
+  Paper,
+  Switch,
+  FormLabel,
+  Typography,
+  Box,
+  Grid,
+} from "@mui/material";
 // @ts-expect-error TS(6142): Module '../../utils/HighchartDependencies' was res... Remove this comment to see the full error message
 import HighchartsDependencies from "../../utils/HighchartDependencies";
 // @ts-expect-error TS(6142): Module './Editor' was resolved to 'D:/workspace/pr... Remove this comment to see the full error message
@@ -16,6 +24,8 @@ import { StrategySelector } from "./StrategySelector";
 // @ts-expect-error TS(2732): Cannot find module './default_template.json'. Cons... Remove this comment to see the full error message
 import { template } from "./default_template.json";
 import "./styles/Algotrading.css";
+import { map } from "lodash";
+import AnalysisBox from "./AnalysisBox";
 
 // Utility function to get stock market open time
 const getStockMarketOpenTime = () => {
@@ -60,94 +70,63 @@ function Algotrading() {
   };
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className="m-1 p-0 h-screen flex flex-col gap-4">
-      <div className="m-1 grid md:grid-cols-1 lg:grid-cols-4 gap-4 flex-grow">
-        {/* Chart component */}
-        <div className="col-span-1 lg:col-span-3">
-          <div
-            className="h-96 lg:h-full bg-transparent border border-gray-300 rounded-md overflow-hidden"
-            style={{ maxHeight: "55vh" }}
-          >
-            <TradeChart
-              formValues={formValues}
-              trades={trades}
-              className="h-100 w-100"
-              isCandleStickChart={isCandleStickChart}
-            />
-          </div>
-        </div>
-
-        {/* Analysis component */}
-        <div className="col-span-1 lg:col-span-1 flex flex-col">
-          <div className="text-center font-semibold text-heading mb-3">
-            Analysis
-          </div>
-          <div className="flex-grow overflow-x-auto">
-            {analysis ? (
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <div className="table-report">
-                {Object.keys(analysis).map((key) => (
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <div className="table-row" key={key}>
-                    <div className="key">{key}</div>
-                    <div className="value">
-                      {typeof analysis[key] === "number"
-                        ? Math.round(analysis[key] * 1000) / 1000
-                        : String(analysis[key])}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <div className="text-gray-500">Strategy not executed yet</div>
-            )}
-          </div>
-
-          {/* Toggle button for line chart and candlestick visualization */}
-          <div className="mt-4">
-            <Paper className="p-2 flex mb-0">
-              Candle Stick Chart
-              <Switch
-                checked={isCandleStickChart}
-                name="enable candle stick chart"
-                onChange={updateCandleStickChart}
-                // @ts-expect-error TS(2322): Type '{ checked: boolean; name: string; onChange: ... Remove this comment to see the full error message
-                label="enable candle stick chart"
-              />
-            </Paper>
-          </div>
-        </div>
-      </div>
-
-      {/*// @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <div
-        id="filter_code_panel"
-        className="grid md:grid-cols-1 lg:grid-cols-4 gap-4 md:h-100"
+    <Grid container spacing={2} sx={{ p: "10px", height: "100vh" }}>
+      <Grid item xs={12} sm={9} sx={{ height: "50%" }}>
+        <TradeChart
+          formValues={formValues}
+          trades={trades}
+          isCandleStickChart={isCandleStickChart}
+        />
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        sm={3}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          height: "50%",
+          gap: "10px",
+        }}
       >
-        <div className="col-span-1 lg:col-span-3 ">
-          <Editor code={code} setCode={setCode} />
-        </div>
+        <AnalysisBox analysis={analysis} />
+        <Paper sx={{ display: "flex", alignItems: "center", px: "1rem" }}>
+          <Typography>Candle Stick Chart</Typography>
+          <Switch
+            checked={isCandleStickChart}
+            name="enable candle stick chart"
+            onChange={updateCandleStickChart}
+            label="enable candle stick chart"
+          />
+        </Paper>
+      </Grid>
 
-        <div className="col-span-1 lg:col-span-1 rounded-md shadow-md">
-          <StrategySelector
-            setCode={setCode}
-            formValues={formValues}
-            setFormValues={setFormValues}
-          />
-          <Panel
-            username="alvin369"
-            formValues={formValues}
-            setFormValues={setFormValues}
-            code={code}
-            settrades={setTrades}
-            setAnalysis={setAnalysis}
-            description={null}
-          />
-        </div>
-      </div>
-    </div>
+      <Grid item xs={12} sm={9} sx={{ height: "50%" }}>
+        <Editor code={code} setCode={setCode} />
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        sm={3}
+        sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+      >
+        <StrategySelector
+          setCode={setCode}
+          formValues={formValues}
+          setFormValues={setFormValues}
+        />
+        <Panel
+          username="alvin369"
+          formValues={formValues}
+          setFormValues={setFormValues}
+          code={code}
+          settrades={setTrades}
+          setAnalysis={setAnalysis}
+          description={null}
+        />
+      </Grid>
+    </Grid>
   );
 }
 
