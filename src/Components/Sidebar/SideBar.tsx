@@ -17,6 +17,7 @@ import logo from "../../assets/logo.png";
 import { useState, useEffect } from "react";
 import "./Sidebar.css";
 import { SvgIcon } from "@mui/material";
+import SideBarIcon from "./SideBarIcon";
 
 const SideBar = () => {
   const [userProfilePic, setUserProfilePic] = useState("");
@@ -125,12 +126,5 @@ const SideBar = () => {
     </div>
   );
 };
-
-const SideBarIcon = ({ icon, path }: any) => (
-  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-  <Link to={path}>
-    <div className="sidebar-icon">{icon}</div>
-  </Link>
-);
 
 export default SideBar;
