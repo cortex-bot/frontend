@@ -8,7 +8,8 @@ import {
   UseQueryOptions,
 } from "@tanstack/react-query";
 import _, { capitalize, chain, noop } from "lodash";
-import { getRequestPromise } from "./axios";
+import { useAppStore } from "../stores/store";
+import { getRequestPromise, useAxios } from "./axios";
 import { RequestData, ServiceType } from "./types";
 
 type UsePutData = {
@@ -23,34 +24,61 @@ export const getQueryKeyForEndpoint = (endpoint: string): QueryKey => {
   return [chain(endpoint).split(/[-/]/).map(capitalize).join("").value()];
 };
 
-export const useFetch = <T, R, Q = never>({
+export const useFetch = <T, R = never, Q = never>({
   endpoint,
   service,
   requestBody,
   queryParams,
   method = "GET",
   options,
+  showErrorNotification = true,
+  customErrorMessage,
 }: RequestData<R, Q> & {
   options?: Partial<UseQueryOptions<T | null, Error, T | null, QueryKey>>;
 }) => {
+  const addNotification = useAppStore((state) => state.addNotification);
   const queryKey = [getQueryKeyForEndpoint(endpoint), requestBody, queryParams];
-  const getData = async () => {
-    const response = await getRequestPromise<T, R, Q>({
-      endpoint,
-      method,
-      requestBody,
-      queryParams,
-      service,
-    });
-    return response.data;
-  };
-  return useQuery({
-    ...options,
-    queryKey,
-    queryFn: getData,
-  });
-};
+  try {
+    const getData = async () => {
+      const { data, errorCode, errorDescription, status } =
+        await getRequestPromise<T, R, Q>({
+          endpoint,
+          method,
+          requestBody,
+          queryParams,
+          service,
+        });
 
+      if (status === "FAILURE" && showErrorNotification) {
+        addNotification({
+          id: _.uniqueId("notification"),
+          message: customErrorMessage ?? `${errorCode}: ${errorDescription}`,
+          type: "error",
+        });
+      }
+
+      return data;
+    };
+    return useQuery({
+      ...options,
+      queryKey,
+      queryFn: getData,
+    });
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occured";
+
+    console.log(errorMessage);
+    if (showErrorNotification) {
+      addNotification({
+        id: _.uniqueId("notification"),
+        message: customErrorMessage ?? errorMessage,
+        type: "error",
+      });
+    }
+    throw new Error(errorMessage);
+  }
+};
 // TODO: Add success/failure notifications. Think about whether to put it in getRequestPromise or let react query handlers do the job
 export const usePut = <T>({
   endpoint,

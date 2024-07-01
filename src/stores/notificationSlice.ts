@@ -3,7 +3,7 @@ import { StateCreator } from "zustand";
 interface Notification {
   id: string;
   message: string;
-  type?: "SUCCESS" | "ERROR" | "INFO";
+  type?: "success" | "info" | "warning" | "error";
 }
 
 export interface NotificationSlice {

@@ -1,6 +1,4 @@
-
-
-export type Status = "SUCCESS" | "FAILURE" | "PENDING";
+export type Status = "SUCCESS" | "FAILURE" | "PENDING" | "UNKNOWN";
 
 export type ServiceType = "MANAGER" | "DATA" | "BROKER";
 export type MethodType = "GET" | "POST" | "PUT" | "DELETE";
@@ -12,6 +10,8 @@ export type RequestData<R, Q> = {
   queryParams?: Q;
   service?: ServiceType;
   invalidateEndpoint?: string;
+  showErrorNotification?: boolean;
+  customErrorMessage?: string;
 };
 
 export type GenericResponse<T> = {
@@ -19,4 +19,4 @@ export type GenericResponse<T> = {
   data: T | null;
   errorCode?: string;
   errorDescription?: string;
-}
+};

@@ -21,11 +21,7 @@ import AnalysisBox from "./AnalysisBox";
 import { useAppStore } from "../../stores/store";
 
 function Algotrading() {
-  const [analysis, setAnalysis] = useState(null);
   const [isCandleStickChart, setIsCandleStickChart] = useState(true);
-  const code = useAppStore((state) => state.code);
-  const setCode = useAppStore((state) => state.setCode);
-
   const updateCandleStickChart = (e: any) => {
     setIsCandleStickChart(e.target.checked);
   };
@@ -47,7 +43,7 @@ function Algotrading() {
           gap: "10px",
         }}
       >
-        <AnalysisBox analysis={analysis} />
+        <AnalysisBox />
         <Paper sx={{ display: "flex", alignItems: "center", px: "1rem" }}>
           <FormControlLabel
             control={
@@ -62,7 +58,7 @@ function Algotrading() {
       </Grid>
 
       <Grid item xs={12} sm={9} sx={{ height: "50%" }}>
-        <Editor code={code} setCode={setCode} />
+        <Editor />
       </Grid>
       <Grid
         item

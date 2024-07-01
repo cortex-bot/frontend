@@ -10,8 +10,6 @@ import {
   GetStockDataRequest,
   StockData,
 } from "./types";
-import { useQuery } from "@tanstack/react-query";
-import { getRequestPromise } from "../axios";
 
 export const useExecuteStrategy = (
   executeStrategyRequest: ExecuteStrategyRequest

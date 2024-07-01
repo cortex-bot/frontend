@@ -5,9 +5,13 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-language_tools";
 import "ace-builds/src-noconflict/ext-beautify";
 import "./styles/Editor.css"; // Import the CSS file for custom styling
+import { useAppStore } from "../../stores/store";
 
-function Editor({ code, setCode }: any) {
+function Editor() {
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const code = useAppStore((state) => state.code);
+  const setCode = useAppStore((state) => state.setCode);
+
 
   useEffect(() => {
     const handleEscKey = (event: any) => {
