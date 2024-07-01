@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo, useEffect } from "react";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import indicatorsAll from "highcharts/indicators/indicators-all";
@@ -11,6 +11,14 @@ import { PlotChart } from "./Utils";
 import "./styles/TradeChart.css";
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
 import { dataService, getStockData } from "../../configs.json";
+import { useAppStore } from "../../stores/store";
+import useLocalStorage, { BrokerDetails } from "../../hooks/useLocalStorage";
+import {
+  useExecuteStrategy,
+  useGetStocksData,
+} from "../../api/algotrading/requests";
+import { Trade } from "../../api/algotrading/types";
+import { useAnalysis } from "./hooks";
 
 indicatorsAll(Highcharts);
 annotationsAdvanced(Highcharts);
@@ -21,11 +29,41 @@ stockTools(Highcharts);
 // Apply the theme using setOptions()
 // Highcharts.setOptions(Highcharts.theme.darkUnicaTheme);
 
+const EMPTY_TRADES_ARRAY: Trade[] = [];
+
 function TradeChart(props: any) {
-  const { formValues, trades, className, isCandleStickChart } = props;
-  const [options, setOptions] = useState(null);
-  const [stockData, setStockData] = useState(null);
-  const [stockName, setStockName] = useState(null);
+  const { className, isCandleStickChart } = props;
+  // const [options, setOptions] = useState(null);
+
+  const { storedValue: userName } = useLocalStorage<string | undefined>(
+    "username"
+  );
+  const { storedValue: brokerDetails } = useLocalStorage<
+    BrokerDetails | undefined
+  >("brokerDetails");
+
+  const { trades, strategyConfig } = useAnalysis();
+
+  const getStockDataRequest = useMemo(
+    () => ({
+      ticker: strategyConfig.ticker ?? "TATAMOTORS.NS",
+      startDate: strategyConfig.startDate,
+      endDate: strategyConfig.endDate,
+      interval: strategyConfig.interval ?? "1d",
+      username: userName,
+      broker_name: brokerDetails?.name,
+    }),
+    [
+      strategyConfig.ticker,
+      strategyConfig.startDate,
+      strategyConfig.endDate,
+      strategyConfig.interval,
+      userName,
+      brokerDetails?.name,
+    ]
+  );
+
+  const { data: stockData } = useGetStocksData(getStockDataRequest);
 
   const api_url = dataService + getStockData;
   const config = {
@@ -35,50 +73,49 @@ function TradeChart(props: any) {
     },
   };
 
-  useEffect(() => {
-    const payload = {
-      ticker: formValues.stock_name || "TATAMOTORS.NS",
-      startDate: formValues.start_date,
-      endDate: formValues.end_date,
-      interval: formValues.interval || "1d",
-    };
+  const highchartOptions = useMemo(
+    () =>
+      PlotChart(
+        stockData ?? [],
+        strategyConfig.ticker,
+        trades,
+        isCandleStickChart
+      ),
+    [stockData, strategyConfig.ticker, trades, isCandleStickChart]
+  );
 
-    if (localStorage.getItem("username") != null) {
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-      payload["username"] = localStorage.getItem("username");
-      if (localStorage.getItem("brokerDetails") != null)
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-        payload["broker_name"] = JSON.parse(
-          // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
-          localStorage.getItem("brokerDetails")
-        )["name"];
-      // payload["interval"] = "1d";
-      console.log("post request upd", payload);
-    }
+  // useEffect(() => {
+  //   const payload = {
+  //     ticker: strategyConfig.ticker ?? "TATAMOTORS.NS",
+  //     startDate: strategyConfig.startDate,
+  //     endDate: strategyConfig.endDate,
+  //     interval: strategyConfig.interval ?? "1d",
+  //     username: userName,
+  //     broker_name: brokerDetails?.name,
+  //   };
 
-    axios
-      .post(api_url, payload, config)
-      .then((data) => {
-        // @ts-expect-error TS(2345): Argument of type '{ navigation: { bindingsClassNam... Remove this comment to see the full error message
-        setOptions(
-          PlotChart(data.data.data, payload.ticker, trades, isCandleStickChart)
-        );
-        setStockData(data.data.data);
-        setStockName(payload.ticker);
-        console.log("options set : ", options);
-      })
-      .catch((error) => alert("Getting Stock Data " + error));
-  }, [
-    formValues.stock_name,
-    formValues.start_date,
-    formValues.end_date,
-    formValues.interval,
-    trades,
-    isCandleStickChart,
-  ]);
+  //   axios
+  //     .post(api_url, payload, config)
+  //     .then((data) => {
+  //       // @ts-expect-error TS(2345): Argument of type '{ navigation: { bindingsClassNam... Remove this comment to see the full error message
+  //       setOptions(
+  //         PlotChart(data.data.data, payload.ticker, trades, isCandleStickChart)
+  //       );
+  //       console.log("options set : ", options);
+  //     })
+  //     .catch((error) => alert("Getting Stock Data " + error));
+  // }, [
+  //   strategyConfig.ticker,
+  //   strategyConfig.startDate,
+  //   strategyConfig.endDate,
+  //   strategyConfig.interval,
+  //   brokerDetails?.name,
+  //   trades,
+  //   userName,
+  //   isCandleStickChart,
+  // ]);
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div
       className={className}
       style={{
@@ -88,12 +125,12 @@ function TradeChart(props: any) {
         height: "100%",
       }}
     >
-      {options && (
+      {highchartOptions && (
         // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <HighchartsReact
           highcharts={Highcharts}
           constructorType={"stockChart"}
-          options={options}
+          options={highchartOptions}
           containerProps={{ style: { height: "100%", width: "100%" } }}
         />
       )}

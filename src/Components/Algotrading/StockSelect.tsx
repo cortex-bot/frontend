@@ -6,7 +6,14 @@ import { convertStocksMappingToArray } from "../Charts/utils";
 import { Button, Paper, Switch, FormLabel, Typography } from "@mui/material";
 import axios from "axios";
 
-function StockSelect(setter: any, isMulti = false, stock_name = "stock_name") {
+type StockSelectProps = {
+  setter: (name: string, value: any) => void;
+  isMulti?: boolean;
+  stockName?: string;
+};
+
+function StockSelect(props: StockSelectProps) {
+  const { setter, isMulti = false, stockName = "stock_name" } = props;
   const [options, setoptions] = useState("loading");
 
   useEffect(() => {
@@ -24,10 +31,10 @@ function StockSelect(setter: any, isMulti = false, stock_name = "stock_name") {
         onChange={(e) => {
           console.log(e);
           if (isMulti) {
-            setter(stock_name, e);
+            setter(stockName, e);
           } else {
             // @ts-expect-error TS(2531): Object is possibly 'null'.
-            setter(stock_name, e["value"]);
+            setter(stockName, e["value"]);
           }
         }}
         defaultValue={options[0]}

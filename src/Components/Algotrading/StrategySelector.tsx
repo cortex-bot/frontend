@@ -6,10 +6,15 @@ import { useState, useEffect } from "react";
 import { convertListToDropdown } from "./Utils";
 import { Paper, Typography } from "@mui/material";
 import Select from "react-select";
+import { useAppStore } from "../../stores/store";
 
-export function StrategySelector({ setCode, formValues, setFormValues }: any) {
+export function StrategySelector() {
   const [strategyList, setStrategyList] = useState([]);
   const [strategyName, setStrategyName] = useState(null);
+
+  const strategyConfig = useAppStore((state) => state.strategyConfig);
+  const setStrategyConfig = useAppStore((state) => state.setStrategyConfig);
+  const setCode = useAppStore((state) => state.setCode);
 
   useEffect(() => {
     axios.get(host + getStrategyList).then((response) => {
@@ -26,9 +31,9 @@ export function StrategySelector({ setCode, formValues, setFormValues }: any) {
         .get(host + getStrategyCode + "/" + strategyName)
         .then((response) => {
           setCode(response.data.code);
-          setFormValues({
-            ...formValues,
-            strategy_name: strategyName,
+          setStrategyConfig({
+            ...strategyConfig,
+            strategyName,
             description: response.data.description,
           });
         });

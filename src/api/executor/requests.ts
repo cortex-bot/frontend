@@ -9,10 +9,10 @@ import {
   getTradeTypeList as getTradeTypeListEndpoint,
 } from "../../configs.json";
 import { ManagerEndpoints } from "../endpoints";
-import { useGet, usePost } from "../queryClient";
+import { useFetch, usePost } from "../queryClient";
 
 export const useGetActiveExecutors = () => {
-  return useGet<any[]>({
+  return useFetch<any[]>({
     endpoint: ManagerEndpoints.activeExecutorsList,
   });
 };

@@ -1,9 +1,11 @@
 import {
   QueryClient,
+  QueryFunction,
   QueryKey,
   useMutation,
   useQuery,
   useQueryClient,
+  UseQueryOptions,
 } from "@tanstack/react-query";
 import _, { capitalize, chain, noop } from "lodash";
 import { getRequestPromise } from "./axios";
@@ -21,17 +23,21 @@ export const getQueryKeyForEndpoint = (endpoint: string): QueryKey => {
   return [chain(endpoint).split(/[-/]/).map(capitalize).join("").value()];
 };
 
-export const useGet = <T>({
+export const useFetch = <T, R, Q = never>({
   endpoint,
   service,
   requestBody,
   queryParams,
-}: RequestData) => {
-  const queryKey = getQueryKeyForEndpoint(endpoint);
+  method = "GET",
+  options,
+}: RequestData<R, Q> & {
+  options?: Partial<UseQueryOptions<T | null, Error, T | null, QueryKey>>;
+}) => {
+  const queryKey = [getQueryKeyForEndpoint(endpoint), requestBody, queryParams];
   const getData = async () => {
-    const response = await getRequestPromise<T>({
+    const response = await getRequestPromise<T, R, Q>({
       endpoint,
-      method: "GET",
+      method,
       requestBody,
       queryParams,
       service,
@@ -39,6 +45,7 @@ export const useGet = <T>({
     return response.data;
   };
   return useQuery({
+    ...options,
     queryKey,
     queryFn: getData,
   });
@@ -85,7 +92,7 @@ export const usePut = <T>({
 };
 
 // TODO: Add success/failure notifications. Think about whether to put it in getRequestPromise or let react query handlers do the job
-export const usePost = <T>({
+export const usePost = <T, R, Q>({
   endpoint,
   service,
   invalidateEndpoint,
@@ -105,20 +112,29 @@ export const usePost = <T>({
     requestBody,
     queryParams,
   }: {
-    requestBody?: { [index: string]: any };
-    queryParams?: { [index: string]: any };
+    requestBody?: R;
+    queryParams?: Q;
   }) => {
-    const response = await getRequestPromise<T>({
-      endpoint,
-      service,
-      method: "POST",
-      requestBody,
-      queryParams,
-    });
-    return response.data;
+    try {
+      const response = await getRequestPromise<T, R, Q>({
+        endpoint,
+        service,
+        method: "POST",
+        requestBody,
+        queryParams,
+      });
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          error.response?.data.error_description || "An unknown error occurred"
+        );
+      }
+      throw new Error("An unknown error occurred");
+    }
   };
 
-  return useMutation({
+  return useMutation<T | undefined, any, any>({
     mutationFn: postData,
     onSuccess: successHandler,
   });

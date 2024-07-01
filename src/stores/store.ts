@@ -1,19 +1,16 @@
-import { create } from 'zustand';
+import { create, useStore } from "zustand";
+import createAlgoTradingSlice, { AlgoTradingSlice } from "./algoTradingSlice";
+import createNotificationSlice, {
+  NotificationSlice,
+} from "./notificationSlice";
 
-interface Notification {
-  id: string
-  message: string
-  type?: 'SUCCESS' | 'ERROR' | 'INFO'
-}
+type AppState = NotificationSlice & AlgoTradingSlice;
 
-export interface State {
-  notifications: Notification[]
-  addNotification: (notification: Notification) => void
-  closeNotification: (id: string) => void
-}
+export const useRootStore = create<AppState>()((...args) => ({
+  ...createNotificationSlice(...args),
+  ...createAlgoTradingSlice(...args),
+}));
 
-export const useStore = create<State>()((set) => ({
-  notifications: [] as Notification[],
-  addNotification: (notification) => set((state) => ({ notifications: [...state.notifications, notification] })),
-  closeNotification: (id) => set((state) => ({ notifications: state.notifications.filter((notification) => notification.id !== id) }))
-}))
+export const useAppStore = <T>(selector?: (state: AppState) => T) => {
+  return useStore(useRootStore, selector!);
+};

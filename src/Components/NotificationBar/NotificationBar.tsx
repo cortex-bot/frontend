@@ -1,11 +1,11 @@
 import { Snackbar } from "@mui/material";
 import { useCallback, useMemo } from "react";
-import { useStore } from "../../stores/store.ts";
+import { useAppStore } from "../../stores/store";
 import { isEmpty } from "lodash";
 
 function NotificationBar() {
-  const notifications = useStore((state) => state.notifications);
-  const closeNotification = useStore((state) => state.closeNotification);
+  const notifications = useAppStore((state) => state.notifications);
+  const closeNotification = useAppStore((state) => state.closeNotification);
 
   const { id, message } = useMemo(
     () => notifications[0] ?? {},

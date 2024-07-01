@@ -22,6 +22,7 @@ import SignalsDashboard from "./Components/Signal/SignalsDashboard";
 import NotificationBar from "./Components/NotificationBar/NotificationBar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import theme from "./theme";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import {
   ThemeProvider,
@@ -39,6 +40,7 @@ export default function App() {
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
           <CssBaseline />
           <BrowserRouter>
             <SideBar />

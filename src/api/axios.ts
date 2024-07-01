@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, isAxiosError } from "axios";
 import { host, dataServiceHost, brokerServiceHost } from "../configs.json";
-import { useStore } from "../stores/store";
+import { useAppStore } from "../stores/store";
 import { forEach, get } from "lodash";
 import { url } from "inspector";
 import {
@@ -30,7 +30,7 @@ export function useAxios<T>({
   disableErrorNotification = false,
   service = "MANAGER",
 }: UseAxiosProps) {
-  const addNotification = useStore((state) => state.addNotification);
+  const addNotification = useAppStore((state) => state.addNotification);
   const [status, setStatus] = useState<Status>("PENDING");
   const [error, setError] = useState({ code: null, description: null });
   const [data, setData] = useState<T | null>(null);
@@ -70,13 +70,13 @@ export function useAxios<T>({
   return { status, error, commonFetch, data };
 }
 
-export const getRequestPromise = async <T>({
+export const getRequestPromise = async <T, R, Q>({
   endpoint,
   method = "GET",
   requestBody,
   queryParams,
   service = "MANAGER",
-}: RequestData): Promise<GenericResponse<T>> => {
+}: RequestData<R, Q>): Promise<GenericResponse<T>> => {
   const hostUrl = getHostUrlForService(service);
   const url = generateUrlString(hostUrl, endpoint, queryParams);
   const {

@@ -1,13 +1,22 @@
 import React, { useCallback } from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import { isEmpty, map } from "lodash";
+import { useExecuteStrategy } from "../../api/algotrading/requests";
+import { useAnalysis } from "./hooks";
 
 interface AnalysisProps {
   analysis: Record<string, any>;
 }
 
-const AnalysisBox = ({ analysis }: AnalysisProps) => {
+const AnalysisBox = () => {
+  const { analysis, isError, error } = useAnalysis();
+
   const getAnalysisDetails = useCallback(() => {
+    if (isError) {
+      console.error(error);
+      return <Typography align="center">Error fetching analysis</Typography>;
+    }
+
     if (isEmpty(analysis)) {
       return <Typography align="center">Strategy not executed yet</Typography>;
     }
@@ -22,7 +31,7 @@ const AnalysisBox = ({ analysis }: AnalysisProps) => {
         </Typography>
       </Box>
     ));
-  }, [analysis]);
+  }, [analysis, isError, error]);
 
   return (
     <Paper

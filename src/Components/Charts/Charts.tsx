@@ -1,21 +1,20 @@
-import { useState, useEffect } from 'react';
-import Highcharts from 'highcharts/highstock';
-import HighchartsReact from 'highcharts-react-official';
-import axios from 'axios';
-import Indicators from 'highcharts/indicators/indicators-all.js';
-import DragPanes from 'highcharts/modules/drag-panes.js';
-import AnnotationsAdvanced from 'highcharts/modules/annotations-advanced.js';
-import PriceIndicator from 'highcharts/modules/price-indicator.js';
-import FullScreen from 'highcharts/modules/full-screen.js';
-import StockTools from 'highcharts/modules/stock-tools.js';
+import { useState, useEffect } from "react";
+import Highcharts from "highcharts/highstock";
+import HighchartsReact from "highcharts-react-official";
+import axios from "axios";
+import Indicators from "highcharts/indicators/indicators-all.js";
+import DragPanes from "highcharts/modules/drag-panes.js";
+import AnnotationsAdvanced from "highcharts/modules/annotations-advanced.js";
+import PriceIndicator from "highcharts/modules/price-indicator.js";
+import FullScreen from "highcharts/modules/full-screen.js";
+import StockTools from "highcharts/modules/stock-tools.js";
 
-import './Charts.css';
+import "./Charts.css";
 // @ts-expect-error TS(2732): Cannot find module '../../configs.json'. Consider ... Remove this comment to see the full error message
-import { host, getStockData, stockDataUpdate } from '../../configs.json';
-// @ts-expect-error TS(2307): Cannot find module './StockSelect' or its correspo... Remove this comment to see the full error message
-import StockSelect from './StockSelect';
+import { host, getStockData, stockDataUpdate } from "../../configs.json";
 
-import PlotChart from './utils';
+import PlotChart from "./utils";
+import StockSelect from "../Algotrading/StockSelect";
 
 Indicators(Highcharts);
 DragPanes(Highcharts);
@@ -25,7 +24,7 @@ FullScreen(Highcharts);
 StockTools(Highcharts);
 
 function Charts() {
-  const [stock_name, setstock_name] = useState('BANK_NIFTY');
+  const [stock_name, setstock_name] = useState("BANK_NIFTY");
   const [options, setoptions] = useState(null);
 
   useEffect(() => {
@@ -35,7 +34,7 @@ function Charts() {
         .toISOString()
         .slice(0, 10),
       end: new Date().toISOString().slice(0, 10),
-      interval: 'daily',
+      interval: "daily",
     };
 
     const api_url = host + getStockData;
@@ -65,10 +64,10 @@ function Charts() {
   return (
     // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className="">
-      {StockSelect(setstock_name)}
+      <StockSelect setter={setstock_name} />
       <HighchartsReact
         highcharts={Highcharts}
-        constructorType={'stockChart'}
+        constructorType={"stockChart"}
         options={options}
       />
       {/* Alerts use this button carefully */}

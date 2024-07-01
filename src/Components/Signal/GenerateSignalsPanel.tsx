@@ -187,7 +187,7 @@ function GenerateSignalsPanel({
           >
             Select Stocks
           </Typography>
-          {StockSelect(updateFormValue, false, "stock_list")}
+          <StockSelect setter={updateFormValue} stockName="stock_list" />
 
           <Typography
             variant="h7"
@@ -243,7 +243,8 @@ function GenerateSignalsPanel({
               name="start_date"
               type="date"
               value={formValues.start_date}
-              label={"Start Date"} />
+              label={"Start Date"}
+            />
 
             <TextField
               variant="standard"
@@ -251,7 +252,8 @@ function GenerateSignalsPanel({
               name="end_date"
               type="date"
               value={formValues.end_date}
-              label={"End Date"} />
+              label={"End Date"}
+            />
           </div>
 
           <div className="grid md:grid-cols-2 gap-2 mt-3">
@@ -262,7 +264,8 @@ function GenerateSignalsPanel({
               multiline="false"
               type="textarea"
               value={formValues.username}
-              label={" username "} />
+              label={" username "}
+            />
 
             <TextField
               variant="standard"
@@ -271,7 +274,8 @@ function GenerateSignalsPanel({
               multiline="true"
               type="textarea"
               value={(formValues as any).remarks}
-              label={" remarks "} />
+              label={" remarks "}
+            />
           </div>
           <div className="grid grid-col-1 grid-flow-col m-3 align-bottom">
             <Button
@@ -304,7 +308,8 @@ function GenerateSignalsPanel({
             multiline="false"
             type="textarea"
             value={(formValues as any).updatedStockBucketName}
-            label={" stockBucketName "} />
+            label={" stockBucketName "}
+          />
 
           <Button
             className=" bg-green-100 btn btn-primary align-left"

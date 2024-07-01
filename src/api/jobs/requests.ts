@@ -7,10 +7,10 @@ import {
   resumeJob as resumeJobEndpoint,
   deleteJob as deleteJobEndpoint,
 } from "../../configs.json";
-import { useGet, usePut } from "../queryClient";
+import { useFetch, usePut } from "../queryClient";
 
 export const useGetAllJobs = () => {
-  return useGet({
+  return useFetch({
     endpoint: getAllJobsEndpoint,
   });
   // const { commonFetch, status, error, data } = useAxios<JobData[]>({

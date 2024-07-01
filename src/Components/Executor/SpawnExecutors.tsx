@@ -164,7 +164,11 @@ export default function SpawnExecutors() {
         >
           Select Stocks
         </Typography>
-        {StockSelect(extractValuesFromMultiSelect, true, "stock_list")}
+        <StockSelect
+          setter={extractValuesFromMultiSelect}
+          isMulti={true}
+          stockName="stock_list"
+        />
 
         <div className="grid md:grid-cols-2 gap-2 mt-3">
           <Select
